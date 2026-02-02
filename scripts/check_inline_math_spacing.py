@@ -145,7 +145,7 @@ def main():
     parser.add_argument(
         "paths",
         nargs="*",
-        default=["series"],
+        default=["series", "exercise"],
         help="Files or directories to scan (default: series)",
     )
     parser.add_argument(
