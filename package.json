@@ -1,0 +1,19 @@
+{
+  "author": "",
+  "description": "",
+  "devDependencies": {
+    "markdownlint-cli": "^0.47.0"
+  },
+  "engines": {
+    "npm": "Use pnpm instead of npm!"
+  },
+  "license": "",
+  "main": "",
+  "name": "lecture",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "lint:md": "markdownlint *.md */*.md"
+  },
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.5.2"
+}
