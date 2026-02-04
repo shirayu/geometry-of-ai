@@ -14,6 +14,7 @@
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "lint:math": "node ./scripts/check-math.mjs",
+        "lint:insertion": "python3 ./scripts/check_inline_math_spacing.py",
         "lint:md": "markdownlint *.md */*.md"
     },
     "version": "1.0.0",
