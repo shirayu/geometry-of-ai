@@ -37,7 +37,4 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint Markdown
-        run: pnpm lint:md
-
-      - name: Lint Math Syntax
-        run: pnpm lint:math
+        run: pnpm lint
