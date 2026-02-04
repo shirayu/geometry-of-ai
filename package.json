@@ -13,8 +13,9 @@
     "main": "",
     "name": "lecture",
     "scripts": {
-        "format": "run-p format:insertion format:markdownlint",
+        "format": "run-p format:insertion format:dashlines format:markdownlint",
         "format:insertion": "python3 ./scripts/check_inline_math_spacing.py --fix",
+        "format:dashlines": "python3 ./scripts/remove_dash_only_lines.py",
         "format:markdownlint": "markdownlint -f ./*.md doc/*.md",
         "preinstall": "npx only-allow pnpm",
         "lint": "run-p lint:math lint:insertion lint:md",
