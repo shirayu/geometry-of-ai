@@ -5,6 +5,7 @@
   "line-length": false,
   "no-inline-html": false,
   "MD041": false,
+  "MD036": false,
   "MD024": false,
   "MD028": false,
   "MD026": false
