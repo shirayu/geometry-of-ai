@@ -138,7 +138,7 @@ ______|            |______
 - 対策1: 量子化後に再正規化
 - 対策2: 球面上で直接量子化（研究段階）
 
-```python
+```appendix1_spherical_quantization.py
 # 概念的なコード
 x_normalized = F.normalize(x, dim=-1)  # ノルム1に正規化
 x_quantized = quantize(x_normalized)   # 量子化
@@ -235,7 +235,7 @@ LLM推論では、実務上しばしば以下が支配的になる：
 
 ### 5.1 基本的な量子化（PyTorch・概念例）
 
-```python
+```appendix1_symmetric_quantization.py
 import torch
 
 def quantize_tensor_symmetric(x, bits=8, eps=1e-8):
@@ -259,7 +259,7 @@ print(f"平均絶対誤差: {(weight - weight_approx).abs().mean():.6f}")
 
 ### 5.2 実用的なライブラリ（例）
 
-```python
+```appendix1_quantization_libraries.py
 # bitsandbytes（4-bit/8-bit量子化）
 import bitsandbytes as bnb
 linear_4bit = bnb.nn.Linear4bit(in_features, out_features)
@@ -278,7 +278,7 @@ model = AutoGPTQForCausalLM.from_quantized("model-gptq")
 > `get_hidden_states` はモデル実装に依存する（フックで取得する等が必要）。
 > また t-SNE は局所構造を強調しやすく、距離の解釈には注意。
 
-```python
+```appendix1_quantization_visualization.py
 import torch
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
