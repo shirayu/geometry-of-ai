@@ -83,3 +83,12 @@ MoEやTDA等の最新知見を交え、手法の陳腐化に抗う普遍的な�
 | A2 | [多様体の純度問題: 幾何学がまだ解けていない課題](series/appendix.2.md) | 幾何学が解けない「真偽」の限界と、動態論への接続。 | 純度, EL2Nスコア, Influence Functions |
 | A3 | [動的剪定の幾何学: 柔軟な回路がもたらす知能](series/appendix.3.md) | 「動的剪定」で繋ぐAttentionとMoE | 動的剪定, ルーティング, MoE |
 | A4 | [空間の「物差し」再考: 2点間から情報の密度まで](series/appendix.4.md) | 距離、非対称性、密度で測る「情報の地形」 | 内積, KLダイバージェンス, フィッシャー情報行列 |
+
+## 制作
+
+以下に主担当を示す。
+
+- 企画・統括: [林部 祐太](https://hayashibe.jp/)
+- 執筆: [Claude](https://claude.ai/)
+- 主査読: [ChatGPT](https://chatgpt.com/)
+- 副査読: [Gemini](https://gemini.google.com/)
