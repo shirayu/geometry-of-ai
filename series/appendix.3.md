@@ -252,13 +252,17 @@ Expert4: ██ (4%)
 
 $$\mathcal{L}_{\text{balance}} = \alpha \cdot N \cdot \sum_{i=1}^{N_{\text{experts}}} f_i \cdot p_i$$
 
-- $f_i$ : Expert $i$ に実際に割り当てられたトークンの割合（実測値）
-- $p_i$ : Expert $i$ へのルーティング確率の平均（期待値）
+**記号の定義**（論文・解説により記号と概念の対応が入れ替わることがあるため注意）：
+- $f_i$ : Expert $i$ に実際に割り当てられたトークンの割合（**load** - 実測値）
+- $p_i$ : Expert $i$ へのルーティング確率の平均（**importance** - 期待値）
 - $N$ : Expert数
 - $\alpha$ : バランス係数
 
+> [!NOTE]
+> **記号の揺れについて**：文献によって、$f_i$ を「importance（確率質量の総和）」、$p_i$ を「load（割当トークン比率）」と逆に定義する場合もある。本質は「**実測の負荷** × **期待される重要度** の積を最小化する」ことであり、記号より概念が重要である。
+
 **仕組み**：
-- 特定のExpertに負荷が集中すると、 $f_i \cdot p_i$ が大きくなる
+- 特定のExpertに負荷が集中すると、そのExpertの $f_i \cdot p_i$ が大きくなる
 - この項を損失に加えることで、集中に対してペナルティを与える
 - 訓練中、モデルは負荷を分散させるようルーティングを調整する
 
@@ -277,13 +281,16 @@ Load Balancing Lossは、入力空間の分割を均等化するよう促す**�
 
 - **Capacity Factor**：各Expertが受け入れるトークン数に上限を設ける。上限を超えたトークンは他のExpertに割り当てられる。
 - **Expert Choice Routing**（Zhou et al., 2022）：トークンがExpertを選ぶのではなく、ExpertがトークンをTop-K選択する。
-- **Shared Expert**（DeepSeek-MoE等）：すべての入力に対して常に活性化する共通Expertを設ける。共通知識の重複を防ぎつつ、専門化を促進。
+- **Shared Expert**：すべての入力に対して常に活性化する共通Expertを設ける（DeepSeekMoE, Dai et al., 2024で明示的に採用）。共通知識の重複を防ぎつつ、専門化を促進。Shared Expertは負荷分散の直接的な手段ではないが、専門Expertの役割を明確化する効果がある。
 
 #### 実装ノートとの接続
 
 本資料の実装ノートセクション（後述）で提示したMoEの簡略実装には、Load Balancing Lossが**含まれていない**。これは教育目的の簡略化である。
 
-実際のMoE（Mixtral、Switch Transformer、DeepSeek-V3等）では、この補助損失が訓練の安定性と性能に**不可欠**である。Load Balancing Lossなしで訓練すると、ほぼ確実にルーティング崩壊が発生する。
+実際のMoE（Mixtral、Switch Transformer、DeepSeek-V3等）では、この補助損失が訓練の安定性と性能に**極めて重要**である。Load Balancing Lossや類似の負荷分散機構なしで訓練すると、**ルーティング崩壊が発生しやすく**、実運用規模では何らかの負荷分散機構（補助損失、ルーターバイアス調整、Capacity Factor等）が**重要**となる。
+
+> [!NOTE]
+> **負荷分散の多様性**：Load Balancing Lossは代表的な手法だが、唯一の解ではない。ルーター設計、初期化、Top-Kの選び方、Capacity Factorの調整などでも負荷分散に影響する。近年は「補助損失なし／弱い補助損失」でも負荷を保つ手法の研究もある（例：Auxiliary-Loss-Free Load Balancing Strategy, He et al., 2024）。
 
 ## スパース性（疎性）の幾何学：条件依存の有効性
 
@@ -391,10 +398,12 @@ Group2: Q3, Q4 → 共有 K2, V2
 シーケンス長が長くなると、キャッシュサイズが線形増加
 ```
 
-**問題点（Memory Wall）**：
+**問題点（Memory Wall - 容量と帯域の制約）**：
 - 長いシーケンス（数千〜数万トークン）では、KVキャッシュが**数GB〜数十GB**に達する
 - GPUのHBM容量を圧迫し、バッチサイズを制限（スループット低下）
-- これは**Memory Wall**（メモリ帯域の壁）と呼ばれる推論時のボトルネックである
+- これは**Memory Wall**と呼ばれる問題の一側面であり、特に推論時の**メモリ容量制約**と**メモリ帯域制約**の両面から性能ボトルネックとなる
+  - **容量制約**：KVキャッシュが大きすぎてHBMに載らない、またはバッチサイズを小さくせざるを得ない
+  - **帯域制約**：HBMへのアクセス速度が計算速度に追いつかない（FlashAttentionが主に対処する問題）
 
 **GQAの効果**：
 標準Multi-head Attention（8ヘッド）では、各ヘッドがK,Vを持つため、キャッシュサイズは $8 \times d$ に比例。
@@ -408,7 +417,11 @@ $$\text{KVキャッシュ削減率} = 1 - \frac{2}{8} = 75\%$$
 - または、**バッチサイズを拡大**してスループット向上
 
 > [!NOTE]
-> **FlashAttentionとの一貫性**：GQAのメモリ削減は、FlashAttentionのI/O削減と同じ文脈にある。両者とも「メモリ階層の制約」という物理的制約に対処する設計である。FlashAttentionは**計算時のHBM↔SRAM間I/O**を削減し、GQAは**推論時のHBM使用量**を削減する。
+> **FlashAttentionとの一貫性**：GQAのメモリ削減は、FlashAttentionのI/O削減と同じ「メモリ階層の制約」という文脈にある。ただし、対処する側面が異なる：
+> - **FlashAttention**：計算時のHBM↔SRAM間I/O削減（**帯域制約**への対処）
+> - **GQA**：推論時のHBM使用量削減（**容量制約**への対処）
+> 
+> 両者は相補的であり、併用することで推論効率を大きく改善できる。
 
 ### LoRA (Low-Rank Adaptation)：更新ランクの削減
 
@@ -559,6 +572,8 @@ FlashAttention:
 - MoEの「部分空間分割」は理想化された仮説であり、実際は複雑
 - FlashAttentionの「パッキング」は教育的比喩であり、本質はI/O削減
 - Load Balancing Lossの簡略式は概念示唆であり、実装には使用不可
+- Load Balancing Lossの記号定義（$f_i, p_i$）は文献により揺れがある
+- ルーティング崩壊の発生条件は設計・データ・初期化に依存し、一概には言えない
 
 **読者へのメッセージ**：
 本資料は「正解」を示すものではなく、「見方」を提供するものである。この視点が有用かどうかは、読者が扱う問題・データ・モデルに依存する。批判的に読み、自身の状況に適用可能かを判断されたい。
@@ -788,6 +803,9 @@ print(f"Parameters saved: ~{(1 - 2/8) * 100:.1f}% (for K,V)")
 - Zhou, Y., Lei, T., Liu, H., Du, N., Huang, Y., Zhao, V., Dai, A., Chen, Z., Le, Q., & Laudon, J. (2022). Mixture-of-Experts with Expert Choice Routing. *NeurIPS 2022*. arXiv: [arXiv:2202.09368](https://arxiv.org/abs/2202.09368).
     - Expert Choice Routing（ExpertがトークンをTop-K選択）の提案。ルーティング崩壊への対策の一つ。
 
+- He, X., Shen, C., Gan, Z., Tan, L., Wang, G., Zhao, Y., Chen, W., & Xu, Y. (2024). Auxiliary-Loss-Free Load Balancing Strategy for Mixture-of-Experts. arXiv: [arXiv:2408.15664](https://arxiv.org/abs/2408.15664).
+    - 補助損失なしでも負荷分散を実現する手法の提案。Load Balancing Lossの代替アプローチの研究例。
+
 ### 効率化手法
 
 - Ainslie, J., Lee-Thorp, J., de Jong, M., Zemlyanskiy, Y., Lebrón, F., & Sanghai, S. (2023). GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints. *EMNLP 2023*. arXiv: [arXiv:2305.13245](https://arxiv.org/abs/2305.13245).
@@ -826,8 +844,12 @@ print(f"Parameters saved: ~{(1 - 2/8) * 100:.1f}% (for K,V)")
 2. **条件依存性**：「スパース化が常に有効」ではなく、データ・タスク・モデルに依存。Dense表現が有利な場合もある。
 3. **理想化と現実**：MoEの「直交部分空間」仮説は理想化されたモデル。実際は部分的重なりや共有専門性が存在。
 4. **比喩の限界**：「パッキング」「幾何学的適合」は教育的比喩。FlashAttentionの本質はI/O削減。
-5. **ルーティング崩壊**：MoEでは特定Expertへの集中が問題となり、Load Balancing Lossが不可欠。
-6. **メモリ階層の制約**：GQAのKVキャッシュ削減、FlashAttentionのI/O削減は、ともにMemory Wallへの対処。
+5. **ルーティング崩壊**：MoEでは特定Expertへの集中が問題となりやすく、Load Balancing Loss等の負荷分散機構が重要。ただし、ルーター設計や初期化などでも影響を受ける。
+6. **メモリ階層の制約**：
+   - GQAのKVキャッシュ削減：推論時の**容量制約**に対処
+   - FlashAttentionのI/O削減：計算時の**帯域制約**に対処
+   - 両者は相補的
+7. **記号の揺れ**：Load Balancing Lossの $f_i, p_i$ の定義は文献により入れ替わる。概念（load/importance）が重要。
 
 ### 講義本編との接続
 
