@@ -267,7 +267,7 @@ Expert4: ██ (4%)
 
 ルーティング崩壊を防ぐため、**Load Balancing Loss**が訓練時に追加される。Switch Transformer（Fedus et al., 2022）では、以下のような補助損失が導入される：
 
-$$\mathcal{L}_{\text{balance}} = \alpha \cdot N_{\text{experts}} \cdot \sum_{i=1}^{N_{\text{experts}}} f_i \cdot p_i$$
+$$\mathcal{L} _{\text{balance}} = \alpha \cdot N _{\text{experts}} \cdot \sum _{i=1}^{N _{\text{experts}}} f _i \cdot p _i$$
 
 **記号の定義**（論文・解説により記号と概念の対応が入れ替わることがあるため注意）：
 
@@ -322,7 +322,7 @@ $d$ 次元単位球面上で一様ランダムに選んだ2つのベクトル $\
 
 $$\mathbb{E}[\mathbf{u}^\top \mathbf{v}] = 0, \quad \text{Var}[\mathbf{u}^\top \mathbf{v}] = \frac{1}{d}$$
 
-これは、高次元空間のほとんどの方向が**互いに無関係**であることを意味する。言い換えれば、**空間のほとんどが「空」**である。
+これは、高次元空間のほとんどの方向が**互いに無関係**であることを意味する。言い換えれば、 **空間のほとんどが「空」** である。
 
 ### スパース化の有効性：条件依存
 
@@ -563,7 +563,7 @@ FlashAttention:
 
 ### 「何を計算しないか」を決める知能
 
-本Appendixで見てきたように、動的剪定の本質は**「何を計算するか」ではなく「何を計算しないか」を決めるプロセス**である。
+本Appendixで見てきたように、動的剪定の本質は **「何を計算するか」ではなく「何を計算しないか」を決めるプロセス** である。
 
 - **Attention:** 情報流の重み付けにより、寄与の小さい接続の影響を低減
 - **Sparse Attention:** 計算自体を省略し、重要な接続のみ処理
