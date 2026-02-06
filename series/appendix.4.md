@@ -51,7 +51,7 @@ $$\mathbf{u} \cdot \mathbf{v} = \sum_i u_i v_i = \|\mathbf{u}\| \|\mathbf{v}\| \
 
 この式は、内積が以下の2つの情報を含むことを示している：
 
-- **大きさ**（ノルム $\|\mathbf{u}\|, \|\mathbf{v}\|$）
+- **大きさ**（ノルム $\|\mathbf{u}\|, \|\mathbf{v}\|$ ）
 - **方向の近さ**（角度 $\theta$ のコサイン）
 
 ### コサイン類似度：方向だけを見る
@@ -76,15 +76,18 @@ $$\text{score}(q_i, k_j) = \frac{q_i^\top k_j}{\sqrt{d_k}}$$
 ```appendix4_cosine_similarity.py
 import torch
 
+
 def dot_product(u, v):
     """内積の計算（標準的なAttentionに相当）"""
     return torch.dot(u, v)
+
 
 def cosine_similarity(u, v):
     """コサイン類似度の計算（正規化後の内積）"""
     u_norm = u / u.norm()
     v_norm = v / v.norm()
     return torch.dot(u_norm, v_norm)
+
 
 # 例：同じ方向だが大きさが異なるベクトル
 u = torch.tensor([1.0, 2.0, 3.0])
@@ -116,7 +119,8 @@ $$d(\mathbf{u}, \mathbf{v}) = \text{arcosh}\left(1 + 2\frac{\|\mathbf{u} - \math
 
 > [!NOTE]
 > **実装上の注意**：Poincaré球モデルでは、すべての点が $\|\mathbf{u}\| < 1$ を満たす必要がある（開球内）。実装時には数値安定性のため、以下の対策が推奨される：
-> 1. **境界クリッピング**：境界 $\|\mathbf{u}\| = 1$ に近づきすぎないよう、例えば $\|\mathbf{u}\| < 1 - \epsilon$ （$\epsilon = 10^{-5}$）でクリップ
+>
+> 1. **境界クリッピング**：境界 $\|\mathbf{u}\| = 1$ に近づきすぎないよう、例えば $\|\mathbf{u}\| < 1 - \epsilon$ （ $\epsilon = 10^{-5}$ ）でクリップ
 > 2. **arcoshの引数の保証**：浮動小数点誤差で arcosh の引数が 1 未満になり得るため、`arg = arg.clamp(min=1 + eps)` のような処理が有用
 > 3. **ゼロ除算回避**：分母 $(1-\|\mathbf{u}\|^2)(1-\|\mathbf{v}\|^2)$ がゼロにならないよう、上記のクリッピングと合わせて対策する
 
@@ -154,25 +158,26 @@ $$D_{\text{KL}}(Q \| P) = \sum_x Q(x) \log \frac{Q(x)}{P(x)}$$
 
 なぜ非対称なのか？ それは、**「どちらの視点で測るか」が異なる**からである。
 
-- **$D_{\text{KL}}(P \| Q)$**：「真の分布 $P$ から見て、モデル $Q$ がどれだけズレているか」
+- $D_{\text{KL}}(P \| Q)$ ：「真の分布 $P$ から見て、モデル $Q$ がどれだけズレているか」
     - $P$ の確率が高い場所で $Q$ の確率が低いと、大きなペナルティ
     - **Forward KL** とも呼ばれる
-- **$D_{\text{KL}}(Q \| P)$**：「モデル $Q$ から見て、真の分布 $P$ がどれだけズレているか」
+- $D_{\text{KL}}(Q \| P)$ ：「モデル $Q$ から見て、真の分布 $P$ がどれだけズレているか」
     - $Q$ の確率が高い場所で $P$ の確率が低いと、大きなペナルティ
     - **Reverse KL** とも呼ばれる
 
 ```appendix4_kl_asymmetry.py
 import torch
-import torch.nn.functional as F
 
 # 真の分布 P と モデル Q
 P = torch.tensor([0.1, 0.6, 0.3])
 Q = torch.tensor([0.4, 0.3, 0.3])
 
+
 # KLダイバージェンスの計算（手計算版）
 def kl_divergence(p, q):
     """KL(P||Q) を計算"""
     return (p * torch.log(p / q)).sum()
+
 
 kl_pq = kl_divergence(P, Q)
 kl_qp = kl_divergence(Q, P)
@@ -257,10 +262,10 @@ $$G = \begin{pmatrix} 1/\sigma^2 & 0 \\ 0 & 2/\sigma^4 \end{pmatrix}$$
 
 これは何を意味するか？
 
-- **平均 $\mu$ の感度**：$1/\sigma^2$ に比例。分散が小さいほど、平均の変化に敏感。
-- **分散 $\sigma^2$ の感度**：$2/\sigma^4$ に比例。分散が小さいほど、さらに敏感。
+- **平均 $\mu$ の感度**： $1/\sigma^2$ に比例。分散が小さいほど、平均の変化に敏感。
+- **分散 $\sigma^2$ の感度**： $2/\sigma^4$ に比例。分散が小さいほど、さらに敏感。
 
-つまり、「鋭い分布（小さい $\sigma$）」の方が、パラメータの変化に対して敏感である。
+つまり、「鋭い分布（小さい $\sigma$ ）」の方が、パラメータの変化に対して敏感である。
 
 > [!TIP]
 > **物理的アナロジー**：フィッシャー情報は、物理学における「有効質量」に似ている。重い物体を動かすには大きな力が必要だが、軽い物体は小さな力で動く。情報密度の高い場所では、分布を動かすのに「大きな勾配」が必要になる。
@@ -307,46 +312,47 @@ $$\theta_{t+1} = \theta_t - \eta \tilde{\nabla}_\theta \mathcal{L}$$
 
 ```appendix4_natural_gradient_concept.py
 import torch
-import torch.nn as nn
 
 # 【重要】以下は「自然勾配法の形式」を示す教育的疑似コードであり、
 # Fisher情報行列を単位行列で代用しているため、自然勾配の性質を何も示さない。
 # 実際には単なる学習率の再スケール（(1+damping)倍）に過ぎない。
 
+
 def natural_gradient_step(model, loss, lr=0.01, damping=1e-4):
     """自然勾配法の"形式"を示す疑似コード（実用不可）
-    
+
     警告: 本実装はFisher情報を単位行列で代用しており、
     自然勾配の本質（モデル依存の計量）が完全に失われている。
     fisher_approx = (1+damping)*I なので、これは単なるスカラー倍であり、
     自然勾配が提供する「空間の歪みの補正」は一切行われない。
-    
+
     真の実装には、モデルの出力分布からFisherを計算する必要がある。
     """
     # 通常の勾配
     loss.backward()
-    
+
     # パラメータと勾配を1次元ベクトルに
     params = torch.cat([p.flatten() for p in model.parameters()])
     grads = torch.cat([p.grad.flatten() for p in model.parameters()])
-    
+
     # 【問題点】Fisherを単位行列で代用 → これでは自然勾配にならない
     # fisher_approx = I + damping*I = (1+damping)*I
     # つまり、恒等変換のスカラー倍 = 学習率を (1+damping) 倍するだけ
     # 実際には、出力のlog probabilityの勾配の外積の期待値を計算する必要がある
     fisher_approx = torch.eye(len(params)) + damping * torch.eye(len(params))
-    
+
     # "自然勾配のような形" = Fisher^{-1} @ grad
     # （ただしFisher = (1+damping)*I なので、実質 grad / (1+damping)）
     natural_grad = torch.linalg.solve(fisher_approx, grads)
-    
+
     # パラメータ更新
     idx = 0
     for p in model.parameters():
         p_len = p.numel()
-        p.data -= lr * natural_grad[idx:idx+p_len].view_as(p)
+        p.data -= lr * natural_grad[idx : idx + p_len].view_as(p)
         idx += p_len
         p.grad.zero_()
+
 
 # 【推奨】実用にはK-FAC等の専用ライブラリ、または対角Fisher近似を用いるべき
 ```
@@ -369,6 +375,7 @@ def natural_gradient_step(model, loss, lr=0.01, damping=1e-4):
 - **MoE**：（典型的には）入力特徴に対する線形スコア（内積に相当）が高いExpertを選択 = その部分空間が「重要」
 
 ただし、**厳密には**：
+
 - **Attentionは内積幾何に基づく類似度計算**（表現空間上の操作）
 - **Fisher情報は統計モデルの計量**（確率分布のパラメータ空間上の操作）
 - **対象空間が異なる**：「重要度」は表現（埋め込み）上の概念、Fisherの「感度」は確率モデル（出力分布）上の概念
@@ -425,14 +432,16 @@ def natural_gradient_step(model, loss, lr=0.01, damping=1e-4):
 ### KLダイバージェンスの非対称性の確認
 
 ```appendix4_kl_asymmetry_viz.py
-import torch
 import matplotlib.pyplot as plt
 import numpy as np
+import torch
+
 
 def kl_divergence(p, q):
     """KL(P||Q) を計算（0除算回避付き）"""
     epsilon = 1e-10
     return (p * torch.log((p + epsilon) / (q + epsilon))).sum()
+
 
 # 2つの分布を定義
 P = torch.tensor([0.7, 0.2, 0.1])
@@ -442,21 +451,21 @@ kl_qp_list = []
 
 # Qの最初の要素を変化させる
 for q0 in np.linspace(0.1, 0.9, 50):
-    Q = torch.tensor([q0, (1-q0)*0.6, (1-q0)*0.4])
+    Q = torch.tensor([q0, (1 - q0) * 0.6, (1 - q0) * 0.4])
     Q_list.append(q0)
     kl_pq_list.append(kl_divergence(P, Q).item())
     kl_qp_list.append(kl_divergence(Q, P).item())
 
 # 可視化
 plt.figure(figsize=(10, 6))
-plt.plot(Q_list, kl_pq_list, label='KL(P||Q)', linewidth=2)
-plt.plot(Q_list, kl_qp_list, label='KL(Q||P)', linewidth=2, linestyle='--')
-plt.xlabel('Q[0]')
-plt.ylabel('KL Divergence')
-plt.title('KL Divergence Asymmetry')
+plt.plot(Q_list, kl_pq_list, label="KL(P||Q)", linewidth=2)
+plt.plot(Q_list, kl_qp_list, label="KL(Q||P)", linewidth=2, linestyle="--")
+plt.xlabel("Q[0]")
+plt.ylabel("KL Divergence")
+plt.title("KL Divergence Asymmetry")
 plt.legend()
 plt.grid(True, alpha=0.3)
-plt.savefig('kl_asymmetry.png', dpi=150, bbox_inches='tight')
+plt.savefig("kl_asymmetry.png", dpi=150, bbox_inches="tight")
 print("KLダイバージェンスの非対称性を kl_asymmetry.png に保存")
 ```
 
@@ -464,19 +473,17 @@ print("KLダイバージェンスの非対称性を kl_asymmetry.png に保存")
 
 ```appendix4_fisher_gaussian.py
 import torch
-import torch.distributions as dist
+
 
 def fisher_information_gaussian(mu, sigma):
     """正規分布のフィッシャー情報行列（解析的）
-    
+
     N(mu, sigma^2) のフィッシャー情報行列:
     [[1/sigma^2, 0],
      [0, 2/sigma^4]]
     """
-    return torch.tensor([
-        [1/sigma**2, 0],
-        [0, 2/sigma**4]
-    ])
+    return torch.tensor([[1 / sigma**2, 0], [0, 2 / sigma**4]])
+
 
 # 異なる分散での比較
 sigmas = [0.5, 1.0, 2.0]
@@ -484,19 +491,19 @@ sigmas = [0.5, 1.0, 2.0]
 for sigma in sigmas:
     fisher = fisher_information_gaussian(mu=0.0, sigma=sigma)
     print(f"σ={sigma}:")
-    print(f"  F_μμ = {fisher[0,0]:.4f} (平均への感度)")
-    print(f"  F_σσ = {fisher[1,1]:.4f} (分散への感度)")
+    print(f"  F_μμ = {fisher[0, 0]:.4f} (平均への感度)")
+    print(f"  F_σσ = {fisher[1, 1]:.4f} (分散への感度)")
     print()
 
 # 出力例:
 # σ=0.5:
 #   F_μμ = 4.0000 (平均への感度)  ← 分散が小さいほど感度が高い
 #   F_σσ = 32.0000 (分散への感度)
-# 
+#
 # σ=1.0:
 #   F_μμ = 1.0000
 #   F_σσ = 2.0000
-# 
+#
 # σ=2.0:
 #   F_μμ = 0.2500  ← 分散が大きいと感度が低い
 #   F_σσ = 0.1250
@@ -505,19 +512,21 @@ for sigma in sigmas:
 ### 自然勾配と通常勾配の比較（玩具問題）
 
 ```appendix4_natural_vs_standard.py
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import matplotlib.pyplot as plt
+
 
 # 簡単な2パラメータのロジスティック回帰
 class SimpleLogistic(nn.Module):
     def __init__(self):
         super().__init__()
         self.w = nn.Parameter(torch.tensor([0.0, 0.0]))
-    
+
     def forward(self, x):
         return torch.sigmoid(x @ self.w)
+
 
 # データ生成（線形分離可能）
 torch.manual_seed(42)
@@ -552,15 +561,15 @@ for _ in range(100):
 
 # 可視化
 plt.figure(figsize=(10, 6))
-plt.plot(losses_sgd, label='SGD (Standard Gradient)', linewidth=2)
-plt.plot(losses_adam, label='Adam (Adaptive Preconditioning)', linewidth=2)
-plt.xlabel('Iteration')
-plt.ylabel('Loss')
-plt.title('Convergence: Standard Gradient vs Adaptive Preconditioning')
+plt.plot(losses_sgd, label="SGD (Standard Gradient)", linewidth=2)
+plt.plot(losses_adam, label="Adam (Adaptive Preconditioning)", linewidth=2)
+plt.xlabel("Iteration")
+plt.ylabel("Loss")
+plt.title("Convergence: Standard Gradient vs Adaptive Preconditioning")
 plt.legend()
 plt.grid(True, alpha=0.3)
-plt.yscale('log')
-plt.savefig('gradient_comparison.png', dpi=150, bbox_inches='tight')
+plt.yscale("log")
+plt.savefig("gradient_comparison.png", dpi=150, bbox_inches="tight")
 print("収束の比較を gradient_comparison.png に保存")
 ```
 
