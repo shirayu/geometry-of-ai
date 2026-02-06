@@ -104,7 +104,7 @@ Softmaxは、この類似度を確率分布に変換する。結果として、*
 | --- | --- | --- | --- | --- |
 | **計算的剪定** | ○（計算を省く） | △（削除or保持） | 静的 | 構造化Pruning（実効速度は実装依存） |
 | **標準Attention** | ✗（全計算） | ○（Softmax重み） | 動的 | Transformer |
-| **Sparse Attention** | ○（Top-K等） | ○（重み付け） | 動的 | Top-K Attention, Local Attention |
+| **Sparse Attention** | ○（Top-K等） | ○（重み付け） | 動的 | Top-K Attention, Local Attention, Block-sparse Attention |
 
 > [!IMPORTANT]
 > **「剪定」という用語の注意**：本資料では教育的メタファーとして「Attention=動的剪定」と表現しているが、厳密には標準Attentionは**計算を省いていない**。真の計算削減を行うのは、Sparse Attention（Top-K Attention、Local Attention、Block Sparse Attention等）やMoEである。
@@ -484,7 +484,7 @@ Token3: L1 → skip → skip → L4 （L2, L3をスキップ）
 ├─────────────────┤
 │ SRAM (Shared Memory/L1キャッシュ) │ 数十～数百KB, 高速（オンチップ）
 ├─────────────────┤
-│ HBM (High Bandwidth Memory)    │ ～ 数十GB, 低速（外部メモリ）
+│ HBM (High Bandwidth Memory)    │ ～ 数十GB, 低速（オンチップではない外部メモリ）
 └─────────────────┘
 ```
 
