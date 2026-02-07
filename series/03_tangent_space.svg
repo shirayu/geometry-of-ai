@@ -1,0 +1,168 @@
+<svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2c3e50" />
+    </marker>
+    <marker id="arrowheadRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#e74c3c" />
+    </marker>
+    <marker id="arrowheadGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#27ae60" />
+    </marker>
+    <marker id="arrowheadBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3498db" />
+    </marker>
+    
+    <linearGradient id="tangentPlaneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d6eaf8;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#aed6f1;stop-opacity:0.6" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="900" height="650" fill="#ffffff"/>
+  
+  <!-- Title -->
+  <text x="450" y="30" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    球面上の接空間とリーマン勾配
+  </text>
+  
+  <!-- Main sphere -->
+  <g transform="translate(450, 320)">
+    <!-- Sphere outline -->
+    <ellipse cx="0" cy="0" rx="200" ry="200" fill="none" stroke="#5d6d7e" stroke-width="2.5"/>
+    <ellipse cx="0" cy="0" rx="200" ry="200" fill="#ebf5fb" opacity="0.4"/>
+    
+    <!-- Grid lines on sphere - lighter -->
+    <ellipse cx="0" cy="0" rx="200" ry="80" fill="none" stroke="#aeb6bf" stroke-width="0.8" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="200" ry="40" fill="none" stroke="#aeb6bf" stroke-width="0.8" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="160" ry="60" fill="none" stroke="#aeb6bf" stroke-width="0.8" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="120" ry="45" fill="none" stroke="#aeb6bf" stroke-width="0.8" opacity="0.5"/>
+    
+    <!-- Point x on sphere (upper right) -->
+    <circle cx="120" cy="-120" r="8" fill="#2c3e50" stroke="white" stroke-width="2.5"/>
+    <text x="138" y="-118" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">x</text>
+    
+    <!-- Radial vector from origin to x - lighter -->
+    <line x1="0" y1="0" x2="120" y2="-120" stroke="#95a5a6" stroke-width="2" stroke-dasharray="5,5" opacity="0.6"/>
+    <text x="45" y="-45" font-family="Arial, sans-serif" font-size="13" fill="#7f8c8d">半径方向</text>
+    
+    <!-- Tangent plane at x - lighter gradient -->
+    <path d="M 40,-200 L 200,-40 L 180,80 L 20,-80 Z" fill="url(#tangentPlaneGrad)" stroke="#3498db" stroke-width="2.5"/>
+    
+    <!-- Tangent plane label -->
+    <text x="165" y="-5" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#3498db">T</text>
+    <text x="178" y="0" font-family="Arial, sans-serif" font-size="12" fill="#3498db">x</text>
+    <text x="188" y="-5" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#3498db">S</text>
+    <text x="200" y="-1" font-family="Arial, sans-serif" font-size="11" fill="#3498db">d-1</text>
+    <text x="165" y="15" font-family="Arial, sans-serif" font-size="12" fill="#34495e">(接空間)</text>
+    
+    <!-- Euclidean gradient (has radial component) -->
+    <line x1="120" y1="-120" x2="200" y2="-40" stroke="#e74c3c" stroke-width="3.5" marker-end="url(#arrowheadRed)"/>
+    <text x="210" y="-25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#e74c3c">∇f(x)</text>
+    <text x="210" y="-8" font-family="Arial, sans-serif" font-size="12" fill="#c0392b">(ユークリッド勾配)</text>
+    
+    <!-- Decomposition: radial component -->
+    <line x1="120" y1="-120" x2="165" y2="-75" stroke="#e67e22" stroke-width="2.5" stroke-dasharray="4,3" marker-end="url(#arrowhead)"/>
+    <text x="142" y="-82" font-family="Arial, sans-serif" font-size="13" fill="#d35400" font-weight="bold">(∇f·x)x</text>
+    <text x="138" y="-66" font-family="Arial, sans-serif" font-size="11" fill="#d35400">(半径成分)</text>
+    
+    <!-- Riemannian gradient (tangent component) -->
+    <line x1="120" y1="-120" x2="165" y2="-165" stroke="#27ae60" stroke-width="3.5" marker-end="url(#arrowheadGreen)"/>
+    <text x="145" y="-183" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#27ae60">grad</text>
+    <text x="182" y="-179" font-family="Arial, sans-serif" font-size="11" fill="#27ae60">S</text>
+    <text x="192" y="-183" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#27ae60">f(x)</text>
+    <text x="145" y="-165" font-family="Arial, sans-serif" font-size="12" fill="#229954">(リーマン勾配)</text>
+    <text x="145" y="-150" font-family="Arial, sans-serif" font-size="11" fill="#34495e">(接空間内)</text>
+    
+    <!-- Right angle indicator (orthogonality) -->
+    <path d="M 152,-128 L 158,-134 L 164,-128" fill="none" stroke="#7f8c8d" stroke-width="1.5"/>
+    
+    <!-- Origin marker -->
+    <circle cx="0" cy="0" r="5" fill="#34495e"/>
+    <text x="-18" y="22" font-family="Arial, sans-serif" font-size="14" fill="#2c3e50" font-weight="bold">O</text>
+  </g>
+  
+  <!-- Mathematical formula box - lighter -->
+  <rect x="50" y="45" width="360" height="140" fill="white" stroke="#3498db" stroke-width="2.5" rx="10"/>
+  <text x="230" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    接空間の定義
+  </text>
+  <text x="230" y="105" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#34495e">
+    T<tspan font-size="11" baseline-shift="sub">x</tspan> S<tspan font-size="11" baseline-shift="super">d-1</tspan> = {<tspan font-weight="bold">v</tspan> ∈ ℝ<tspan font-size="11" baseline-shift="super">d</tspan> : <tspan font-weight="bold">v</tspan><tspan font-size="11" baseline-shift="super">⊤</tspan><tspan font-weight="bold">x</tspan> = 0}
+  </text>
+  <text x="230" y="128" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#7f8c8d">
+    (xと直交するベクトルの集合)
+  </text>
+  
+  <line x1="70" y1="142" x2="390" y2="142" stroke="#d5dbdb" stroke-width="1.5"/>
+  
+  <text x="230" y="165" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    リーマン勾配
+  </text>
+  <text x="230" y="180" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#27ae60" font-weight="bold">
+    grad<tspan font-size="10" baseline-shift="sub">S</tspan> f(<tspan font-weight="bold">x</tspan>) = ∇f(<tspan font-weight="bold">x</tspan>) − (∇f(<tspan font-weight="bold">x</tspan>)<tspan font-size="10" baseline-shift="super">⊤</tspan><tspan font-weight="bold">x</tspan>) <tspan font-weight="bold">x</tspan>
+  </text>
+  
+  <!-- Projection illustration box - lighter -->
+  <rect x="50" y="540" width="800" height="95" fill="#f8f9f9" stroke="#bdc3c7" stroke-width="1.5" rx="8"/>
+  <text x="450" y="568" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    射影による球面制約の維持
+  </text>
+  
+  <text x="70" y="595" font-family="Arial, sans-serif" font-size="14" fill="#34495e">
+    <tspan font-weight="bold">1. ユークリッド更新:</tspan> <tspan font-family="monospace" fill="#e74c3c" font-weight="bold">x' = x − lr · ∇f(x)</tspan>  <tspan fill="#7f8c8d">(球面から外れる)</tspan>
+  </text>
+  
+  <text x="70" y="620" font-family="Arial, sans-serif" font-size="14" fill="#34495e">
+    <tspan font-weight="bold">2. 球面への射影:</tspan> <tspan font-family="monospace" fill="#27ae60" font-weight="bold">x = x' / ||x'||</tspan>  <tspan fill="#7f8c8d">(正規化して球面に戻す = retraction)</tspan>
+  </text>
+  
+  <!-- Visual update illustration - cleaner -->
+  <g transform="translate(680, 100)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" fill="#2c3e50">更新の流れ</text>
+    
+    <!-- Small sphere -->
+    <circle cx="0" cy="60" r="50" fill="none" stroke="#5d6d7e" stroke-width="2"/>
+    <circle cx="0" cy="60" r="50" fill="#ebf5fb" opacity="0.3"/>
+    
+    <!-- Point on sphere -->
+    <circle cx="30" cy="25" r="4" fill="#2c3e50"/>
+    <text x="48" y="27" font-family="Arial, sans-serif" font-size="13" fill="#2c3e50" font-weight="bold">x<tspan font-size="9" baseline-shift="sub">t</tspan></text>
+    
+    <!-- Update step (goes off sphere) -->
+    <line x1="30" y1="25" x2="65" y2="10" stroke="#e74c3c" stroke-width="2.5" marker-end="url(#arrowheadRed)"/>
+    <circle cx="65" cy="10" r="3.5" fill="#e74c3c"/>
+    <text x="73" y="12" font-family="Arial, sans-serif" font-size="12" fill="#e74c3c" font-weight="bold">x'</text>
+    
+    <!-- Project back -->
+    <line x1="65" y1="10" x2="38" y2="18" stroke="#27ae60" stroke-width="2.5" stroke-dasharray="3,2" marker-end="url(#arrowheadGreen)"/>
+    <circle cx="38" cy="18" r="4" fill="#27ae60"/>
+    <text x="42" y="5" font-family="Arial, sans-serif" font-size="13" fill="#27ae60" font-weight="bold">x<tspan font-size="9" baseline-shift="sub">t+1</tspan></text>
+    
+    <!-- Origin -->
+    <circle cx="0" cy="60" r="3" fill="#7f8c8d"/>
+    
+    <!-- Labels with background -->
+    <rect x="45" y="28" width="50" height="16" fill="white" opacity="0.8" rx="3"/>
+    <text x="48" y="38" font-family="Arial, sans-serif" font-size="10" fill="#e74c3c" font-weight="bold">1. 更新</text>
+    
+    <rect x="34" y="18" width="50" height="16" fill="white" opacity="0.8" rx="3"/>
+    <text x="37" y="28" font-family="Arial, sans-serif" font-size="10" fill="#27ae60" font-weight="bold">2. 射影</text>
+  </g>
+  
+  <!-- Key insight box - lighter yellow -->
+  <rect x="510" y="540" width="340" height="95" fill="#fef9e7" stroke="#f39c12" stroke-width="2.5" rx="8"/>
+  <text x="680" y="568" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" fill="#7d6608">
+    重要な注意
+  </text>
+  <text x="680" y="592" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#7d6608">
+    上記の射影法は近似的な方法
+  </text>
+  <text x="680" y="610" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#7d6608">
+    学習率が小さければリーマン最適化に近づく
+  </text>
+  <text x="680" y="628" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#7d6608">
+    (運動量を使う場合はさらなる工夫が必要)
+  </text>
+</svg>

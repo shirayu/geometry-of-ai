@@ -1,0 +1,110 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="domeGradient" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#2d3561;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#1a1f3a;stop-opacity:0.6" />
+    </radialGradient>
+    <radialGradient id="starGlow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="#ffffff"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    プラネタリウム・メタファー: 球面上の表現学習
+  </text>
+  
+  <!-- Dome (hemisphere) - lighter -->
+  <ellipse cx="400" cy="450" rx="300" ry="150" fill="url(#domeGradient)" opacity="0.4"/>
+  <path d="M 100,450 Q 400,150 700,450" fill="none" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Grid lines on dome - lighter -->
+  <path d="M 250,450 Q 400,250 550,450" fill="none" stroke="#95a5a6" stroke-width="1" opacity="0.4"/>
+  <path d="M 320,450 Q 400,300 480,450" fill="none" stroke="#95a5a6" stroke-width="1" opacity="0.4"/>
+  <ellipse cx="400" cy="450" rx="240" ry="90" fill="none" stroke="#95a5a6" stroke-width="1" opacity="0.4"/>
+  <ellipse cx="400" cy="450" rx="180" ry="50" fill="none" stroke="#95a5a6" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Star cluster 1 (upper left constellation) - brighter gold -->
+  <circle cx="280" cy="220" r="5" fill="#ffb700"/>
+  <circle cx="280" cy="220" r="12" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="310" cy="240" r="4" fill="#ffb700"/>
+  <circle cx="310" cy="240" r="10" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="250" cy="250" r="3.5" fill="#ffb700"/>
+  <circle cx="250" cy="250" r="9" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="290" cy="270" r="4" fill="#ffb700"/>
+  <circle cx="290" cy="270" r="10" fill="url(#starGlow)" opacity="0.6"/>
+  
+  <!-- Connecting lines for cluster 1 - lighter -->
+  <line x1="280" y1="220" x2="310" y2="240" stroke="#ffb700" stroke-width="1.5" opacity="0.5"/>
+  <line x1="310" y1="240" x2="290" y2="270" stroke="#ffb700" stroke-width="1.5" opacity="0.5"/>
+  <line x1="250" y1="250" x2="280" y2="220" stroke="#ffb700" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Star cluster 2 (upper right constellation) - brighter blue -->
+  <circle cx="520" cy="240" r="5" fill="#5dade2"/>
+  <circle cx="520" cy="240" r="12" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="490" cy="260" r="3.5" fill="#5dade2"/>
+  <circle cx="490" cy="260" r="9" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="540" cy="280" r="4" fill="#5dade2"/>
+  <circle cx="540" cy="280" r="10" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="510" cy="300" r="3.5" fill="#5dade2"/>
+  <circle cx="510" cy="300" r="9" fill="url(#starGlow)" opacity="0.6"/>
+  
+  <!-- Connecting lines for cluster 2 - lighter -->
+  <line x1="520" y1="240" x2="490" y2="260" stroke="#5dade2" stroke-width="1.5" opacity="0.5"/>
+  <line x1="490" y1="260" x2="510" y2="300" stroke="#5dade2" stroke-width="1.5" opacity="0.5"/>
+  <line x1="520" y1="240" x2="540" y2="280" stroke="#5dade2" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Star cluster 3 (center) - brighter red -->
+  <circle cx="380" cy="310" r="4" fill="#ff7979"/>
+  <circle cx="380" cy="310" r="10" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="410" cy="320" r="5" fill="#ff7979"/>
+  <circle cx="410" cy="320" r="12" fill="url(#starGlow)" opacity="0.6"/>
+  <circle cx="400" cy="350" r="3.5" fill="#ff7979"/>
+  <circle cx="400" cy="350" r="9" fill="url(#starGlow)" opacity="0.6"/>
+  
+  <!-- Connecting lines for cluster 3 - lighter -->
+  <line x1="380" y1="310" x2="410" y2="320" stroke="#ff7979" stroke-width="1.5" opacity="0.5"/>
+  <line x1="410" y1="320" x2="400" y2="350" stroke="#ff7979" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Angular distance illustration - lighter -->
+  <path d="M 400,450 L 280,220" stroke="#95a5a6" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5"/>
+  <path d="M 400,450 L 520,240" stroke="#95a5a6" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5"/>
+  
+  <!-- Angle arc -->
+  <path d="M 360,380 A 80 80 0 0 1 440,360" fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+  <text x="400" y="390" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#e74c3c" font-style="italic" font-weight="bold">θ</text>
+  
+  <!-- Observer position -->
+  <circle cx="400" cy="450" r="6" fill="#34495e"/>
+  <text x="400" y="475" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#2c3e50" font-weight="bold">観測点</text>
+  
+  <!-- Legend box - white background with border -->
+  <rect x="20" y="80" width="200" height="170" fill="white" stroke="#bdc3c7" stroke-width="2" rx="8"/>
+  <text x="120" y="105" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" fill="#2c3e50">対応関係</text>
+  
+  <circle cx="45" cy="130" r="4" fill="#ffb700"/>
+  <text x="65" y="135" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">星 = データ点</text>
+  
+  <line x1="40" y1="155" x2="50" y2="155" stroke="#ffb700" stroke-width="2"/>
+  <text x="65" y="160" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">星座 = クラスター</text>
+  
+  <path d="M 40,175 A 10 10 0 0 1 50,175" fill="none" stroke="#e74c3c" stroke-width="2"/>
+  <text x="65" y="180" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">角度 = 類似度</text>
+  
+  <ellipse cx="45" cy="200" rx="18" ry="10" fill="#2d3561" opacity="0.4"/>
+  <text x="65" y="205" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">ドーム = 単位球面</text>
+  
+  <line x1="40" y1="225" x2="50" y2="225" stroke="#95a5a6" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="65" y="230" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">測地線 = 最短距離</text>
+  
+  <!-- Key insight box - lighter background -->
+  <rect x="560" y="80" width="220" height="120" fill="#e8f5ff" stroke="#3498db" stroke-width="2" rx="8"/>
+  <text x="670" y="105" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2c3e50">重要な洞察</text>
+  <text x="670" y="130" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#34495e">星の明るさ(ノルム)は</text>
+  <text x="670" y="150" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#34495e">考慮しない</text>
+  <text x="670" y="175" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#e74c3c" font-weight="bold">→ 方向のみが意味を持つ</text>
+</svg>

@@ -1,0 +1,175 @@
+<svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for different kappa values -->
+    <radialGradient id="vmfKappa0">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#3498db;stop-opacity:0.3" />
+    </radialGradient>
+    <radialGradient id="vmfKappa5">
+      <stop offset="0%" style="stop-color:#e67e22;stop-opacity:0.8" />
+      <stop offset="30%" style="stop-color:#e67e22;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#e67e22;stop-opacity:0.1" />
+    </radialGradient>
+    <radialGradient id="vmfKappa50">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:1" />
+      <stop offset="15%" style="stop-color:#e74c3c;stop-opacity:0.6" />
+      <stop offset="50%" style="stop-color:#e74c3c;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#e74c3c;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="900" height="700" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="450" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    von Mises-Fisher 分布の集中度パラメータ κ
+  </text>
+  
+  <!-- Three spheres showing different kappa values -->
+  
+  <!-- Sphere 1: kappa = 0 (uniform) -->
+  <g transform="translate(150, 180)">
+    <!-- Sphere outline -->
+    <circle cx="0" cy="0" r="120" fill="none" stroke="#34495e" stroke-width="2"/>
+    
+    <!-- Uniform distribution (equal opacity everywhere) -->
+    <circle cx="0" cy="0" r="120" fill="url(#vmfKappa0)"/>
+    
+    <!-- Grid lines -->
+    <ellipse cx="0" cy="0" rx="120" ry="40" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="90" ry="30" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="60" ry="20" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <line x1="0" y1="-120" x2="0" y2="120" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <path d="M -120,0 Q 0,-40 120,0" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <path d="M -120,0 Q 0,40 120,0" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    
+    <!-- Mean direction indicator (top of sphere) -->
+    <circle cx="0" cy="-120" r="5" fill="#2c3e50"/>
+    <line x1="0" y1="-120" x2="0" y2="-95" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Scattered points to show uniformity -->
+    <circle cx="40" cy="-80" r="2" fill="#3498db" opacity="0.6"/>
+    <circle cx="-60" cy="-60" r="2" fill="#3498db" opacity="0.6"/>
+    <circle cx="80" cy="-40" r="2" fill="#3498db" opacity="0.6"/>
+    <circle cx="-90" cy="-20" r="2" fill="#3498db" opacity="0.6"/>
+    <circle cx="50" cy="40" r="2" fill="#3498db" opacity="0.6"/>
+    <circle cx="-70" cy="60" r="2" fill="#3498db" opacity="0.6"/>
+    <circle cx="30" cy="80" r="2" fill="#3498db" opacity="0.6"/>
+    <circle cx="-40" cy="90" r="2" fill="#3498db" opacity="0.6"/>
+    
+    <!-- Label -->
+    <text x="0" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#3498db">κ = 0</text>
+    <text x="0" y="180" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#555">一様分布</text>
+    <text x="0" y="198" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#555">(方向の情報なし)</text>
+  </g>
+  
+  <!-- Sphere 2: kappa = 5 (moderate concentration) -->
+  <g transform="translate(450, 180)">
+    <!-- Sphere outline -->
+    <circle cx="0" cy="0" r="120" fill="none" stroke="#34495e" stroke-width="2"/>
+    
+    <!-- Moderate concentration -->
+    <circle cx="0" cy="-90" r="60" fill="url(#vmfKappa5)"/>
+    
+    <!-- Grid lines -->
+    <ellipse cx="0" cy="0" rx="120" ry="40" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="90" ry="30" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="60" ry="20" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <line x1="0" y1="-120" x2="0" y2="120" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <path d="M -120,0 Q 0,-40 120,0" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <path d="M -120,0 Q 0,40 120,0" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    
+    <!-- Mean direction indicator -->
+    <circle cx="0" cy="-120" r="5" fill="#2c3e50"/>
+    <line x1="0" y1="-120" x2="0" y2="-95" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Points clustered around mean -->
+    <circle cx="5" cy="-115" r="2" fill="#e67e22" opacity="0.8"/>
+    <circle cx="-8" cy="-110" r="2" fill="#e67e22" opacity="0.8"/>
+    <circle cx="12" cy="-108" r="2" fill="#e67e22" opacity="0.8"/>
+    <circle cx="-15" cy="-105" r="2" fill="#e67e22" opacity="0.7"/>
+    <circle cx="20" cy="-100" r="2" fill="#e67e22" opacity="0.7"/>
+    <circle cx="-25" cy="-95" r="2" fill="#e67e22" opacity="0.6"/>
+    <circle cx="30" cy="-85" r="2" fill="#e67e22" opacity="0.5"/>
+    <circle cx="-35" cy="-80" r="2" fill="#e67e22" opacity="0.4"/>
+    
+    <!-- Label -->
+    <text x="0" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#e67e22">κ = 5</text>
+    <text x="0" y="180" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#555">緩やかな集中</text>
+    <text x="0" y="198" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#555">(星座がぼんやり)</text>
+  </g>
+  
+  <!-- Sphere 3: kappa = 50 (high concentration) -->
+  <g transform="translate(750, 180)">
+    <!-- Sphere outline -->
+    <circle cx="0" cy="0" r="120" fill="none" stroke="#34495e" stroke-width="2"/>
+    
+    <!-- High concentration -->
+    <circle cx="0" cy="-110" r="30" fill="url(#vmfKappa50)"/>
+    
+    <!-- Grid lines -->
+    <ellipse cx="0" cy="0" rx="120" ry="40" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="90" ry="30" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="60" ry="20" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <line x1="0" y1="-120" x2="0" y2="120" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <path d="M -120,0 Q 0,-40 120,0" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    <path d="M -120,0 Q 0,40 120,0" fill="none" stroke="#7f8c8d" stroke-width="0.5" opacity="0.5"/>
+    
+    <!-- Mean direction indicator -->
+    <circle cx="0" cy="-120" r="5" fill="#2c3e50"/>
+    <line x1="0" y1="-120" x2="0" y2="-95" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Points tightly clustered -->
+    <circle cx="2" cy="-118" r="2" fill="#e74c3c"/>
+    <circle cx="-3" cy="-117" r="2" fill="#e74c3c"/>
+    <circle cx="4" cy="-116" r="2" fill="#e74c3c"/>
+    <circle cx="-5" cy="-115" r="2" fill="#e74c3c"/>
+    <circle cx="6" cy="-114" r="2" fill="#e74c3c"/>
+    <circle cx="-7" cy="-113" r="2" fill="#e74c3c"/>
+    
+    <!-- Label -->
+    <text x="0" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#e74c3c">κ = 50</text>
+    <text x="0" y="180" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#555">強い集中</text>
+    <text x="0" y="198" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#555">(星座が明確)</text>
+  </g>
+  
+  <!-- Mathematical formula -->
+  <rect x="50" y="430" width="800" height="80" fill="white" stroke="#3498db" stroke-width="2" rx="10"/>
+  <text x="450" y="460" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#2c3e50">
+    確率密度関数: <tspan font-style="italic">p</tspan>(<tspan font-weight="bold">x</tspan> | <tspan font-weight="bold">μ</tspan>, κ) = <tspan font-style="italic">C</tspan><tspan font-size="12" baseline-shift="sub">d</tspan>(κ) exp(κ <tspan font-weight="bold">μ</tspan><tspan font-size="12" baseline-shift="super">⊤</tspan><tspan font-weight="bold">x</tspan>)
+  </text>
+  <text x="450" y="490" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#555">
+    <tspan font-weight="bold">μ</tspan>: 平均方向 (単位ベクトル),  κ ≥ 0: 集中度パラメータ
+  </text>
+  
+  <!-- Interpretation table -->
+  <rect x="50" y="540" width="800" height="120" fill="#f0f8ff" stroke="#cbd5e0" stroke-width="1" rx="5"/>
+  <text x="450" y="565" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    κ の解釈
+  </text>
+  
+  <line x1="100" y1="580" x2="800" y2="580" stroke="#cbd5e0" stroke-width="1"/>
+  
+  <!-- Table content -->
+  <text x="70" y="600" font-family="Arial, sans-serif" font-size="13" fill="#3498db" font-weight="bold">κ = 0:</text>
+  <text x="140" y="600" font-family="Arial, sans-serif" font-size="12" fill="#555">球面上の一様分布 (ランダム)</text>
+  
+  <text x="70" y="620" font-family="Arial, sans-serif" font-size="13" fill="#e67e22" font-weight="bold">κ 小:</text>
+  <text x="140" y="620" font-family="Arial, sans-serif" font-size="12" fill="#555">緩やかに集中 (不確実性が高い)</text>
+  
+  <text x="70" y="640" font-family="Arial, sans-serif" font-size="13" fill="#e74c3c" font-weight="bold">κ 大:</text>
+  <text x="140" y="640" font-family="Arial, sans-serif" font-size="12" fill="#555">強く集中 (確信度が高い) → κ → ∞ でデルタ関数に近づく</text>
+  
+  <!-- Key analogy -->
+  <rect x="550" y="585" width="280" height="60" fill="#fff3cd" stroke="#ffc107" stroke-width="2" rx="5"/>
+  <text x="690" y="605" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#856404">
+    正規分布との対応
+  </text>
+  <text x="690" y="625" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#856404">
+    1/κ ≈ 分散 σ²
+  </text>
+  <text x="690" y="640" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#856404">
+    (κ が大きい = 分散が小さい = 集中)
+  </text>
+</svg>
