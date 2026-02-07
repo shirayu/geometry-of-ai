@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" font-family="'STIX Two Math', 'Latin Modern Math', 'Cambria Math', serif">
+  <defs>
+    <style>
+      .label { font-size: 14px; fill: #1a1a2e; }
+      .label-sm { font-size: 12px; fill: #555; }
+      .title { font-size: 16px; fill: #1a1a2e; font-weight: 600; }
+      .annotation { font-size: 11.5px; fill: #444; }
+      .tau-label { font-size: 13px; font-weight: 600; }
+    </style>
+    <marker id="arrTau" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#7f8c8d"/>
+    </marker>
+    <radialGradient id="glowHot" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e74c3c" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#e74c3c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowWarm" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e67e22" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#e67e22" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowMid" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f1c40f" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#f1c40f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowCool" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#2ecc71" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="310" y="28" text-anchor="middle" class="title">温度パラメータ τ の効果（ロジット z = (2.0, 1.0, 0.1) の場合）</text>
+
+  <!-- Main triangle: A(310,55) top, B(110,330) bottom-left, C(510,330) bottom-right -->
+  <g>
+    <!-- Interior fill -->
+    <polygon points="310,55 110,330 510,330" fill="#f5f5fa" opacity="0.6"/>
+    <!-- Boundary -->
+    <polygon points="310,55 110,330 510,330" fill="none" stroke="#bbb" stroke-width="1.5"/>
+
+    <!-- Vertex labels -->
+    <text x="310" y="44" text-anchor="middle" class="label-sm">p₁ = 1</text>
+    <text x="90" y="348" text-anchor="middle" class="label-sm">p₂ = 1</text>
+    <text x="530" y="348" text-anchor="middle" class="label-sm">p₃ = 1</text>
+
+    <!-- Center marker (uniform) -->
+    <circle cx="310" cy="238" r="2" fill="#aaa"/>
+
+    <!-- 
+      Simplex coords: point = p1*A + p2*B + p3*C
+      A=(310,55), B=(110,330), C=(510,330)
+    -->
+
+    <!-- τ→0: near (1,0,0) → near vertex A -->
+    <circle cx="310" cy="72" r="18" fill="url(#glowHot)"/>
+    <circle cx="310" cy="72" r="4" fill="#e74c3c"/>
+    <text x="340" y="70" class="tau-label" fill="#e74c3c">τ → 0</text>
+    <text x="340" y="84" class="annotation" fill="#c0392b">≈ argmax (1, 0, 0)</text>
+    <text x="340" y="97" class="annotation" fill="#c0392b">H ≈ 0</text>
+
+    <!-- τ=0.5: (0.88, 0.11, 0.01) -->
+    <!-- x = 310*.88 + 110*.11 + 510*.01 = 290, y = 55*.88 + 330*.11 + 330*.01 = 88 -->
+    <circle cx="290" cy="88" r="14" fill="url(#glowWarm)"/>
+    <circle cx="290" cy="88" r="4" fill="#e67e22"/>
+    <text x="222" y="86" text-anchor="end" class="tau-label" fill="#e67e22">τ = 0.5</text>
+    <text x="222" y="100" text-anchor="end" class="annotation" fill="#d35400">(.88, .11, .01)</text>
+
+    <!-- τ=1.0: (0.66, 0.24, 0.10) -->
+    <!-- x = 310*.66 + 110*.24 + 510*.10 = 282, y = 55*.66 + 330*.24 + 330*.10 = 149 -->
+    <circle cx="282" cy="149" r="14" fill="url(#glowMid)"/>
+    <circle cx="282" cy="149" r="4.5" fill="#f1c40f" stroke="#d4ac0d" stroke-width="0.8"/>
+    <text x="218" y="148" text-anchor="end" class="tau-label" fill="#d4ac0d">τ = 1.0</text>
+    <text x="218" y="162" text-anchor="end" class="annotation" fill="#b7950b">(.66, .24, .10)</text>
+
+    <!-- τ=2.0: (0.49, 0.32, 0.19) -->
+    <!-- x = 310*.49 + 110*.32 + 510*.19 = 284, y = 55*.49 + 330*.32 + 330*.19 = 195 -->
+    <circle cx="284" cy="195" r="14" fill="url(#glowCool)"/>
+    <circle cx="284" cy="195" r="4.5" fill="#2ecc71" stroke="#27ae60" stroke-width="0.8"/>
+    <text x="218" y="194" text-anchor="end" class="tau-label" fill="#27ae60">τ = 2.0</text>
+    <text x="218" y="208" text-anchor="end" class="annotation" fill="#1e8449">(.49, .32, .19)</text>
+
+    <!-- τ→∞: (0.33, 0.33, 0.33) → center -->
+    <circle cx="310" cy="238" r="14" fill="url(#glowCool)" opacity="0.6"/>
+    <circle cx="310" cy="238" r="4" fill="#3498db"/>
+    <text x="340" y="234" class="tau-label" fill="#2471a3">τ → ∞</text>
+    <text x="340" y="248" class="annotation" fill="#2471a3">一様分布 (1/3, 1/3, 1/3)</text>
+    <text x="340" y="261" class="annotation" fill="#2471a3">H = log 3（最大）</text>
+
+    <!-- Trajectory curve -->
+    <path d="M 310,72 C 298,78 292,83 290,88 C 286,108 283,135 282,149 C 281,170 283,185 284,195 C 290,215 300,230 310,238"
+          fill="none" stroke="#7f8c8d" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrTau)"/>
+
+    <!-- Arrow label -->
+    <text x="254" y="172" text-anchor="end" class="annotation" fill="#7f8c8d">τ 増加 →</text>
+  </g>
+
+  <!-- Entropy scale (right side, with enough margin) -->
+  <g transform="translate(575, 55)">
+    <text x="15" y="0" text-anchor="middle" class="label" font-weight="600" fill="#555">エントロピー</text>
+    <text x="15" y="16" text-anchor="middle" class="label" font-weight="600" fill="#555">H</text>
+    <line x1="15" y1="28" x2="15" y2="265" stroke="#bbb" stroke-width="1.5"/>
+    <!-- Top tick: H=0 -->
+    <line x1="10" y1="28" x2="20" y2="28" stroke="#bbb" stroke-width="1"/>
+    <text x="28" y="33" class="annotation">0</text>
+    <text x="28" y="46" class="annotation" fill="#888">（確定的）</text>
+    <!-- Bottom tick: H=log3 -->
+    <line x1="10" y1="265" x2="20" y2="265" stroke="#bbb" stroke-width="1"/>
+    <text x="28" y="262" class="annotation">log 3</text>
+    <text x="28" y="275" class="annotation" fill="#888">（最大）</text>
+    <!-- Arrow pointing down -->
+    <polygon points="15,265 11,255 19,255" fill="#bbb"/>
+    <!-- Color dots on scale -->
+    <circle cx="15" cy="35" r="3.5" fill="#e74c3c"/>
+    <circle cx="15" cy="85" r="3.5" fill="#e67e22"/>
+    <circle cx="15" cy="148" r="3.5" fill="#f1c40f"/>
+    <circle cx="15" cy="205" r="3.5" fill="#2ecc71"/>
+    <circle cx="15" cy="258" r="3.5" fill="#3498db"/>
+  </g>
+
+  <!-- Footer -->
+  <text x="310" y="385" text-anchor="middle" class="annotation" fill="#777">τ が大きいほどロジットの差が平滑化され、分布は一様分布（中心）に近づく</text>
+</svg>

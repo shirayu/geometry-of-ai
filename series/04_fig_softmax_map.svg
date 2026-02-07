@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" font-family="'STIX Two Math', 'Latin Modern Math', 'Cambria Math', serif">
+  <defs>
+    <style>
+      .label { font-size: 14px; fill: #1a1a2e; }
+      .label-sm { font-size: 12px; fill: #555; }
+      .label-math { font-size: 15px; fill: #1a1a2e; font-style: italic; }
+      .title { font-size: 16px; fill: #1a1a2e; font-weight: 600; }
+      .annotation { font-size: 11.5px; fill: #444; }
+    </style>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#888"/>
+    </marker>
+    <linearGradient id="logitBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0f0f8"/>
+      <stop offset="100%" stop-color="#e2e2f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="340" y="28" text-anchor="middle" class="title">Softmax写像：ℝᴷ → int(Δᴷ⁻¹)</text>
+
+  <!-- ===== Left: Logit space R^K ===== -->
+  <rect x="20" y="50" width="210" height="270" rx="8" fill="url(#logitBg)" stroke="#999" stroke-width="1.2"/>
+  <text x="125" y="75" text-anchor="middle" class="label" font-weight="600">ロジット空間 ℝᴷ</text>
+
+  <!-- Grid lines -->
+  <g opacity="0.15" stroke="#666" stroke-width="0.5">
+    <line x1="40" y1="100" x2="40" y2="300"/>
+    <line x1="80" y1="100" x2="80" y2="300"/>
+    <line x1="120" y1="100" x2="120" y2="300"/>
+    <line x1="160" y1="100" x2="160" y2="300"/>
+    <line x1="200" y1="100" x2="200" y2="300"/>
+    <line x1="40" y1="130" x2="210" y2="130"/>
+    <line x1="40" y1="175" x2="210" y2="175"/>
+    <line x1="40" y1="220" x2="210" y2="220"/>
+    <line x1="40" y1="265" x2="210" y2="265"/>
+  </g>
+
+  <!-- Sample points in R^K -->
+  <circle cx="70" cy="130" r="4.5" fill="#e67e22"/>
+  <text x="82" y="128" class="label-sm" fill="#e67e22">z₁ = (5, 1, 0)</text>
+
+  <circle cx="140" cy="195" r="4.5" fill="#e67e22"/>
+  <text x="82" y="205" class="label-sm" fill="#e67e22">z₂ = (1, 1, 1)</text>
+
+  <circle cx="100" cy="260" r="4.5" fill="#e67e22"/>
+  <text x="112" y="263" class="label-sm" fill="#e67e22">z₃ = (−2, 0, 3)</text>
+
+  <!-- Points on 1-direction (same image) -->
+  <circle cx="120" cy="155" r="3.5" fill="#9b59b6" opacity="0.7"/>
+  <circle cx="162" cy="175" r="3.5" fill="#9b59b6" opacity="0.7"/>
+  <line x1="120" y1="155" x2="162" y2="175" stroke="#9b59b6" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
+  <text x="130" y="148" class="annotation" fill="#9b59b6">z + c·𝟏</text>
+  <text x="42" y="290" class="annotation" fill="#9b59b6">（𝟏方向に平行な点は</text>
+  <text x="42" y="303" class="annotation" fill="#9b59b6">　同一の分布に写る）</text>
+
+  <!-- ===== Arrow: Softmax ===== -->
+  <line x1="248" y1="185" x2="350" y2="185" stroke="#2c3e50" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="299" y="175" text-anchor="middle" class="label" font-weight="600">Softmax</text>
+  <text x="299" y="210" text-anchor="middle" class="annotation">exp(zᵢ) / Σ exp(zⱼ)</text>
+
+  <!-- ===== Right: Simplex ===== -->
+  <!-- Triangle: A(520,60) top, B(390,305) bottom-left, C(650,305) bottom-right -->
+  <g>
+    <!-- Interior fill -->
+    <polygon points="520,60 390,305 650,305" fill="#dceefb" opacity="0.5"/>
+
+    <!-- Boundary (red) -->
+    <polygon points="520,60 390,305 650,305" fill="none" stroke="#e74c3c" stroke-width="2.2"/>
+
+    <!-- Dashed interior contour -->
+    <polygon points="520,80 408,295 632,295" fill="none" stroke="#3498db" stroke-width="1.2" stroke-dasharray="5,3"/>
+
+    <!-- Vertex labels -->
+    <circle cx="520" cy="60" r="5" fill="#e74c3c"/>
+    <text x="540" y="58" class="label-sm" fill="#c0392b">(1,0,0)</text>
+
+    <circle cx="390" cy="305" r="5" fill="#e74c3c"/>
+    <text x="365" y="322" class="label-sm" fill="#c0392b">(0,1,0)</text>
+
+    <circle cx="650" cy="305" r="5" fill="#e74c3c"/>
+    <text x="638" y="322" class="label-sm" fill="#c0392b">(0,0,1)</text>
+
+    <!-- Interior label -->
+    <text x="520" y="245" text-anchor="middle" class="label" fill="#2471a3">int(Δ²)</text>
+    <text x="520" y="260" text-anchor="middle" class="annotation" fill="#2471a3">滑らかな多様体</text>
+
+    <!-- Mapped point: z1 → near top vertex -->
+    <circle cx="518" cy="92" r="4.5" fill="#e67e22"/>
+    <text x="538" y="97" class="annotation" fill="#e67e22">(.94, .02, .01)</text>
+
+    <!-- Mapped point: z2 → center (uniform) -->
+    <circle cx="520" cy="223" r="4.5" fill="#e67e22"/>
+    <!-- Purple ring: z+c·1 also maps here -->
+    <circle cx="520" cy="223" r="8" fill="none" stroke="#9b59b6" stroke-width="1.2" stroke-dasharray="3,2"/>
+
+    <!-- Mapped point: z3 → near bottom-right vertex -->
+    <circle cx="633" cy="293" r="4.5" fill="#e67e22"/>
+    <text x="582" y="283" class="annotation" fill="#e67e22">(.01, .05, .95)</text>
+
+    <!-- Boundary annotation -->
+    <text x="520" y="336" text-anchor="middle" class="annotation" fill="#c0392b">境界：到達不可能（pᵢ > 0 常に成立）</text>
+  </g>
+
+  <!-- Mapping arrows (gray, curved) -->
+  <path d="M 74,130 C 200,80 380,60 515,90" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+  <path d="M 144,195 C 270,185 420,210 516,222" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+  <path d="M 104,260 C 230,290 470,310 629,294" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+
+  <!-- Legend bar -->
+  <rect x="370" y="350" width="295" height="22" rx="3" fill="#fafafa" stroke="#ccc" stroke-width="0.7"/>
+  <line x1="382" y1="361" x2="402" y2="361" stroke="#e74c3c" stroke-width="2"/>
+  <text x="406" y="365" class="annotation" fill="#c0392b">境界（特異）</text>
+  <line x1="485" y1="361" x2="505" y2="361" stroke="#3498db" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="509" y="365" class="annotation" fill="#2471a3">開内部（像の範囲）</text>
+</svg>
