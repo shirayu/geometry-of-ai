@@ -24,12 +24,12 @@
   <g id="left-panel">
     <text x="200" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50" text-anchor="middle">3D空間での物体</text>
     
-    <!-- Light source -->
-    <circle cx="120" cy="80" r="15" fill="#FDB813" filter="url(#shadow)"/>
-    <line x1="120" y1="80" x2="200" y2="150" stroke="#FDB813" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
-    <line x1="120" y1="80" x2="200" y2="180" stroke="#FDB813" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
-    <line x1="120" y1="80" x2="200" y2="120" stroke="#FDB813" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
-    <text x="120" y="115" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50" text-anchor="middle">光源</text>
+    <!-- Parallel light source -->
+    <circle cx="70" cy="70" r="12" fill="#FDB813" filter="url(#shadow)"/>
+    <line x1="40" y1="50" x2="200" y2="130" stroke="#FDB813" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <line x1="40" y1="80" x2="200" y2="160" stroke="#FDB813" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <line x1="40" y1="110" x2="200" y2="190" stroke="#FDB813" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <text x="70" y="105" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50" text-anchor="middle">平行光源</text>
     
     <!-- 3D cube (isometric view) -->
     <g transform="translate(200, 150)">
