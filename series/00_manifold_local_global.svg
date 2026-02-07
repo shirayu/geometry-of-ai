@@ -1,75 +1,302 @@
-<svg viewBox="0 55 800 330" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#333" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 55 653.85382 324.47363"
+   version="1.1"
+   id="svg19"
+   sodipodi:docname="00_manifold_local_global.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   width="653.85382"
+   height="324.47363"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview19"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.9290625"
+     inkscape:cx="64.581231"
+     inkscape:cy="172.75479"
+     inkscape:window-width="1536"
+     inkscape:window-height="836"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg19" />
+  <defs
+     id="defs2">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#333333"
+         id="polygon1" />
     </marker>
-    <radialGradient id="sphereGrad" cx="40%" cy="40%">
-      <stop offset="0%" style="stop-color:#e0f0ff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#4080c0;stop-opacity:1" />
+    <radialGradient
+       id="sphereGrad"
+       cx="175.8"
+       cy="195.8"
+       fx="175.8"
+       fy="195.8"
+       r="121"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         style="stop-color:#e0f0ff;stop-opacity:1"
+         id="stop1" />
+      <stop
+         offset="100%"
+         style="stop-color:#4080c0;stop-opacity:1"
+         id="stop2" />
     </radialGradient>
   </defs>
-  
   <!-- Left: Sphere with coordinate patches -->
-  <g id="sphere">
-    <text x="200" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">大域的構造: 球面</text>
-    
+  <g
+     id="sphere"
+     transform="translate(-79,5.5741725)">
+    <text
+       x="200"
+       y="70"
+       font-family="Arial, sans-serif"
+       font-size="16px"
+       font-weight="bold"
+       text-anchor="middle"
+       fill="#333333"
+       id="text2">大域的構造: 球面</text>
     <!-- Sphere -->
-    <circle cx="200" cy="220" r="120" fill="url(#sphereGrad)" stroke="#2060a0" stroke-width="2"/>
-    
+    <circle
+       cx="200"
+       cy="220"
+       r="120"
+       fill="url(#sphereGrad)"
+       stroke="#2060a0"
+       stroke-width="2"
+       id="circle2"
+       style="fill:url(#sphereGrad)" />
     <!-- Coordinate patch 1 (top) -->
-    <ellipse cx="200" cy="150" rx="60" ry="30" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-dasharray="5,3"/>
-    <text x="200" y="145" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#c92a2a" font-weight="bold">座標系 1</text>
-    
+    <ellipse
+       cx="215.03166"
+       cy="158.75261"
+       rx="60"
+       ry="30"
+       fill="none"
+       stroke="#ff6b6b"
+       stroke-width="2.5"
+       stroke-dasharray="5, 3"
+       id="ellipse2" />
+    <text
+       x="161.56459"
+       y="138.53067"
+       font-family="Arial, sans-serif"
+       font-size="12px"
+       text-anchor="middle"
+       fill="#c92a2a"
+       font-weight="bold"
+       id="text3"
+       inkscape:label="text3">座標系 1</text>
     <!-- Coordinate patch 2 (middle-right) -->
-    <ellipse cx="250" cy="220" rx="50" ry="40" fill="none" stroke="#51cf66" stroke-width="2.5" stroke-dasharray="5,3"/>
-    <text x="280" y="220" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#2b8a3e" font-weight="bold">座標系 2</text>
-    
+    <ellipse
+       cx="250"
+       cy="220"
+       rx="50"
+       ry="40"
+       fill="none"
+       stroke="#51cf66"
+       stroke-width="2.5"
+       stroke-dasharray="5, 3"
+       id="ellipse3" />
+    <!-- Local patch (to be zoomed) -->
+    <text
+       x="204.65138"
+       y="205.53915"
+       font-family="Arial, sans-serif"
+       font-size="12px"
+       text-anchor="middle"
+       fill="#2b8a3e"
+       font-weight="bold"
+       id="text4">座標系 2</text>
     <!-- Coordinate patch 3 (bottom-left) -->
-    <ellipse cx="160" cy="270" rx="55" ry="35" fill="none" stroke="#ffd43b" stroke-width="2.5" stroke-dasharray="5,3"/>
-    <text x="130" y="290" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#e67700" font-weight="bold">座標系 3</text>
-    
+    <ellipse
+       cx="175.03166"
+       cy="260.10574"
+       rx="55"
+       ry="35"
+       fill="none"
+       stroke="#ffd43b"
+       stroke-width="2.5"
+       stroke-dasharray="5, 3"
+       id="ellipse4" />
+    <text
+       x="149.78853"
+       y="234.43991"
+       font-family="Arial, sans-serif"
+       font-size="12px"
+       text-anchor="middle"
+       fill="#e67700"
+       font-weight="bold"
+       id="text5">座標系 3</text>
     <!-- Overlap annotation -->
-    <path d="M 230 190 Q 240 200 235 210" fill="none" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-    <text x="245" y="190" font-family="Arial, sans-serif" font-size="11" fill="#333">重なり合う領域</text>
   </g>
-  
   <!-- Right: Local coordinate system (zoomed in) -->
-  <g id="local-patch">
-    <text x="600" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">局所的構造: 平坦に見える</text>
-    
+  <g
+     id="local-patch"
+     transform="translate(-82.99576,-1.65625)">
+    <text
+       x="600"
+       y="70"
+       font-family="Arial, sans-serif"
+       font-size="16px"
+       font-weight="bold"
+       text-anchor="middle"
+       fill="#333333"
+       id="text7">局所的構造: 平坦に見える</text>
     <!-- Flat coordinate grid -->
-    <rect x="500" y="100" width="200" height="200" fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
-    
+    <rect
+       x="500"
+       y="100"
+       width="200"
+       height="200"
+       fill="#f8f9fa"
+       stroke="#adb5bd"
+       stroke-width="2"
+       id="rect7" />
     <!-- Grid lines -->
-    <g stroke="#dee2e6" stroke-width="1">
-      <line x1="550" y1="100" x2="550" y2="300"/>
-      <line x1="600" y1="100" x2="600" y2="300"/>
-      <line x1="650" y1="100" x2="650" y2="300"/>
-      <line x1="500" y1="150" x2="700" y2="150"/>
-      <line x1="500" y1="200" x2="700" y2="200"/>
-      <line x1="500" y1="250" x2="700" y2="250"/>
+    <g
+       stroke="#dee2e6"
+       stroke-width="1"
+       id="g12">
+      <line
+         x1="550"
+         y1="100"
+         x2="550"
+         y2="300"
+         id="line7" />
+      <line
+         x1="600"
+         y1="100"
+         x2="600"
+         y2="300"
+         id="line8" />
+      <line
+         x1="650"
+         y1="100"
+         x2="650"
+         y2="300"
+         id="line9" />
+      <line
+         x1="500"
+         y1="150"
+         x2="700"
+         y2="150"
+         id="line10" />
+      <line
+         x1="500"
+         y1="200"
+         x2="700"
+         y2="200"
+         id="line11" />
+      <line
+         x1="500"
+         y1="250"
+         x2="700"
+         y2="250"
+         id="line12" />
     </g>
-    
     <!-- Axes -->
-    <line x1="500" y1="300" x2="720" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
-    <line x1="500" y1="300" x2="500" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
-    <text x="730" y="305" font-family="Arial, sans-serif" font-size="14" fill="#333">x</text>
-    <text x="490" y="75" font-family="Arial, sans-serif" font-size="14" fill="#333">y</text>
-    
+    <line
+       x1="500"
+       y1="300"
+       x2="720"
+       y2="300"
+       stroke="#333333"
+       stroke-width="2"
+       marker-end="url(#arrowhead)"
+       id="line13"
+       inkscape:label="line13" />
+    <line
+       x1="500"
+       y1="300"
+       x2="500"
+       y2="80"
+       stroke="#333333"
+       stroke-width="2"
+       marker-end="url(#arrowhead)"
+       id="line14" />
+    <text
+       x="730"
+       y="305"
+       font-family="Arial, sans-serif"
+       font-size="14px"
+       fill="#333333"
+       id="text14">x</text>
+    <text
+       x="490"
+       y="75"
+       font-family="Arial, sans-serif"
+       font-size="14px"
+       fill="#333333"
+       id="text15"
+       inkscape:label="text15">y</text>
     <!-- Point in local coordinates -->
-    <circle cx="600" cy="200" r="5" fill="#ff6b6b"/>
-    <text x="620" y="205" font-family="Arial, sans-serif" font-size="12" fill="#333">P (x, y)</text>
-    
+    <circle
+       cx="600"
+       cy="200"
+       r="5"
+       fill="#ff6b6b"
+       id="circle15" />
+    <text
+       x="620"
+       y="205"
+       font-family="Arial, sans-serif"
+       font-size="12px"
+       fill="#333333"
+       id="text16">P (x, y)</text>
     <!-- Annotation -->
-    <text x="600" y="330" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#495057" font-style="italic">この範囲では平面座標で記述できる</text>
+    <text
+       x="600"
+       y="330"
+       font-family="Arial, sans-serif"
+       font-size="12px"
+       text-anchor="middle"
+       fill="#495057"
+       font-style="italic"
+       id="text17">この範囲では平面座標で記述できる</text>
   </g>
-  
   <!-- Arrow connecting sphere to local patch -->
-  <path d="M 320 180 Q 400 140 480 150" fill="none" stroke="#868e96" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
-  <text x="390" y="125" font-family="Arial, sans-serif" font-size="13" fill="#495057" font-weight="bold">拡大</text>
-  
+  <path
+     d="m 167.00424,218.34375 q 130,-70 230,-70"
+     fill="none"
+     stroke="#868e96"
+     stroke-width="2"
+     stroke-dasharray="5, 5"
+     marker-end="url(#arrowhead)"
+     id="path17" />
+  <text
+     x="294.08798"
+     y="139.48906"
+     font-family="Arial, sans-serif"
+     font-size="13px"
+     fill="#495057"
+     font-weight="bold"
+     id="text18">拡大</text>
   <!-- Bottom annotation -->
-  <text x="400" y="380" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#495057">
-    多様体 = 局所的には平坦、大域的には曲がった空間
-  </text>
+  <text
+     x="317.00424"
+     y="378.34375"
+     font-family="Arial, sans-serif"
+     font-size="13px"
+     text-anchor="middle"
+     fill="#495057"
+     id="text19">多様体 = 局所的には平坦、大域的には曲がった空間</text>
 </svg>
