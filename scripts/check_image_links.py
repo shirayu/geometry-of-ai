@@ -10,6 +10,8 @@ from pathlib import Path
 RE_INLINE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
 RE_REF = re.compile(r"!\[[^\]]*\]\[([^\]]*)\]")
 RE_REF_DEF = re.compile(r"^\s*\[([^\]]+)\]:\s*(\S+)")
+RE_IMG_TAG = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
+RE_IMG_SRC = re.compile(r"""src\s*=\s*(?P<q>['"]?)(?P<url>[^'">\s]+)(?P=q)""", re.IGNORECASE)
 
 REMOTE_PREFIXES = (
     "http://",
@@ -64,6 +66,16 @@ def collect_ref_defs(lines: Iterable[str]) -> dict[str, str]:
     return refs
 
 
+def extract_img_srcs(line: str) -> list[str]:
+    srcs: list[str] = []
+    for tag in RE_IMG_TAG.findall(line):
+        m = RE_IMG_SRC.search(tag)
+        if not m:
+            continue
+        srcs.append(m.group("url"))
+    return srcs
+
+
 def resolve_path(md_path: Path, url: str, repo_root: Path) -> Path:
     if url.startswith("/"):
         return repo_root / url.lstrip("/")
@@ -106,6 +118,21 @@ def check_file(md_path: Path, repo_root: Path) -> list[tuple[int, str, Path | No
             if is_remote(url) or url.startswith("#"):
                 continue
             base = strip_query_fragment(url)
+            resolved = resolve_path(md_path, base, repo_root)
+            if not resolved.is_file():
+                errors.append((idx, url, resolved))
+
+        for src in extract_img_srcs(line):
+            url = normalize_url(src)
+            if url == "":
+                errors.append((idx, src, None))
+                continue
+            if is_remote(url) or url.startswith("#"):
+                continue
+            base = strip_query_fragment(url)
+            if base == "":
+                errors.append((idx, url, None))
+                continue
             resolved = resolve_path(md_path, base, repo_root)
             if not resolved.is_file():
                 errors.append((idx, url, resolved))
