@@ -1,0 +1,93 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#333" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#fa5252" />
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#228be6" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">球面線形補間 (Slerp) vs 線形補間</text>
+  
+  <!-- Main diagram -->
+  <g id="interpolation-diagram">
+    <!-- Unit circle (sphere cross-section) -->
+    <circle cx="400" cy="280" r="180" fill="none" stroke="#adb5bd" stroke-width="2"/>
+    <circle cx="400" cy="280" r="180" fill="#e7f5ff" fill-opacity="0.3"/>
+    
+    <!-- Coordinate axes -->
+    <line x1="200" y1="280" x2="600" y2="280" stroke="#dee2e6" stroke-width="1" stroke-dasharray="5,5"/>
+    <line x1="400" y1="80" x2="400" y2="480" stroke="#dee2e6" stroke-width="1" stroke-dasharray="5,5"/>
+    
+    <!-- Start vector v0 -->
+    <line x1="400" y1="280" x2="527.28" y2="153.58" stroke="#495057" stroke-width="3" marker-end="url(#arrowhead2)"/>
+    <text x="545" y="145" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">v₀</text>
+    
+    <!-- End vector v1 -->
+    <line x1="400" y1="280" x2="272.72" y2="153.58" stroke="#495057" stroke-width="3" marker-end="url(#arrowhead2)"/>
+    <text x="245" y="145" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">v₁</text>
+    
+    <!-- Slerp path (arc on circle) -->
+    <path d="M 527.28,153.58 A 180,180 0 0,0 272.72,153.58" fill="none" stroke="#228be6" stroke-width="3" stroke-dasharray="none"/>
+    
+    <!-- Linear interpolation path (straight line) -->
+    <line x1="527.28" y1="153.58" x2="272.72" y2="153.58" stroke="#fa5252" stroke-width="3" stroke-dasharray="8,4"/>
+    
+    <!-- Intermediate points on Slerp -->
+    <circle cx="470" cy="131" r="4" fill="#228be6"/>
+    <circle cx="400" cy="100" r="4" fill="#228be6"/>
+    <circle cx="330" cy="131" r="4" fill="#228be6"/>
+    
+    <!-- Intermediate points on Lerp -->
+    <circle cx="470" cy="153.58" r="4" fill="#fa5252"/>
+    <circle cx="400" cy="153.58" r="4" fill="#fa5252"/>
+    <circle cx="330" cy="153.58" r="4" fill="#fa5252"/>
+    
+    <!-- Annotation: Slerp stays on sphere -->
+    <path d="M 400,100 L 400,65" stroke="#228be6" stroke-width="1.5" marker-end="url(#arrowhead-blue)"/>
+    <text x="400" y="55" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#228be6" font-weight="bold">Slerp: 球面上を移動</text>
+    
+    <!-- Annotation: Lerp cuts through sphere -->
+    <path d="M 400,153.58 L 400,195" stroke="#fa5252" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+    <text x="400" y="210" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#fa5252" font-weight="bold">線形補間: 球面を突き抜ける</text>
+    
+    <!-- Angle theta -->
+    <path d="M 455,240 A 65,65 0 0,0 345,240" fill="none" stroke="#37b24d" stroke-width="2"/>
+    <text x="400" y="260" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#37b24d" font-weight="bold">θ</text>
+  </g>
+  
+  <!-- Legend and formulas -->
+  <g id="legend">
+    <rect x="30" y="380" width="740" height="100" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1" rx="5"/>
+    
+    <!-- Slerp formula -->
+    <line x1="50" y1="410" x2="90" y2="410" stroke="#228be6" stroke-width="3"/>
+    <text x="100" y="415" font-family="Arial, sans-serif" font-size="13" fill="#333">
+      <tspan font-weight="bold">Slerp(v₀, v₁, t)</tspan> = 
+      <tspan fill="#228be6">sin((1-t)θ) / sin(θ) · v₀ + sin(tθ) / sin(θ) · v₁</tspan>
+    </text>
+    
+    <!-- Lerp formula -->
+    <line x1="50" y1="445" x2="90" y2="445" stroke="#fa5252" stroke-width="3" stroke-dasharray="8,4"/>
+    <text x="100" y="450" font-family="Arial, sans-serif" font-size="13" fill="#333">
+      <tspan font-weight="bold">線形補間(v₀, v₁, t)</tspan> = 
+      <tspan fill="#fa5252">(1-t) · v₀ + t · v₁</tspan>
+    </text>
+    
+    <text x="400" y="470" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#495057" font-style="italic">
+      ※ t ∈ [0,1] は補間パラメータ。t=0でv₀、t=1でv₁
+    </text>
+  </g>
+  
+  <!-- Key insight box -->
+  <rect x="600" y="100" width="180" height="80" fill="#fff9db" stroke="#fab005" stroke-width="2" rx="5"/>
+  <text x="690" y="125" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333" font-weight="bold">重要な違い</text>
+  <text x="690" y="145" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#333">Slerpは||v||=1を保つ</text>
+  <text x="690" y="162" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#333">線形補間の中点は</text>
+  <text x="690" y="176" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#333">||v|| ≈ 0.71 になる</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#333" />
+    </marker>
+    <radialGradient id="sphereGrad" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#e0f0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4080c0;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">多様体の局所と大域の構造</text>
+  
+  <!-- Left: Sphere with coordinate patches -->
+  <g id="sphere">
+    <text x="200" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">大域的構造: 球面</text>
+    
+    <!-- Sphere -->
+    <circle cx="200" cy="220" r="120" fill="url(#sphereGrad)" stroke="#2060a0" stroke-width="2"/>
+    
+    <!-- Coordinate patch 1 (top) -->
+    <ellipse cx="200" cy="150" rx="60" ry="30" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-dasharray="5,3"/>
+    <text x="200" y="145" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#c92a2a" font-weight="bold">座標系 1</text>
+    
+    <!-- Coordinate patch 2 (middle-right) -->
+    <ellipse cx="250" cy="220" rx="50" ry="40" fill="none" stroke="#51cf66" stroke-width="2.5" stroke-dasharray="5,3"/>
+    <text x="280" y="220" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#2b8a3e" font-weight="bold">座標系 2</text>
+    
+    <!-- Coordinate patch 3 (bottom-left) -->
+    <ellipse cx="160" cy="270" rx="55" ry="35" fill="none" stroke="#ffd43b" stroke-width="2.5" stroke-dasharray="5,3"/>
+    <text x="130" y="290" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#e67700" font-weight="bold">座標系 3</text>
+    
+    <!-- Overlap annotation -->
+    <path d="M 230 190 Q 240 200 235 210" fill="none" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="245" y="190" font-family="Arial, sans-serif" font-size="11" fill="#333">重なり合う領域</text>
+  </g>
+  
+  <!-- Right: Local coordinate system (zoomed in) -->
+  <g id="local-patch">
+    <text x="600" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">局所的構造: 平坦に見える</text>
+    
+    <!-- Flat coordinate grid -->
+    <rect x="500" y="100" width="200" height="200" fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+    
+    <!-- Grid lines -->
+    <g stroke="#dee2e6" stroke-width="1">
+      <line x1="550" y1="100" x2="550" y2="300"/>
+      <line x1="600" y1="100" x2="600" y2="300"/>
+      <line x1="650" y1="100" x2="650" y2="300"/>
+      <line x1="500" y1="150" x2="700" y2="150"/>
+      <line x1="500" y1="200" x2="700" y2="200"/>
+      <line x1="500" y1="250" x2="700" y2="250"/>
+    </g>
+    
+    <!-- Axes -->
+    <line x1="500" y1="300" x2="720" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <line x1="500" y1="300" x2="500" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="730" y="305" font-family="Arial, sans-serif" font-size="14" fill="#333">x</text>
+    <text x="490" y="75" font-family="Arial, sans-serif" font-size="14" fill="#333">y</text>
+    
+    <!-- Point in local coordinates -->
+    <circle cx="600" cy="200" r="5" fill="#ff6b6b"/>
+    <text x="620" y="205" font-family="Arial, sans-serif" font-size="12" fill="#333">P (x, y)</text>
+    
+    <!-- Annotation -->
+    <text x="600" y="330" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#495057" font-style="italic">この範囲では平面座標で記述できる</text>
+  </g>
+  
+  <!-- Arrow connecting sphere to local patch -->
+  <path d="M 320 180 Q 400 140 480 150" fill="none" stroke="#868e96" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+  <text x="390" y="125" font-family="Arial, sans-serif" font-size="13" fill="#495057" font-weight="bold">拡大</text>
+  
+  <!-- Bottom annotation -->
+  <text x="400" y="380" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#495057">
+    多様体 = 局所的には平坦、大域的には曲がった空間
+  </text>
+</svg>

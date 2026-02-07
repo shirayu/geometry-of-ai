@@ -1,0 +1,109 @@
+<svg viewBox="0 0 900 350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="sphereGrad2" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#e0f0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4080c0;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="hyperbolicGrad" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#fff5e6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d9a066;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Title -->
+  <text x="450" y="30" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">曲率による三角形の違い</text>
+  
+  <!-- Flat (Zero Curvature) -->
+  <g id="flat">
+    <text x="150" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">平面 (曲率 = 0)</text>
+    
+    <!-- Background -->
+    <rect x="30" y="90" width="240" height="180" fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+    
+    <!-- Grid -->
+    <g stroke="#e9ecef" stroke-width="1">
+      <line x1="90" y1="90" x2="90" y2="270"/>
+      <line x1="150" y1="90" x2="150" y2="270"/>
+      <line x1="210" y1="90" x2="210" y2="270"/>
+      <line x1="30" y1="150" x2="270" y2="150"/>
+      <line x1="30" y1="210" x2="270" y2="210"/>
+    </g>
+    
+    <!-- Triangle -->
+    <polygon points="80,220 220,220 150,120" fill="none" stroke="#228be6" stroke-width="3"/>
+    
+    <!-- Angles -->
+    <circle cx="80" cy="220" r="3" fill="#228be6"/>
+    <circle cx="220" cy="220" r="3" fill="#228be6"/>
+    <circle cx="150" cy="120" r="3" fill="#228be6"/>
+    
+    <!-- Angle arcs -->
+    <path d="M 100,220 Q 95,210 90,200" fill="none" stroke="#fa5252" stroke-width="2"/>
+    <path d="M 200,220 Q 205,210 210,200" fill="none" stroke="#fa5252" stroke-width="2"/>
+    <path d="M 140,135 Q 150,140 160,135" fill="none" stroke="#fa5252" stroke-width="2"/>
+    
+    <!-- Labels -->
+    <text x="150" y="300" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" font-weight="bold">内角の和 = 180°</text>
+    <text x="150" y="318" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">ユークリッド幾何学</text>
+  </g>
+  
+  <!-- Positive Curvature (Sphere) -->
+  <g id="positive">
+    <text x="450" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">球面 (曲率 > 0)</text>
+    
+    <!-- Sphere -->
+    <circle cx="450" cy="180" r="90" fill="url(#sphereGrad2)" stroke="#2060a0" stroke-width="2"/>
+    
+    <!-- Triangle on sphere (using approximation with curves) -->
+    <path d="M 450,90 Q 470,140 490,180" fill="none" stroke="#228be6" stroke-width="3"/>
+    <path d="M 490,180 Q 480,210 450,240" fill="none" stroke="#228be6" stroke-width="3"/>
+    <path d="M 450,240 Q 420,210 410,180 Q 420,140 450,90" fill="none" stroke="#228be6" stroke-width="3"/>
+    
+    <!-- Vertices -->
+    <circle cx="450" cy="90" r="3" fill="#228be6"/>
+    <circle cx="490" cy="180" r="3" fill="#228be6"/>
+    <circle cx="450" cy="240" r="3" fill="#228be6"/>
+    
+    <!-- Angle indicators (simplified) -->
+    <path d="M 450,105 Q 455,100 460,98" fill="none" stroke="#fa5252" stroke-width="2"/>
+    <path d="M 478,180 Q 482,175 484,170" fill="none" stroke="#fa5252" stroke-width="2"/>
+    <path d="M 450,227 Q 455,230 460,230" fill="none" stroke="#fa5252" stroke-width="2"/>
+    
+    <!-- Labels -->
+    <text x="450" y="300" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" font-weight="bold">内角の和 > 180°</text>
+    <text x="450" y="318" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">楕円幾何学</text>
+    
+    <!-- Example annotation -->
+    <text x="450" y="335" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#868e96" font-style="italic">例: 各角90°で合計270°</text>
+  </g>
+  
+  <!-- Negative Curvature (Hyperbolic) -->
+  <g id="negative">
+    <text x="750" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">双曲面 (曲率 < 0)</text>
+    
+    <!-- Saddle surface representation (Poincaré disk style) -->
+    <circle cx="750" cy="180" r="90" fill="url(#hyperbolicGrad)" stroke="#c2790a" stroke-width="2"/>
+    
+    <!-- Hyperbolic triangle (curves bending inward) -->
+    <path d="M 750,100 Q 780,130 800,160" fill="none" stroke="#228be6" stroke-width="3"/>
+    <path d="M 800,160 Q 790,200 750,230" fill="none" stroke="#228be6" stroke-width="3"/>
+    <path d="M 750,230 Q 710,200 700,160 Q 720,130 750,100" fill="none" stroke="#228be6" stroke-width="3"/>
+    
+    <!-- Vertices -->
+    <circle cx="750" cy="100" r="3" fill="#228be6"/>
+    <circle cx="800" cy="160" r="3" fill="#228be6"/>
+    <circle cx="750" cy="230" r="3" fill="#228be6"/>
+    
+    <!-- Angle indicators -->
+    <path d="M 750,112 Q 755,108 760,106" fill="none" stroke="#fa5252" stroke-width="2"/>
+    <path d="M 790,160 Q 793,156 795,152" fill="none" stroke="#fa5252" stroke-width="2"/>
+    <path d="M 750,220 Q 755,222 760,222" fill="none" stroke="#fa5252" stroke-width="2"/>
+    
+    <!-- Labels -->
+    <text x="750" y="300" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" font-weight="bold">内角の和 < 180°</text>
+    <text x="750" y="318" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">双曲幾何学</text>
+    
+    <!-- Example annotation -->
+    <text x="750" y="335" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#868e96" font-style="italic">鞍型の曲面</text>
+  </g>
+</svg>
