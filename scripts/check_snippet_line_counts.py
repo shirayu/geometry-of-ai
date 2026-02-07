@@ -9,6 +9,7 @@ from pathlib import Path
 DETAILS_OPEN_RE = re.compile(r"<details(?:\s+[^>]*)?>", re.IGNORECASE)
 DETAILS_CLOSE_RE = re.compile(r"</details>", re.IGNORECASE)
 SUMMARY_RE = re.compile(r"^<summary>\s*コード例:\s*([^<]+?)\s*</summary>\s*$")
+IMPL_NOTE_HEADING_RE = re.compile(r"^(#{1,6})\s+.*実装ノート")
 
 
 def count_lines(path: Path) -> int:
@@ -115,6 +116,50 @@ def check_summary_filename_consistency(markdown_files: list[Path]) -> list[str]:
     return errors
 
 
+def check_impl_note_details(series_files: list[Path]) -> list[str]:
+    errors: list[str] = []
+    for path in series_files:
+        lines = path.read_text(encoding="utf-8").splitlines()
+        in_fence = False
+        fence_marker = ""
+        details_depth = 0
+        in_impl_note = False
+        impl_note_level = 0
+
+        for idx, line in enumerate(lines, start=1):
+            stripped = line.lstrip()
+
+            if not in_fence:
+                details_depth += len(DETAILS_OPEN_RE.findall(line))
+                details_depth -= len(DETAILS_CLOSE_RE.findall(line))
+                if details_depth < 0:
+                    details_depth = 0
+
+                match = IMPL_NOTE_HEADING_RE.match(stripped)
+                if match:
+                    in_impl_note = True
+                    impl_note_level = len(match.group(1))
+                elif stripped.startswith("#"):
+                    level = len(stripped) - len(stripped.lstrip("#"))
+                    if in_impl_note and level <= impl_note_level:
+                        in_impl_note = False
+
+            if stripped.startswith("```") or stripped.startswith("~~~"):
+                marker = stripped[:3]
+                if not in_fence:
+                    if in_impl_note and details_depth == 0:
+                        errors.append(
+                            f"ERROR {path}:{idx}: code fence in 実装ノート is not wrapped by <details>",
+                        )
+                    in_fence = True
+                    fence_marker = marker
+                elif marker == fence_marker:
+                    in_fence = False
+                    fence_marker = ""
+
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Check snippet line counts (error: >= 60 lines, info: >= 40 lines).",
@@ -151,6 +196,9 @@ def main() -> int:
     has_error = False
     markdown_files = iter_markdown_files(["series", "exercise"])
     for error in check_summary_filename_consistency(markdown_files):
+        print(error)
+        has_error = True
+    for error in check_impl_note_details(iter_markdown_files(["series"])):
         print(error)
         has_error = True
 

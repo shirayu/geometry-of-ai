@@ -617,6 +617,9 @@ FlashAttention:
 >
 > 本コードの目的は「Top-K選択の概念」を示すことであり、性能改善ではない。速度比較は意味を持たない。
 
+<details>
+<summary>コード例: appendix3_topk_reweighting_attention.py</summary>
+
 ```appendix3_topk_reweighting_attention.py
 import time
 
@@ -677,7 +680,12 @@ print("Note: 教育実装は標準実装と同等か、むしろ遅い可能性�
 print("      真の高速化には専用カーネルが必要")
 ```
 
+</details>
+
 ### MoEの簡略実装
+
+<details>
+<summary>コード例: appendix3_simple_moe.py</summary>
 
 ```appendix3_simple_moe.py
 import torch
@@ -738,10 +746,15 @@ out = moe(x)
 print(f"Input shape: {x.shape}, Output shape: {out.shape}")
 ```
 
+</details>
+
 > [!CAUTION]
 > 上記は概念理解のための簡略実装である。実際のMoE（Mixtral, Switch Transformerなど）は、負荷分散、Expert collapse対策、効率的なバッチ処理など、多くの工夫が加えられている。実装には Hugging Face Transformers など、検証済みのライブラリを使用することを推奨する。
 
 ### GQA (Grouped-Query Attention) の実装
+
+<details>
+<summary>コード例: appendix3_grouped_query_attention.py</summary>
 
 ```appendix3_grouped_query_attention.py
 import torch
@@ -798,6 +811,8 @@ out = gqa(x)
 print(f"GQA output shape: {out.shape}")
 print(f"Parameters saved: ~{(1 - 2 / 8) * 100:.1f}% (for K,V)")
 ```
+
+</details>
 
 ## 参考文献
 

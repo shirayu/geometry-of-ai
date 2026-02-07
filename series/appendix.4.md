@@ -431,6 +431,9 @@ def natural_gradient_step(model, loss, lr=0.01, damping=1e-4):
 
 ### KLダイバージェンスの非対称性の確認
 
+<details>
+<summary>コード例: appendix4_kl_asymmetry_viz.py</summary>
+
 ```appendix4_kl_asymmetry_viz.py
 import matplotlib.pyplot as plt
 import numpy as np
@@ -469,7 +472,12 @@ plt.savefig("kl_asymmetry.png", dpi=150, bbox_inches="tight")
 print("KLダイバージェンスの非対称性を kl_asymmetry.png に保存")
 ```
 
+</details>
+
 ### フィッシャー情報行列の数値計算（正規分布）
+
+<details>
+<summary>コード例: appendix4_fisher_gaussian.py</summary>
 
 ```appendix4_fisher_gaussian.py
 import torch
@@ -509,7 +517,12 @@ for sigma in sigmas:
 #   F_σσ = 0.1250
 ```
 
+</details>
+
 ### 自然勾配と通常勾配の比較（玩具問題）
+
+<details>
+<summary>コード例: appendix4_natural_vs_standard.py</summary>
 
 ```appendix4_natural_vs_standard.py
 import matplotlib.pyplot as plt
@@ -572,6 +585,8 @@ plt.yscale("log")
 plt.savefig("gradient_comparison.png", dpi=150, bbox_inches="tight")
 print("収束の比較を gradient_comparison.png に保存")
 ```
+
+</details>
 
 > [!NOTE]
 > 上記の例では、Adamを **適応的前処理（座標ごとのスケーリング）** として扱っている。これは特定条件下で自然勾配的な効果を持つことがあるが、厳密には自然勾配法（Fisher計量に基づく最適化）とは異なる。真の自然勾配法を実装するには、K-FACなどの専用手法が必要。

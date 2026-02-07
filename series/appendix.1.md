@@ -244,6 +244,9 @@ LLM推論では、実務上しばしば以下が支配的になる：
 
 ### 5.1 基本的な量子化（PyTorch・概念例）
 
+<details>
+<summary>コード例: appendix1_symmetric_quantization.py</summary>
+
 ```appendix1_symmetric_quantization.py
 import torch
 
@@ -269,7 +272,12 @@ weight_approx = dequantize_tensor(weight_q, scale)
 print(f"平均絶対誤差: {(weight - weight_approx).abs().mean():.6f}")
 ```
 
+</details>
+
 ### 5.2 実用的なライブラリ（例）
+
+<details>
+<summary>コード例: appendix1_quantization_libraries.py</summary>
 
 ```appendix1_quantization_libraries.py
 # bitsandbytes（4-bit/8-bit量子化）
@@ -288,11 +296,16 @@ model = AutoGPTQForCausalLM.from_quantized("model-gptq")
 # コマンドライン: ./main -m model.gguf -p "prompt"
 ```
 
+</details>
+
 ### 5.3 量子化前後の表現の可視化（注意付き）
 
 > [!CAUTION]
 > `get_hidden_states` はモデル実装に依存する（フックで取得する等が必要）。
 > また t-SNE は局所構造を強調しやすく、距離の解釈には注意。
+
+<details>
+<summary>コード例: appendix1_quantization_visualization.py</summary>
 
 ```appendix1_quantization_visualization.py
 import matplotlib.pyplot as plt
@@ -313,6 +326,8 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
     plt.title("Representation Space: Original vs Quantized")
     plt.show()
 ```
+
+</details>
 
 ## 6. 未解決問題と研究フロンティア
 
