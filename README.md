@@ -49,7 +49,7 @@ MoEやTDA等の最新知見を交え、手法の陳腐化に抗う普遍的な�
 | --- | --- | --- | --- | --- |
 | 4 | [分類の再統一 I ～Softmaxと情報幾何学～](series/04.md) | Softmaxを確率多様体の写像として読み直す。自然勾配や温度の意味づけを整理する。 | 確率単体, 自然勾配, フィッシャー情報行列, CRF | [演習](exercise/04.md) |
 | 5 | [分類の再統一 II ～マージンの幾何学～](series/05.md) | 角度マージンの直感をSVM的視点と接続する。ArcFaceの設計意図と数値安定性を確認する。 | 最大マージン原理, 角度マージン, ArcFace | [演習](exercise/05.md) |
-| 6 | [Transformerという測量士 ～動的な接続～](series/06.md) | Attentionを動的な空間変形として捉え直す。正規化条件の有無で解釈が変わる点を強調する。 | Scaled Dot-Product, Cosine Attention, T5, RoPE | [演習](exercise/06.md) |
+| 6 | [Transformerという測量士 ～動的な接続～](series/06.md) | Attentionを動的な空間変形として捉え直す。正規化条件の有無で解釈が変わる点を強調する。 | Scaled Dot-Product, Cosine Attention, RoPE | [演習](exercise/06.md) |
 | 7 | [不確実性の復権 ～Variance Matters～](series/07.md) | 点表現から分布表現への移行を議論する。不確実性を持つ表現が何を可能にするかを示す。 | vMF分布, 集中度, OOD検知, VAE, ハルシネーション | [演習](exercise/07.md) |
 
 ### 第3部：時間とダイナミクス
