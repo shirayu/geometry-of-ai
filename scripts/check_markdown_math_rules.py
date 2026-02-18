@@ -7,6 +7,7 @@ from collections import defaultdict
 from pathlib import Path
 
 ARROW_COMMANDS = ("\\xrightarrow", "\\xleftarrow")
+OPERATORNAME = "\\operatorname"
 
 
 def is_escaped(text: str, idx: int) -> bool:
@@ -209,11 +210,42 @@ def collect_arrow_issues(math_text: str, positions: list[tuple[int, int]]) -> li
     return issues
 
 
+def collect_operatorname_issues(math_text: str, positions: list[tuple[int, int]]) -> list[tuple[int, int, str]]:
+    issues: list[tuple[int, int, str]] = []
+    i = 0
+
+    while i < len(math_text):
+        idx = math_text.find(OPERATORNAME, i)
+        if idx == -1:
+            break
+
+        if is_escaped(math_text, idx):
+            i = idx + 1
+            continue
+
+        end = idx + len(OPERATORNAME)
+        matched = OPERATORNAME
+        if end < len(math_text) and math_text[end] == "*":
+            matched += "*"
+            end += 1
+
+        if end < len(math_text) and math_text[end].isalpha():
+            i = idx + 1
+            continue
+
+        line_no, col = positions[idx]
+        issues.append((line_no, col, f"Avoid {matched}; use \\mathrm{{...}} instead"))
+        i = end
+
+    return issues
+
+
 def check_file(path: Path) -> list[str]:
     errors_by_line: dict[int, list[tuple[int, str]]] = defaultdict(list)
 
     for math_text, positions in extract_math_segments(path):
         issues = collect_arrow_issues(math_text, positions)
+        issues.extend(collect_operatorname_issues(math_text, positions))
         for line_no, col, message in issues:
             errors_by_line[line_no].append((col, message))
 
@@ -221,17 +253,13 @@ def check_file(path: Path) -> list[str]:
     for line_no in sorted(errors_by_line):
         items = sorted(errors_by_line[line_no], key=lambda x: x[0])
         details = "; ".join(f"{msg}({col})" for col, msg in items)
-        errors.append(f"{path}:{line_no}: Problematic arrow label in math ({len(items)}): {details}")
+        errors.append(f"{path}:{line_no}: Math style issue ({len(items)}): {details}")
 
     return errors
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description=(
-            "Detect problematic labels in \\xrightarrow/\\xleftarrow inside markdown math blocks ($...$, $$...$$)."
-        )
-    )
+    parser = argparse.ArgumentParser(description=("Detect markdown math style issues inside $...$ and $$...$$."))
     parser.add_argument(
         "paths",
         nargs="*",
@@ -253,9 +281,8 @@ def main() -> int:
         for err in errors:
             print(err)
         print(
-            "Hint: Avoid non-ASCII text inside \\xrightarrow/\\xleftarrow labels. "
-            "Use ASCII labels, numbered arrows (e.g., \\overset{(1)}{\\to}), "
-            "or move the explanation to the sentence below the equation."
+            "Hint: Use \\mathrm{...} instead of \\operatorname in markdown math. "
+            "For \\xrightarrow/\\xleftarrow labels, keep labels ASCII-only."
         )
         return 1
 
