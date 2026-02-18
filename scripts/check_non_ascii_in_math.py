@@ -3,9 +3,10 @@ from __future__ import annotations
 
 import argparse
 import sys
-import unicodedata
 from collections import defaultdict
 from pathlib import Path
+
+ARROW_COMMANDS = ("\\xrightarrow", "\\xleftarrow")
 
 
 def is_escaped(text: str, idx: int) -> bool:
@@ -36,14 +37,45 @@ def is_fence_line(stripped: str) -> tuple[bool, str]:
     return False, ""
 
 
-def check_file(path: Path) -> list[str]:
-    errors_by_line: dict[int, list[tuple[int, str, str, str]]] = defaultdict(list)
+def is_non_ascii_char(ch: str) -> bool:
+    return ord(ch) > 0x7F
+
+
+def find_matching(text: str, start: int, opener: str, closer: str) -> int | None:
+    if start >= len(text) or text[start] != opener:
+        return None
+
+    depth = 0
+    i = start
+    while i < len(text):
+        ch = text[i]
+        if ch == "\\":
+            i += 2
+            continue
+
+        if ch == opener:
+            depth += 1
+        elif ch == closer:
+            depth -= 1
+            if depth == 0:
+                return i
+        i += 1
+
+    return None
+
+
+def extract_math_segments(path: Path) -> list[tuple[str, list[tuple[int, int]]]]:
+    segments: list[tuple[str, list[tuple[int, int]]]] = []
+
     in_fence = False
     fence_marker = ""
     in_code_span = False
     code_span_ticks = 0
     in_math = False
     math_delim = ""
+
+    math_chars: list[str] = []
+    math_positions: list[tuple[int, int]] = []
 
     for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(keepends=True), start=1):
         stripped = line.lstrip()
@@ -96,49 +128,109 @@ def check_file(path: Path) -> list[str]:
                 if ch == "$" and not is_escaped(line, i):
                     if math_delim == "$$":
                         if i + 1 < len(line) and line[i + 1] == "$":
+                            segments.append(("".join(math_chars), math_positions.copy()))
+                            math_chars.clear()
+                            math_positions.clear()
                             in_math = False
                             math_delim = ""
                             i += 2
                             continue
                     else:
                         if not (i + 1 < len(line) and line[i + 1] == "$"):
+                            segments.append(("".join(math_chars), math_positions.copy()))
+                            math_chars.clear()
+                            math_positions.clear()
                             in_math = False
                             math_delim = ""
                             i += 1
                             continue
 
-                if ord(ch) > 0x7F and ch not in "\r\n":
-                    codepoint = f"U+{ord(ch):04X}"
-                    name = unicodedata.name(ch, "UNKNOWN")
-                    errors_by_line[line_no].append((i + 1, ch, codepoint, name))
+                if ch not in "\r\n":
+                    math_chars.append(ch)
+                    math_positions.append((line_no, i + 1))
 
             i += 1
 
+    return segments
+
+
+def collect_arrow_issues(math_text: str, positions: list[tuple[int, int]]) -> list[tuple[int, int, str]]:
+    issues: list[tuple[int, int, str]] = []
+    i = 0
+
+    while i < len(math_text):
+        matched = None
+        for command in ARROW_COMMANDS:
+            if math_text.startswith(command, i):
+                matched = command
+                break
+
+        if matched is None:
+            i += 1
+            continue
+
+        j = i + len(matched)
+
+        while j < len(math_text) and math_text[j].isspace():
+            j += 1
+
+        label_spans: list[tuple[int, int]] = []
+
+        if j < len(math_text) and math_text[j] == "[":
+            end = find_matching(math_text, j, "[", "]")
+            if end is None:
+                i += len(matched)
+                continue
+            label_spans.append((j + 1, end))
+            j = end + 1
+
+        while j < len(math_text) and math_text[j].isspace():
+            j += 1
+
+        if j < len(math_text) and math_text[j] == "{":
+            end = find_matching(math_text, j, "{", "}")
+            if end is None:
+                i += len(matched)
+                continue
+            label_spans.append((j + 1, end))
+            j = end + 1
+
+        for start, end in label_spans:
+            label = math_text[start:end]
+
+            for rel, ch in enumerate(label):
+                if is_non_ascii_char(ch):
+                    abs_idx = start + rel
+                    line_no, col = positions[abs_idx]
+                    issues.append((line_no, col, f"Non-ASCII char {ch!r} in {matched} label"))
+
+        i = j if j > i else i + len(matched)
+
+    return issues
+
+
+def check_file(path: Path) -> list[str]:
+    errors_by_line: dict[int, list[tuple[int, str]]] = defaultdict(list)
+
+    for math_text, positions in extract_math_segments(path):
+        issues = collect_arrow_issues(math_text, positions)
+        for line_no, col, message in issues:
+            errors_by_line[line_no].append((col, message))
+
     errors: list[str] = []
     for line_no in sorted(errors_by_line):
-        items = errors_by_line[line_no]
-        grouped: dict[str, list[int]] = {}
-        order: list[str] = []
-        for col, ch, _codepoint, _name in items:
-            if ch not in grouped:
-                grouped[ch] = []
-                order.append(ch)
-            grouped[ch].append(col)
-
-        details_parts: list[str] = []
-        for ch in order:
-            cols_text = ",".join(str(c) for c in grouped[ch])
-            details_parts.append(f"{ch!r}({cols_text})")
-
-        details = "; ".join(details_parts)
-        errors.append(f"{path}:{line_no}: Non-ASCII in math ({len(items)}): {details}")
+        items = sorted(errors_by_line[line_no], key=lambda x: x[0])
+        details = "; ".join(f"{msg}({col})" for col, msg in items)
+        errors.append(f"{path}:{line_no}: Problematic arrow label in math ({len(items)}): {details}")
 
     return errors
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Detect non-ASCII characters inside markdown math blocks ($...$, $$...$$)."
+        description=(
+            "Detect problematic labels in \\xrightarrow/\\xleftarrow inside markdown math blocks ($...$, $$...$$)."
+        )
     )
     parser.add_argument(
         "paths",
