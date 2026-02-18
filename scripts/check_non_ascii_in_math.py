@@ -252,6 +252,11 @@ def main() -> int:
     if errors:
         for err in errors:
             print(err)
+        print(
+            "Hint: Avoid non-ASCII text inside \\xrightarrow/\\xleftarrow labels. "
+            "Use ASCII labels, numbered arrows (e.g., \\overset{(1)}{\\to}), "
+            "or move the explanation to the sentence below the equation."
+        )
         return 1
 
     return 0
