@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import sys
 import unicodedata
+from collections import defaultdict
 from pathlib import Path
 
 
@@ -36,7 +37,7 @@ def is_fence_line(stripped: str) -> tuple[bool, str]:
 
 
 def check_file(path: Path) -> list[str]:
-    errors: list[str] = []
+    errors_by_line: dict[int, list[tuple[int, str, str, str]]] = defaultdict(list)
     in_fence = False
     fence_marker = ""
     in_code_span = False
@@ -109,11 +110,28 @@ def check_file(path: Path) -> list[str]:
                 if ord(ch) > 0x7F and ch not in "\r\n":
                     codepoint = f"U+{ord(ch):04X}"
                     name = unicodedata.name(ch, "UNKNOWN")
-                    errors.append(
-                        f"{path}:{line_no}:{i + 1}: Non-ASCII in math ({codepoint} {name}): {ch!r}"
-                    )
+                    errors_by_line[line_no].append((i + 1, ch, codepoint, name))
 
             i += 1
+
+    errors: list[str] = []
+    for line_no in sorted(errors_by_line):
+        items = errors_by_line[line_no]
+        grouped: dict[str, list[int]] = {}
+        order: list[str] = []
+        for col, ch, _codepoint, _name in items:
+            if ch not in grouped:
+                grouped[ch] = []
+                order.append(ch)
+            grouped[ch].append(col)
+
+        details_parts: list[str] = []
+        for ch in order:
+            cols_text = ",".join(str(c) for c in grouped[ch])
+            details_parts.append(f"{ch!r}({cols_text})")
+
+        details = "; ".join(details_parts)
+        errors.append(f"{path}:{line_no}: Non-ASCII in math ({len(items)}): {details}")
 
     return errors
 
