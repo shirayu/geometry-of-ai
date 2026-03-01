@@ -3,7 +3,7 @@
     "description": "",
     "devDependencies": {
         "katex": "^0.16.33",
-        "markdownlint-cli": "^0.47.0",
+        "markdownlint-cli2": "^0.21.0",
         "npm-run-all2": "^8.0.4"
     },
     "engines": {
@@ -16,7 +16,7 @@
         "format": "run-p format:insertion format:dashlines format:markdownlint format:ruff",
         "format:insertion": "python3 ./scripts/check_inline_math_spacing.py --fix",
         "format:dashlines": "python3 ./scripts/remove_dash_only_lines.py",
-        "format:markdownlint": "markdownlint -f ./*.md doc/*.md",
+        "format:markdownlint": "markdownlint-cli2 --fix",
         "format:ruff": "uv run ruff format --respect-gitignore && uv run ruff check --fix",
         "preinstall": "npx only-allow pnpm",
         "lint": "run-s lint:snippets lint:parallel",
@@ -26,7 +26,7 @@
         "lint:fence": "python3 ./scripts/lint_no_plain_python_fence.py",
         "lint:snippet_lines": "python3 ./scripts/check_snippet.py",
         "lint:py": "python3 -m compileall -q scripts",
-        "lint:md": "markdownlint *.md */*.md",
+        "lint:md": "markdownlint-cli2",
         "lint:image": "python3 ./scripts/check_image_links.py",
         "lint:parallel": "run-p lint:math lint:math_rules lint:insertion lint:fence lint:snippet_lines lint:section_order lint:py lint:md lint:image lint:keyword_duplicates lint:greek lint:ruff lint:ruff_check",
         "lint:greek": "python3 ./scripts/check_greek_outside_python.py",
