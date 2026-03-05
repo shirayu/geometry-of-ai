@@ -10,7 +10,8 @@ on:
       - opened
       - synchronize
       - reopened
-
+env:
+  MISE_LOCKED: "1"
 jobs:
   lint:
     runs-on: ubuntu-latest
