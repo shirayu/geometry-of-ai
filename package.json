@@ -2,8 +2,8 @@
     "author": "",
     "description": "",
     "devDependencies": {
-        "katex": "^0.16.38",
-        "markdownlint-cli2": "^0.21.0",
+        "katex": "^0.16.40",
+        "markdownlint-cli2": "^0.22.0",
         "npm-run-all2": "^8.0.4"
     },
     "engines": {
