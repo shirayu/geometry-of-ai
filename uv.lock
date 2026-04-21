@@ -2,6 +2,10 @@ version = 1
 revision = 3
 requires-python = ">=3.13"
 
+[options]
+exclude-newer = "2026-04-14T12:58:13.048172699Z"
+exclude-newer-span = "P1W"
+
 [[package]]
 name = "geometry-of-ai"
 version = "0.1.0"
