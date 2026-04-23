@@ -3,7 +3,7 @@
     "description": "",
     "devDependencies": {
         "katex": "^0.16.45",
-        "markdownlint-cli2": "^0.22.0",
+        "markdownlint-cli2": "^0.22.1",
         "npm-run-all2": "^8.0.4"
     },
     "engines": {
