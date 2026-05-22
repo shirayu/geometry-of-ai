@@ -135,7 +135,7 @@ export default defineConfig({
             },
             {
                 text: 'Appendix',
-                collapsed: true,
+                collapsed: false,
                 items: [
                     { text: 'A1：量子化の幾何学', link: '/series/appendix.1' },
                     { text: 'A2：多様体の純度問題', link: '/series/appendix.2' },
