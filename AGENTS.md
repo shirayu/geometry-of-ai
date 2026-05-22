@@ -5,7 +5,6 @@
 ## 主要ディレクトリ
 
 - `series/`: 講義本文
-- `exercise/`: 各回の演習
 - `snippets/`: 抽出・適用対象のコード片
 - `scripts/`:  文中の Python コード断片の同期元, lint, format対象
 

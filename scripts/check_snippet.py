@@ -75,9 +75,9 @@ def collect_fence_locations(markdown_files: list[Path]) -> dict[str, list[tuple[
 
 def markdown_scope_for_snippet(path: Path) -> list[str]:
     parts = path.parts
-    if len(parts) >= 2 and parts[0] == "snippets" and parts[1] in {"series", "exercise"}:
+    if len(parts) >= 2 and parts[0] == "snippets" and parts[1] == "series":
         return [parts[1]]
-    return ["series", "exercise"]
+    return ["series"]
 
 
 def check_summary_filename_consistency(markdown_files: list[Path]) -> list[str]:
@@ -194,7 +194,7 @@ def main() -> int:
         return 0
 
     has_error = False
-    markdown_files = iter_markdown_files(["series", "exercise"])
+    markdown_files = iter_markdown_files(["series"])
     for error in check_summary_filename_consistency(markdown_files):
         print(error)
         has_error = True

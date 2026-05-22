@@ -263,8 +263,8 @@ def main() -> int:
     parser.add_argument(
         "paths",
         nargs="*",
-        default=["series", "exercise"],
-        help="Files or directories to scan (default: series exercise)",
+        default=["series"],
+        help="Files or directories to scan (default: series)",
     )
     args = parser.parse_args()
 
