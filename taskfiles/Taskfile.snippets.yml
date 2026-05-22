@@ -1,0 +1,13 @@
+---
+version: '3'
+
+tasks:
+  extract:
+    desc: Extract snippets from markdown
+    cmds:
+      - python3 ./scripts/sync_snippets.py extract
+
+  apply:
+    desc: Apply snippets to markdown
+    cmds:
+      - python3 ./scripts/sync_snippets.py apply

@@ -43,7 +43,7 @@ def check_file(path: Path) -> list[str]:
 
 def main() -> None:
     if not SITE_SERIES_DIR.exists():
-        print("ERROR: site/series/ が存在しません。先に pnpm site:generate を実行してください。")
+        print("ERROR: site/series/ が存在しません。先に task site:generate を実行してください。")
         sys.exit(1)
 
     md_files = sorted(SITE_SERIES_DIR.glob("*.md"))

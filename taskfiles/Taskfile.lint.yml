@@ -1,0 +1,110 @@
+---
+version: '3'
+
+tasks:
+  all:
+    desc: Run all linters in parallel
+    deps:
+      - math
+      - math_rules
+      - insertion
+      - fence
+      - snippet_lines
+      - section_order
+      - py
+      - md
+      - image
+      - keyword_duplicates
+      - greek
+      - ruff
+      - ruff_check
+      - typos
+      - snippets
+      - site
+
+  math:
+    desc: Check math expressions
+    cmds:
+      - node ./scripts/check-math.mjs
+
+  math_rules:
+    desc: Check markdown math rules
+    cmds:
+      - python3 ./scripts/check_markdown_math_rules.py
+
+  insertion:
+    desc: Check inline math spacing
+    cmds:
+      - python3 ./scripts/check_inline_math_spacing.py
+
+  fence:
+    desc: Check no plain python fences
+    cmds:
+      - python3 ./scripts/lint_no_plain_python_fence.py
+
+  snippet_lines:
+    desc: Check snippet line counts
+    cmds:
+      - python3 ./scripts/check_snippet.py
+
+  section_order:
+    desc: Check section order
+    cmds:
+      - python3 ./scripts/check_section_order.py
+
+  py:
+    desc: Compile-check Python scripts
+    cmds:
+      - python3 -m compileall -q scripts
+
+  md:
+    desc: Lint markdown files
+    cmds:
+      - pnpm exec markdownlint-cli2
+
+  image:
+    desc: Check image links
+    cmds:
+      - python3 ./scripts/check_image_links.py
+
+  keyword_duplicates:
+    desc: Check keyword duplicates
+    cmds:
+      - python3 ./scripts/check_keyword_duplicates.py
+
+  greek:
+    desc: Check Greek letters outside Python blocks
+    cmds:
+      - python3 ./scripts/check_greek_outside_python.py
+
+  ruff:
+    desc: Lint Python with ruff
+    cmds:
+      - uv run ruff check --respect-gitignore
+
+  ruff_check:
+    desc: Check Python formatting with ruff
+    cmds:
+      - uv run ruff format --respect-gitignore --check
+
+  typos:
+    desc: Check typos
+    cmds:
+      - typos
+
+  snippets:
+    desc: Check snippets are in sync with markdown
+    cmds:
+      - |
+        tmpdir=$(mktemp -d)
+        python3 ./scripts/sync_snippets.py --snippets-dir "$tmpdir" extract
+        diff -qr "$tmpdir" snippets
+
+  site:
+    desc: Check site generation is in sync
+    cmds:
+      - |
+        tmpdir=$(mktemp -d)
+        python3 ./scripts/generate_site.py --site-series-dir "$tmpdir"
+        diff -qr "$tmpdir" site/series
+        python3 ./scripts/check_site.py

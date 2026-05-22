@@ -3,8 +3,7 @@
     "description": "",
     "devDependencies": {
         "katex": "^0.16.45",
-        "markdownlint-cli2": "^0.22.1",
-        "npm-run-all2": "^8.0.4"
+        "markdownlint-cli2": "^0.22.1"
     },
     "engines": {
         "npm": "Use pnpm instead of npm!"
@@ -13,37 +12,7 @@
     "main": "",
     "name": "lecture",
     "scripts": {
-        "format": "run-p format:insertion format:dashlines format:markdownlint format:ruff",
-        "format:insertion": "python3 ./scripts/check_inline_math_spacing.py --fix",
-        "format:dashlines": "python3 ./scripts/remove_dash_only_lines.py",
-        "format:markdownlint": "markdownlint-cli2 --fix",
-        "format:ruff": "uv run ruff format --respect-gitignore && uv run ruff check --fix",
-        "preinstall": "npx only-allow pnpm",
-        "lint": "run-s lint:parallel",
-        "lint:math": "node ./scripts/check-math.mjs",
-        "lint:math_rules": "python3 ./scripts/check_markdown_math_rules.py",
-        "lint:insertion": "python3 ./scripts/check_inline_math_spacing.py",
-        "lint:fence": "python3 ./scripts/lint_no_plain_python_fence.py",
-        "lint:snippet_lines": "python3 ./scripts/check_snippet.py",
-        "lint:py": "python3 -m compileall -q scripts",
-        "lint:md": "markdownlint-cli2",
-        "lint:image": "python3 ./scripts/check_image_links.py",
-        "lint:parallel": "run-p lint:math lint:math_rules lint:insertion lint:fence lint:snippet_lines lint:section_order lint:py lint:md lint:image lint:keyword_duplicates lint:greek lint:ruff lint:ruff_check lint:typos lint:snippets lint:site",
-        "lint:greek": "python3 ./scripts/check_greek_outside_python.py",
-        "lint:keyword_duplicates": "python3 ./scripts/check_keyword_duplicates.py",
-        "lint:ruff": "uv run ruff check --respect-gitignore",
-        "lint:ruff_check": "uv run ruff format --respect-gitignore --check",
-        "lint:section_order": "python3 ./scripts/check_section_order.py",
-        "lint:snippets": "tmpdir=$(mktemp -d) && python3 ./scripts/sync_snippets.py --snippets-dir \"$tmpdir\" extract && diff -qr \"$tmpdir\" snippets",
-        "lint:site": "tmpdir=$(mktemp -d) && python3 ./scripts/generate_site.py --site-series-dir \"$tmpdir\" && diff -qr \"$tmpdir\" site/series && python3 ./scripts/check_site.py",
-        "lint:typos": "typos",
-        "snippets:extract": "python3 ./scripts/sync_snippets.py extract",
-        "snippets:apply": "python3 ./scripts/sync_snippets.py apply",
-        "site:generate": "python3 ./scripts/generate_site.py",
-        "site:check": "python3 ./scripts/generate_site.py && python3 ./scripts/check_site.py",
-        "site:dev": "pnpm run site:generate && pnpm --filter geometry-of-ai-site dev",
-        "site:build": "pnpm run site:generate && pnpm --filter geometry-of-ai-site build",
-        "site:preview": "pnpm --filter geometry-of-ai-site preview"
+        "preinstall": "npx only-allow pnpm"
     },
     "version": "1.0.0",
     "packageManager": "pnpm@10.5.2",

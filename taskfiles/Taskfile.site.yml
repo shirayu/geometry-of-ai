@@ -1,0 +1,31 @@
+---
+version: '3'
+
+tasks:
+  generate:
+    desc: Generate site files
+    cmds:
+      - python3 ./scripts/generate_site.py
+
+  check:
+    desc: Generate site and check
+    cmds:
+      - python3 ./scripts/generate_site.py
+      - python3 ./scripts/check_site.py
+
+  dev:
+    desc: Generate site and start dev server
+    cmds:
+      - task: generate
+      - pnpm --filter geometry-of-ai-site dev
+
+  build:
+    desc: Generate site and build
+    cmds:
+      - task: generate
+      - pnpm --filter geometry-of-ai-site build
+
+  preview:
+    desc: Preview built site
+    cmds:
+      - pnpm --filter geometry-of-ai-site preview
