@@ -37,8 +37,15 @@
         "lint:snippets": "tmpdir=$(mktemp -d) && python3 ./scripts/sync_snippets.py --snippets-dir \"$tmpdir\" extract && diff -qr \"$tmpdir\" snippets",
         "lint:typos": "typos",
         "snippets:extract": "python3 ./scripts/sync_snippets.py extract",
-        "snippets:apply": "python3 ./scripts/sync_snippets.py apply"
+        "snippets:apply": "python3 ./scripts/sync_snippets.py apply",
+        "site:generate": "python3 ./scripts/generate_site.py",
+        "site:dev": "pnpm run site:generate && pnpm --filter geometry-of-ai-site dev",
+        "site:build": "pnpm run site:generate && pnpm --filter geometry-of-ai-site build",
+        "site:preview": "pnpm --filter geometry-of-ai-site preview"
     },
     "version": "1.0.0",
-    "packageManager": "pnpm@10.5.2"
+    "packageManager": "pnpm@10.5.2",
+    "pnpm": {
+        "onlyBuiltDependencies": ["esbuild"]
+    }
 }

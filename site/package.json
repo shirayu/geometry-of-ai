@@ -1,0 +1,16 @@
+{
+    "name": "geometry-of-ai-site",
+    "version": "1.0.0",
+    "description": "VitePress site for 情報幾何学とAIの統一視点",
+    "scripts": {
+        "dev": "vitepress dev",
+        "build": "vitepress build",
+        "preview": "vitepress preview"
+    },
+    "license": "",
+    "packageManager": "pnpm@10.5.2",
+    "devDependencies": {
+        "markdown-it-mathjax3": "^4.3.2",
+        "vitepress": "^1.6.4"
+    }
+}
