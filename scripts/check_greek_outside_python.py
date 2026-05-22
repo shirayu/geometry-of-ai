@@ -101,9 +101,7 @@ def main() -> int:
     )
     parser.add_argument(
         "series_dir",
-        nargs="?",
-        default="series",
-        help="Root directory for series markdown files (default: series)",
+        help="Root directory for markdown files",
     )
     args = parser.parse_args()
 

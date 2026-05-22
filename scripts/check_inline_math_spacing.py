@@ -142,9 +142,8 @@ def main():
     parser = argparse.ArgumentParser(description="Check spacing around inline math delimiters ($...$).")
     parser.add_argument(
         "paths",
-        nargs="*",
-        default=["series"],
-        help="Files or directories to scan (default: series)",
+        nargs="+",
+        help="Files or directories to scan",
     )
     parser.add_argument(
         "--fix",

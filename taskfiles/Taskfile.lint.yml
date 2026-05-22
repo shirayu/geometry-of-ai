@@ -1,6 +1,9 @@
 ---
 version: '3'
 
+vars:
+  SERIES_DIR: site/series
+
 tasks:
   all:
     desc: Run all linters in parallel
@@ -20,37 +23,36 @@ tasks:
       - ruff_check
       - typos
       - snippets
-      - site
 
   math:
     desc: Check math expressions
     cmds:
-      - node ./scripts/check-math.mjs
+      - node ./scripts/check-math.mjs {{.SERIES_DIR}}
 
   math_rules:
     desc: Check markdown math rules
     cmds:
-      - python3 ./scripts/check_markdown_math_rules.py
+      - python3 ./scripts/check_markdown_math_rules.py {{.SERIES_DIR}}
 
   insertion:
     desc: Check inline math spacing
     cmds:
-      - python3 ./scripts/check_inline_math_spacing.py
+      - python3 ./scripts/check_inline_math_spacing.py {{.SERIES_DIR}}
 
   fence:
     desc: Check no plain python fences
     cmds:
-      - python3 ./scripts/lint_no_plain_python_fence.py
+      - python3 ./scripts/lint_no_plain_python_fence.py {{.SERIES_DIR}}
 
   snippet_lines:
     desc: Check snippet line counts
     cmds:
-      - python3 ./scripts/check_snippet.py
+      - python3 ./scripts/check_snippet.py snippets --markdown-dir {{.SERIES_DIR}}
 
   section_order:
     desc: Check section order
     cmds:
-      - python3 ./scripts/check_section_order.py
+      - python3 ./scripts/check_section_order.py {{.SERIES_DIR}}
 
   py:
     desc: Compile-check Python scripts
@@ -70,12 +72,12 @@ tasks:
   keyword_duplicates:
     desc: Check keyword duplicates
     cmds:
-      - python3 ./scripts/check_keyword_duplicates.py
+      - python3 ./scripts/check_keyword_duplicates.py {{.SERIES_DIR}}/keywords.md
 
   greek:
     desc: Check Greek letters outside Python blocks
     cmds:
-      - python3 ./scripts/check_greek_outside_python.py
+      - python3 ./scripts/check_greek_outside_python.py {{.SERIES_DIR}}
 
   ruff:
     desc: Lint Python with ruff
@@ -97,14 +99,5 @@ tasks:
     cmds:
       - |
         tmpdir=$(mktemp -d)
-        python3 ./scripts/sync_snippets.py --snippets-dir "$tmpdir" extract
+        python3 ./scripts/sync_snippets.py --snippets-dir "$tmpdir" extract {{.SERIES_DIR}}
         diff -qr "$tmpdir" snippets
-
-  site:
-    desc: Check site generation is in sync
-    cmds:
-      - |
-        tmpdir=$(mktemp -d)
-        python3 ./scripts/generate_site.py --site-series-dir "$tmpdir"
-        diff -qr "$tmpdir" site/series
-        python3 ./scripts/check_site.py

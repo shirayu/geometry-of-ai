@@ -6,8 +6,6 @@ node_modules
 # VitePress
 site/.vitepress/dist
 site/.vitepress/cache
-site/series/
-site/public/series/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

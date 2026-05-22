@@ -1,4 +1,57 @@
 import { defineConfig } from 'vitepress'
+import type MarkdownIt from 'markdown-it'
+
+// ```filename.py → ```python [filename.py]
+function transformPythonFences(md: MarkdownIt) {
+    const original = md.renderer.rules.fence ?? ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
+    md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        const token = tokens[idx]
+        const info = token.info.trim()
+        if (/^[a-zA-Z0-9_]+\.py$/.test(info)) {
+            token.info = `python [${info}]`
+        }
+        return original(tokens, idx, options, env, self)
+    }
+}
+
+// <details>\n<summary>label</summary> → :::details label  /  </details> → :::
+function transformDetails(md: MarkdownIt) {
+    md.core.ruler.push('details_to_vitepress', (state) => {
+        const tokens = state.tokens
+        for (let i = 0; i < tokens.length; i++) {
+            const t = tokens[i]
+            if (t.type !== 'html_block') continue
+            t.content = t.content
+                .replace(/<details>\n<summary>(.*?)<\/summary>/g, ':::details $1')
+                .replace(/<\/details>/g, ':::')
+        }
+    })
+}
+
+// src="filename.ext" (相対パス) → src="/series/filename.ext"
+function transformImagePaths(md: MarkdownIt) {
+    md.core.ruler.push('image_paths', (state) => {
+        for (const t of state.tokens) {
+            if (t.type === 'html_block') {
+                t.content = t.content.replace(
+                    /src="(?!\/|https?:\/\/)([^"]+\.(svg|png|jpg|jpeg|gif|webp))"/gi,
+                    'src="/series/$1"',
+                )
+            }
+        }
+    })
+}
+
+// keywords.md / references.md に aside: false frontmatter を付与
+function injectFrontmatter(md: MarkdownIt) {
+    md.core.ruler.push('inject_frontmatter', (state) => {
+        const file = (state.env as { relativePath?: string }).relativePath ?? ''
+        if (file !== 'series/keywords.md' && file !== 'series/references.md') return
+        if (state.env && !(state.env as Record<string, unknown>).frontmatter) {
+            ;(state.env as Record<string, unknown>).frontmatter = { aside: false }
+        }
+    })
+}
 
 export default defineConfig({
     title: '情報幾何学とAIの統一視点',
@@ -8,15 +61,19 @@ export default defineConfig({
     srcDir: '.',
     outDir: '.vitepress/dist',
 
-
     markdown: {
         math: true,
+        config: (md) => {
+            transformPythonFences(md)
+            transformDetails(md)
+            transformImagePaths(md)
+            injectFrontmatter(md)
+        },
     },
 
     vue: {
         template: {
             compilerOptions: {
-                // 数式内の {{ }} が Vue interpolation と衝突するのを防ぐ
                 delimiters: ['${', '}'],
             },
         },

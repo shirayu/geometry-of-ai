@@ -31,9 +31,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Fail when markdown contains plain ```python fences.")
     parser.add_argument(
         "paths",
-        nargs="*",
-        default=["series"],
-        help="Files or directories to scan (default: series)",
+        nargs="+",
+        help="Files or directories to scan",
     )
     args = parser.parse_args()
 

@@ -1,6 +1,9 @@
 ---
 version: '3'
 
+vars:
+  SERIES_DIR: site/series
+
 tasks:
   all:
     desc: Run all formatters in parallel
@@ -13,7 +16,7 @@ tasks:
   insertion:
     desc: Fix inline math spacing
     cmds:
-      - python3 ./scripts/check_inline_math_spacing.py --fix
+      - python3 ./scripts/check_inline_math_spacing.py --fix {{.SERIES_DIR}}
 
   dashlines:
     desc: Remove dash-only lines
