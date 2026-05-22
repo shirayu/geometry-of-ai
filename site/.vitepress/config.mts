@@ -89,60 +89,95 @@ export default defineConfig({
                 ],
             },
             {
-                text: '第0部：準備と地図',
+                text: '第0部 準備と地図',
                 items: [
-                    { text: '第0回：幾何学という言語', link: '/series/00' },
+                    {
+                        text: '',
+                        items: [
+                            { text: '#0 幾何学という言語', link: '/series/00' },
+                        ],
+                    },
                 ],
             },
             {
-                text: '第1部：平坦な世界の限界',
+                text: '第1部 平坦な世界の限界',
                 items: [
-                    { text: '第1回：かつての地図', link: '/series/01' },
-                    { text: '第2回：ノルムの呪い', link: '/series/02' },
-                    { text: '第3回：プラネタリウムの建設', link: '/series/03' },
+                    {
+                        text: '',
+                        items: [
+                            { text: '#1 かつての地図', link: '/series/01' },
+                            { text: '#2 ノルムの呪い', link: '/series/02' },
+                            { text: '#3 プラネタリウムの建設', link: '/series/03' },
+                        ],
+                    },
                 ],
             },
             {
-                text: '第2部：統一的視点への接続',
+                text: '第2部 統一的視点への接続',
                 items: [
-                    { text: '第4回：分類の再統一 I', link: '/series/04' },
-                    { text: '第5回：分類の再統一 II', link: '/series/05' },
-                    { text: '第6回：Transformerという測量士', link: '/series/06' },
-                    { text: '第7回：不確実性の復権', link: '/series/07' },
+                    {
+                        text: '',
+                        items: [
+                            { text: '#4 分類の再統一 I', link: '/series/04' },
+                            { text: '#5 分類の再統一 II', link: '/series/05' },
+                            { text: '#6 Transformerという測量士', link: '/series/06' },
+                            { text: '#7 不確実性の復権', link: '/series/07' },
+                        ],
+                    },
                 ],
             },
             {
-                text: '第3部：時間とダイナミクス',
+                text: '第3部 時間とダイナミクス',
                 items: [
-                    { text: '第8回：時間の発見', link: '/series/08' },
-                    { text: '第9回：拡散と凝縮', link: '/series/09' },
-                    { text: '第10回：思考の連鎖', link: '/series/10' },
+                    {
+                        text: '',
+                        items: [
+                            { text: '#8 時間の発見', link: '/series/08' },
+                            { text: '#9 拡散と凝縮', link: '/series/09' },
+                            { text: '#10 思考の連鎖', link: '/series/10' },
+                        ],
+                    },
                 ],
             },
             {
-                text: '第4部：マルチモーダルと拡張幾何学',
+                text: '第4部 マルチモーダルと拡張幾何学',
                 items: [
-                    { text: '第11回：感覚の統合', link: '/series/11' },
-                    { text: '第12回：双曲幾何学', link: '/series/12' },
+                    {
+                        text: '',
+                        items: [
+                            { text: '#11 感覚の統合', link: '/series/11' },
+                            { text: '#12 双曲幾何学', link: '/series/12' },
+                        ],
+                    },
                 ],
             },
             {
-                text: '第5部：未来と哲学',
+                text: '第5部 未来と哲学',
                 items: [
-                    { text: '第13回：高次元の深淵', link: '/series/13' },
-                    { text: '第14回：トポロジーという顕微鏡', link: '/series/14' },
-                    { text: '第15回：次の時代を設計する', link: '/series/15' },
+                    {
+                        text: '',
+                        items: [
+                            { text: '#13 高次元の深淵', link: '/series/13' },
+                            { text: '#14 トポロジーという顕微鏡', link: '/series/14' },
+                            { text: '#15 次の時代を設計する', link: '/series/15' },
+                        ],
+                    },
                 ],
             },
             {
                 text: 'Appendix',
                 items: [
-                    { text: 'A1：量子化の幾何学', link: '/series/appendix.1' },
-                    { text: 'A2：多様体の純度問題', link: '/series/appendix.2' },
-                    { text: 'A3：動的剪定の幾何学', link: '/series/appendix.3' },
-                    { text: 'A4：空間の「物差し」再考', link: '/series/appendix.4' },
-                    { text: 'A5：情報幾何学における双対構造', link: '/series/appendix.5' },
-                    { text: 'A6：特異点の幾何学', link: '/series/appendix.6' },
+                    {
+                        text: '',
+                        items: [
+                            { text: 'A1 量子化の幾何学', link: '/series/appendix.1' },
+                            { text: 'A2 多様体の純度問題', link: '/series/appendix.2' },
+                            { text: 'A3 動的剪定の幾何学', link: '/series/appendix.3' },
+                            { text: 'A4 空間の「物差し」再考', link: '/series/appendix.4' },
+                            { text: 'A5 情報幾何学における双対構造', link: '/series/appendix.5' },
+                            { text: 'A6 特異点の幾何学', link: '/series/appendix.6' },
+                        ],
+                    },
                 ],
             },
         ],
