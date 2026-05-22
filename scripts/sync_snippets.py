@@ -95,9 +95,12 @@ def parse_snippet_blocks(lines: list[str]) -> list[SnippetBlock]:
     return blocks
 
 
+_SCOPE_SKIP = {".", "..", "snippets", "site"}
+
+
 def snippet_scope(path: Path) -> str | None:
     for part in path.parts:
-        if part not in {".", "..", "snippets"} and not part.startswith("."):
+        if part not in _SCOPE_SKIP and not part.startswith("."):
             return part
     return None
 

@@ -67,7 +67,7 @@ tasks:
   image:
     desc: Check image links
     cmds:
-      - python3 ./scripts/check_image_links.py
+      - python3 ./scripts/check_image_links.py {{.SERIES_DIR}}
 
   keyword_duplicates:
     desc: Check keyword duplicates

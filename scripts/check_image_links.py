@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import re
 import subprocess
 import sys
@@ -23,12 +24,12 @@ REMOTE_PREFIXES = (
 )
 
 
-def git_ls_files_md() -> list[Path]:
+def git_ls_files_md(directory: Path) -> list[Path]:
     try:
-        out = subprocess.check_output(["git", "ls-files", "*.md"], text=True)
+        out = subprocess.check_output(["git", "ls-files", str(directory)], text=True)
     except Exception:
-        return sorted(p for p in Path(".").rglob("*.md") if "node_modules" not in p.parts)
-    files = [Path(p) for p in out.splitlines() if p.strip()]
+        return sorted(p for p in directory.rglob("*.md") if "node_modules" not in p.parts)
+    files = [Path(p) for p in out.splitlines() if p.strip() and p.endswith(".md")]
     return files
 
 
@@ -79,7 +80,16 @@ def extract_img_srcs(line: str) -> list[str]:
 def resolve_path(md_path: Path, url: str, repo_root: Path) -> Path:
     if url.startswith("/"):
         return repo_root / url.lstrip("/")
-    return (md_path.parent / url).resolve()
+    resolved = (md_path.parent / url).resolve()
+    if not resolved.is_file():
+        # VitePress: files in public/ are served at the root, try public/ sibling
+        site_root = md_path
+        while site_root != repo_root and not (site_root / "public").is_dir():
+            site_root = site_root.parent
+        candidate = (site_root / "public" / md_path.parent.relative_to(site_root) / url).resolve()
+        if candidate.is_file():
+            return candidate
+    return resolved
 
 
 def check_file(md_path: Path, repo_root: Path) -> list[tuple[int, str, Path | None]]:
@@ -141,8 +151,12 @@ def check_file(md_path: Path, repo_root: Path) -> list[tuple[int, str, Path | No
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("directory", type=Path, help="Directory to check")
+    args = parser.parse_args()
+
     repo_root = Path(".").resolve()
-    md_files = git_ls_files_md()
+    md_files = git_ls_files_md(args.directory)
     all_errors: list[tuple[Path, int, str, Path | None]] = []
 
     for md_path in md_files:

@@ -14,7 +14,7 @@ function transformPythonFences(md: MarkdownIt) {
     }
 }
 
-// <details>\n<summary>label</summary> → :::details label  /  </details> → :::
+// <details>\n<summary>label</summary> → <details v-pre> で Vue 補間を無効化
 function transformDetails(md: MarkdownIt) {
     md.core.ruler.push('details_to_vitepress', (state) => {
         const tokens = state.tokens
@@ -22,8 +22,7 @@ function transformDetails(md: MarkdownIt) {
             const t = tokens[i]
             if (t.type !== 'html_block') continue
             t.content = t.content
-                .replace(/<details>\n<summary>(.*?)<\/summary>/g, ':::details $1')
-                .replace(/<\/details>/g, ':::')
+                .replace(/<details>\n<summary>/g, '<details v-pre>\n<summary>')
         }
     })
 }
@@ -68,14 +67,6 @@ export default defineConfig({
             transformDetails(md)
             transformImagePaths(md)
             injectFrontmatter(md)
-        },
-    },
-
-    vue: {
-        template: {
-            compilerOptions: {
-                delimiters: ['${', '}'],
-            },
         },
     },
 

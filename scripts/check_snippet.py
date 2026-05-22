@@ -74,9 +74,6 @@ def collect_fence_locations(markdown_files: list[Path]) -> dict[str, list[tuple[
 
 
 def markdown_scope_for_snippet(path: Path, markdown_dir: str) -> list[str]:
-    parts = path.parts
-    if len(parts) >= 2 and parts[0] == "snippets":
-        return [parts[1]]
     return [markdown_dir]
 
 
@@ -217,7 +214,7 @@ def main() -> int:
 
         if lines >= args.error_threshold:
             scoped_markdown_dirs = set(markdown_scope_for_snippet(path, args.markdown_dir))
-            scoped_locations = [loc for loc in locations if loc[0].parts and loc[0].parts[0] in scoped_markdown_dirs]
+            scoped_locations = [loc for loc in locations if str(loc[0]).startswith(tuple(scoped_markdown_dirs))]
             if not scoped_locations:
                 print(
                     f"ERROR {path}: {lines} lines (>= {args.error_threshold}), "
