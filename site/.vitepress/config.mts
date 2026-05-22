@@ -59,6 +59,7 @@ export default defineConfig({
 
     srcDir: '.',
     outDir: '.vitepress/dist',
+    cleanUrls: true,
 
     markdown: {
         math: true,
