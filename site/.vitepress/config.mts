@@ -26,6 +26,8 @@ export default defineConfig({
         nav: [
             { text: 'ホーム', link: '/' },
             { text: 'はじめに', link: '/series/intro' },
+            { text: 'キーワード集', link: '/series/keywords' },
+            { text: '参考文献', link: '/series/references' },
         ],
 
         sidebar: [
