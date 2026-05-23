@@ -79,7 +79,7 @@ export default defineConfig({
 
         sidebar: [
             {
-                text: 'イントロ',
+                text: '',
                 items: [
                     { text: '重要な前提と制約', link: '/series/intro' },
                     { text: 'キーワード集', link: '/series/keywords' },
