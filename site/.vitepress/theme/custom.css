@@ -1,3 +1,9 @@
+/* デフォルト検索バーを非表示 */
+.VPNavBarSearch {
+    display: none !important;
+}
+
+
 /* 目次非表示（左サイドバー＋右アウトライン） */
 html.hide-toc .VPSidebar {
     display: none !important;
