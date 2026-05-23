@@ -27,6 +27,54 @@ html.hide-toc .VPDoc.has-aside .content-container {
     max-width: 100%;
 }
 
+/* 右目次・左サイドバー: ホバー時のみスクロールバー表示 */
+.VPDoc .aside-container {
+    scrollbar-width: none !important;
+    overflow-y: auto !important;
+}
+
+.VPDoc .aside-container::-webkit-scrollbar {
+    display: none !important;
+    width: 4px !important;
+}
+
+.VPDoc .aside-container:hover {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--vp-c-divider) transparent !important;
+}
+
+.VPDoc .aside-container:hover::-webkit-scrollbar {
+    display: block !important;
+}
+
+.VPDoc .aside-container:hover::-webkit-scrollbar-thumb {
+    background-color: var(--vp-c-divider);
+    border-radius: 2px;
+}
+
+.VPSidebar {
+    scrollbar-width: none;
+}
+
+.VPSidebar::-webkit-scrollbar {
+    display: none;
+    width: 4px;
+}
+
+.VPSidebar:hover {
+    scrollbar-width: thin;
+    scrollbar-color: var(--vp-c-divider) transparent;
+}
+
+.VPSidebar:hover::-webkit-scrollbar {
+    display: block;
+}
+
+.VPSidebar:hover::-webkit-scrollbar-thumb {
+    background-color: var(--vp-c-divider);
+    border-radius: 2px;
+}
+
 /* h2: section — 下線のみ */
 .vp-doc h2 {
     margin-top: 3.5rem;
