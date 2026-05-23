@@ -79,6 +79,26 @@ html.hide-toc .VPDoc.has-aside .content-container {
     border-radius: 2px;
 }
 
+/* 右目次: アクティブ項目に背景色、縦線を非表示 */
+.VPDocAsideOutline .outline-link.active {
+    background-color: #fef9c3;
+    border-radius: 4px;
+    padding-left: 8px;
+    margin-left: -8px;
+}
+
+.dark .VPDocAsideOutline .outline-link.active {
+    background-color: #3d3200;
+}
+
+.VPDocAsideOutline .outline-content {
+    border-left: none !important;
+}
+
+.VPDocAsideOutline .outline-marker {
+    display: none !important;
+}
+
 /* h2: section — 下線のみ */
 .vp-doc h2 {
     margin-top: 3.5rem;
