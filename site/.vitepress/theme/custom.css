@@ -1,3 +1,32 @@
+/* 目次非表示（左サイドバー＋右アウトライン） */
+html.hide-toc .VPSidebar {
+    display: none !important;
+}
+
+html.hide-toc .VPNavBar.has-sidebar .title {
+    background-color: var(--vp-nav-bg-color);
+}
+
+html.hide-toc .VPNavBar.has-sidebar .content-body {
+    background-color: var(--vp-nav-bg-color);
+}
+
+html.hide-toc .VPDocAside {
+    display: none;
+}
+
+html.hide-toc .VPDoc .aside {
+    display: none !important;
+}
+
+html.hide-toc .VPContent.has-sidebar {
+    padding-left: 0 !important;
+}
+
+html.hide-toc .VPDoc.has-aside .content-container {
+    max-width: 100%;
+}
+
 /* h2: section — 下線のみ */
 .vp-doc h2 {
     margin-top: 3.5rem;
