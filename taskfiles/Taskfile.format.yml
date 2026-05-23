@@ -1,0 +1,35 @@
+---
+version: '3'
+
+vars:
+  SERIES_DIR: site/series
+
+tasks:
+  all:
+    desc: Run all formatters in parallel
+    deps:
+      - insertion
+      - dashlines
+      - markdownlint
+      - ruff
+
+  insertion:
+    desc: Fix inline math spacing
+    cmds:
+      - python3 ./scripts/check_inline_math_spacing.py --fix {{.SERIES_DIR}}
+
+  dashlines:
+    desc: Remove dash-only lines
+    cmds:
+      - python3 ./scripts/remove_dash_only_lines.py
+
+  markdownlint:
+    desc: Fix markdownlint issues
+    cmds:
+      - pnpm exec markdownlint-cli2 --fix
+
+  ruff:
+    desc: Format and fix Python with ruff
+    cmds:
+      - uv run ruff format --respect-gitignore
+      - uv run ruff check --fix

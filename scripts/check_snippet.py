@@ -73,11 +73,8 @@ def collect_fence_locations(markdown_files: list[Path]) -> dict[str, list[tuple[
     return locations
 
 
-def markdown_scope_for_snippet(path: Path) -> list[str]:
-    parts = path.parts
-    if len(parts) >= 2 and parts[0] == "snippets" and parts[1] == "series":
-        return [parts[1]]
-    return ["series"]
+def markdown_scope_for_snippet(path: Path, markdown_dir: str) -> list[str]:
+    return [markdown_dir]
 
 
 def check_summary_filename_consistency(markdown_files: list[Path]) -> list[str]:
@@ -166,9 +163,13 @@ def main() -> int:
     )
     parser.add_argument(
         "paths",
-        nargs="*",
-        default=["snippets"],
-        help="Files or directories to scan (default: snippets)",
+        nargs="+",
+        help="Snippet files or directories to scan",
+    )
+    parser.add_argument(
+        "--markdown-dir",
+        required=True,
+        help="Directory containing markdown files",
     )
     parser.add_argument(
         "--error-threshold",
@@ -194,11 +195,11 @@ def main() -> int:
         return 0
 
     has_error = False
-    markdown_files = iter_markdown_files(["series"])
+    markdown_files = iter_markdown_files([args.markdown_dir])
     for error in check_summary_filename_consistency(markdown_files):
         print(error)
         has_error = True
-    for error in check_impl_note_details(iter_markdown_files(["series"])):
+    for error in check_impl_note_details(iter_markdown_files([args.markdown_dir])):
         print(error)
         has_error = True
 
@@ -212,8 +213,8 @@ def main() -> int:
         locations = fence_locations.get(fence_name, [])
 
         if lines >= args.error_threshold:
-            scoped_markdown_dirs = set(markdown_scope_for_snippet(path))
-            scoped_locations = [loc for loc in locations if loc[0].parts and loc[0].parts[0] in scoped_markdown_dirs]
+            scoped_markdown_dirs = set(markdown_scope_for_snippet(path, args.markdown_dir))
+            scoped_locations = [loc for loc in locations if str(loc[0]).startswith(tuple(scoped_markdown_dirs))]
             if not scoped_locations:
                 print(
                     f"ERROR {path}: {lines} lines (>= {args.error_threshold}), "

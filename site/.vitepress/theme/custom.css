@@ -1,0 +1,134 @@
+/* デフォルト検索バーを非表示 */
+.VPNavBarSearch {
+    display: none !important;
+}
+
+
+/* 目次非表示（左サイドバー＋右アウトライン） */
+html.hide-toc .VPSidebar {
+    display: none !important;
+}
+
+html.hide-toc .VPNavBar.has-sidebar .title {
+    background-color: var(--vp-nav-bg-color);
+}
+
+html.hide-toc .VPNavBar.has-sidebar .content {
+    background-color: var(--vp-nav-bg-color);
+}
+
+html.hide-toc .VPNavBar.has-sidebar .content-body {
+    background-color: var(--vp-nav-bg-color);
+}
+
+html.hide-toc .VPDocAside {
+    display: none;
+}
+
+html.hide-toc .VPDoc .aside {
+    display: none !important;
+}
+
+html.hide-toc .VPContent.has-sidebar {
+    padding-left: 0 !important;
+}
+
+html.hide-toc .VPDoc.has-aside .content-container {
+    max-width: 100%;
+}
+
+/* 右目次・左サイドバー: ホバー時のみスクロールバー表示 */
+.VPDoc .aside-container {
+    scrollbar-width: none !important;
+    overflow-y: auto !important;
+}
+
+.VPDoc .aside-container::-webkit-scrollbar {
+    display: none !important;
+    width: 4px !important;
+}
+
+.VPDoc .aside-container:hover {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--vp-c-divider) transparent !important;
+}
+
+.VPDoc .aside-container:hover::-webkit-scrollbar {
+    display: block !important;
+}
+
+.VPDoc .aside-container:hover::-webkit-scrollbar-thumb {
+    background-color: var(--vp-c-divider);
+    border-radius: 2px;
+}
+
+.VPSidebar {
+    scrollbar-width: none;
+}
+
+.VPSidebar::-webkit-scrollbar {
+    display: none;
+    width: 4px;
+}
+
+.VPSidebar:hover {
+    scrollbar-width: thin;
+    scrollbar-color: var(--vp-c-divider) transparent;
+}
+
+.VPSidebar:hover::-webkit-scrollbar {
+    display: block;
+}
+
+.VPSidebar:hover::-webkit-scrollbar-thumb {
+    background-color: var(--vp-c-divider);
+    border-radius: 2px;
+}
+
+/* 右目次: アクティブ項目に背景色、縦線を非表示 */
+.VPDocAsideOutline .outline-link.active {
+    background-color: #fef9c3;
+    border-radius: 4px;
+    padding-left: 8px;
+    margin-left: -8px;
+}
+
+.dark .VPDocAsideOutline .outline-link.active {
+    background-color: #3d3200;
+}
+
+.VPDocAsideOutline .outline-content {
+    border-left: none !important;
+}
+
+.VPDocAsideOutline .outline-marker {
+    display: none !important;
+}
+
+/* h2: section — 下線のみ */
+.vp-doc h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.4rem;
+    border-top: none;
+    border-left: none;
+    border-bottom: 2px solid var(--vp-c-brand-1);
+}
+
+/* h3: subsection — 左ボーダー細め */
+.vp-doc h3 {
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--vp-c-brand-2);
+    border-bottom: none;
+}
+
+/* h4: subsubsection — ブランドカラーのテキスト + 下線ドット */
+.vp-doc h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    color: var(--vp-c-brand-1);
+    border-bottom: 1px dashed var(--vp-c-divider);
+}

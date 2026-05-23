@@ -9,7 +9,7 @@ from pathlib import Path
 
 SKIP_DIRS = {"node_modules", ".git", "tmp"}
 PY_SNIPPET_NAME_RE = re.compile(r"^[A-Za-z0-9._-]+\.py$")
-DEFAULT_TARGET_PATHS = ["series"]
+DEFAULT_TARGET_PATHS: list[str] = []
 
 
 @dataclass(frozen=True)
@@ -95,9 +95,13 @@ def parse_snippet_blocks(lines: list[str]) -> list[SnippetBlock]:
     return blocks
 
 
+_SCOPE_SKIP = {".", "..", "snippets", "site"}
+
+
 def snippet_scope(path: Path) -> str | None:
-    if "series" in path.parts:
-        return "series"
+    for part in path.parts:
+        if part not in _SCOPE_SKIP and not part.startswith("."):
+            return part
     return None
 
 
@@ -205,17 +209,15 @@ def main() -> int:
     p_extract = subparsers.add_parser("extract", help="Extract fenced snippets to files.")
     p_extract.add_argument(
         "paths",
-        nargs="*",
-        default=DEFAULT_TARGET_PATHS,
-        help="Files or directories to scan (default: series)",
+        nargs="+",
+        help="Files or directories to scan",
     )
 
     p_apply = subparsers.add_parser("apply", help="Replace fenced snippets from files.")
     p_apply.add_argument(
         "paths",
-        nargs="*",
-        default=DEFAULT_TARGET_PATHS,
-        help="Files or directories to update (default: series)",
+        nargs="+",
+        help="Files or directories to update",
     )
 
     args = parser.parse_args()

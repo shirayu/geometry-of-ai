@@ -1,0 +1,103 @@
+---
+version: '3'
+
+vars:
+  SERIES_DIR: site/series
+
+tasks:
+  all:
+    desc: Run all linters in parallel
+    deps:
+      - math
+      - math_rules
+      - insertion
+      - fence
+      - snippet_lines
+      - section_order
+      - py
+      - md
+      - image
+      - keyword_duplicates
+      - greek
+      - ruff
+      - ruff_check
+      - typos
+      - snippets
+
+  math:
+    desc: Check math expressions
+    cmds:
+      - node ./scripts/check-math.mjs {{.SERIES_DIR}}
+
+  math_rules:
+    desc: Check markdown math rules
+    cmds:
+      - python3 ./scripts/check_markdown_math_rules.py {{.SERIES_DIR}}
+
+  insertion:
+    desc: Check inline math spacing
+    cmds:
+      - python3 ./scripts/check_inline_math_spacing.py {{.SERIES_DIR}}
+
+  fence:
+    desc: Check no plain python fences
+    cmds:
+      - python3 ./scripts/lint_no_plain_python_fence.py {{.SERIES_DIR}}
+
+  snippet_lines:
+    desc: Check snippet line counts
+    cmds:
+      - python3 ./scripts/check_snippet.py snippets --markdown-dir {{.SERIES_DIR}}
+
+  section_order:
+    desc: Check section order
+    cmds:
+      - python3 ./scripts/check_section_order.py {{.SERIES_DIR}}
+
+  py:
+    desc: Compile-check Python scripts
+    cmds:
+      - python3 -m compileall -q scripts
+
+  md:
+    desc: Lint markdown files
+    cmds:
+      - pnpm exec markdownlint-cli2
+
+  image:
+    desc: Check image links
+    cmds:
+      - python3 ./scripts/check_image_links.py {{.SERIES_DIR}}
+
+  keyword_duplicates:
+    desc: Check keyword duplicates
+    cmds:
+      - python3 ./scripts/check_keyword_duplicates.py {{.SERIES_DIR}}/keywords.md
+
+  greek:
+    desc: Check Greek letters outside Python blocks
+    cmds:
+      - python3 ./scripts/check_greek_outside_python.py {{.SERIES_DIR}}
+
+  ruff:
+    desc: Lint Python with ruff
+    cmds:
+      - uv run ruff check --respect-gitignore
+
+  ruff_check:
+    desc: Check Python formatting with ruff
+    cmds:
+      - uv run ruff format --respect-gitignore --check
+
+  typos:
+    desc: Check typos
+    cmds:
+      - typos
+
+  snippets:
+    desc: Check snippets are in sync with markdown
+    cmds:
+      - |
+        tmpdir=$(mktemp -d)
+        python3 ./scripts/sync_snippets.py --snippets-dir "$tmpdir" extract {{.SERIES_DIR}}
+        diff -qr "$tmpdir" snippets

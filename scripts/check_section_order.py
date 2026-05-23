@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 from pathlib import Path
-
-SERIES_DIR = Path("series")
 
 NEXT_RE = re.compile(r"^#{2,3}\\s+次回予告")
 IMPL_RE = re.compile(r"^##\\s+実装ノート")
@@ -20,12 +19,17 @@ def find_index(lines, regex):
 
 
 def main() -> int:
-    if not SERIES_DIR.exists():
-        print("series/ が見つかりません。", file=sys.stderr)
+    parser = argparse.ArgumentParser(description="Check section order in markdown files.")
+    parser.add_argument("series_dir", help="Directory containing markdown files")
+    args = parser.parse_args()
+
+    series_dir = Path(args.series_dir)
+    if not series_dir.exists():
+        print(f"{series_dir} が見つかりません。", file=sys.stderr)
         return 1
 
     errors = []
-    for path in sorted(SERIES_DIR.glob("*.md")):
+    for path in sorted(series_dir.glob("*.md")):
         lines = path.read_text(encoding="utf-8").splitlines()
         next_i = find_index(lines, NEXT_RE)
         impl_i = find_index(lines, IMPL_RE)

@@ -3,6 +3,10 @@ tmp
 config.json
 node_modules
 
+# VitePress
+site/.vitepress/dist
+site/.vitepress/cache
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -139,9 +143,6 @@ venv.bak/
 
 # Rope project settings
 .ropeproject
-
-# mkdocs documentation
-/site
 
 # mypy
 .mypy_cache/

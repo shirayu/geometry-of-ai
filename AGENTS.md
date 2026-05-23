@@ -4,9 +4,10 @@
 
 ## 主要ディレクトリ
 
-- `series/`: 講義本文
+- `site/series/`: 講義本文
+- `site/public/series/`: 画像ファイル
 - `snippets/`: 抽出・適用対象のコード片
-- `scripts/`:  文中の Python コード断片の同期元, lint, format対象
+- `scripts/`: lint, format スクリプト群
 
 ## セットアップ
 
@@ -15,10 +16,12 @@
 
 ## よく使うコマンド
 
-- 総合 lint: `pnpm lint`
-- 総合 format: `pnpm format`
-- snippets 抽出: `pnpm snippets:extract`
-- snippets 反映: `pnpm snippets:apply`
+- 総合 lint: `task lint`
+- 総合 format: `task format`
+- snippets 抽出: `task snippets:extract`
+- snippets 反映: `task snippets:apply`
+- 開発サーバー起動: `task site:dev` (オプション: `HOST=0.0.0.0 PORT=5174`)
+- サイトビルド: `task site:build`
 
 ## 本文記述注意点
 
@@ -29,15 +32,14 @@
     - `60`行以上: `<details><summary>...</summary>` で囲む（文書内の一貫性を優先）
     - `40`〜`59`行: そのまま表示を基本（必要なら同一文書内の見た目に合わせて折りたたみ可）
     - `40`行未満: 原則そのまま表示（同一文書内の一貫性が必要なら折りたたみ可）
-    - 行数判定は `pnpm run lint:snippet_lines` を使用（`lint:snippets` で同期が取れていることが前提）
+    - 行数判定は `task lint:snippet_lines` を使用（`lint:snippets` で同期が取れていることが前提）
 
 ## PR 前チェック
 
-1. `pnpm format`
-    - markdown中のpythonコードを`snippets/`に反映させるには先に `pnpm snippets:apply`
-    - markdownlint, ruffなどで`.md`, `.py`を整形する
-2. `pnpm snippets:apply`
+1. `task snippets:apply`
     - markdown中のpythonコードは上書きされるので注意
-3. `pnpm lint`
+2. `task format`
+    - markdownlint, ruffなどで`.md`, `.py`を整形する
+3. `task lint`
     - snippetsの同期が取れていないとエラー
 4. 差分に意図しない `snippets/` 変更がないか確認

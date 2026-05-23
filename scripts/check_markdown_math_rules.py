@@ -262,9 +262,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=("Detect markdown math style issues inside $...$ and $$...$$."))
     parser.add_argument(
         "paths",
-        nargs="*",
-        default=["series"],
-        help="Files or directories to scan (default: series)",
+        nargs="+",
+        help="Files or directories to scan",
     )
     args = parser.parse_args()
 

@@ -1,0 +1,17 @@
+---
+version: '3'
+
+includes:
+  format: ./taskfiles/Taskfile.format.yml
+  lint: ./taskfiles/Taskfile.lint.yml
+  snippets: ./taskfiles/Taskfile.snippets.yml
+  site: ./taskfiles/Taskfile.site.yml
+
+tasks:
+  format:
+    cmds:
+      - task: format:all
+
+  lint:
+    cmds:
+      - task: lint:all

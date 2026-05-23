@@ -21,7 +21,9 @@ const getLineNumber = (content, index) => {
 };
 
 const mathRegex = /\$\$([\s\S]+?)\$\$|\$([^\$]+?)\$/g;
-const files = getFiles('.');
+const dirs = process.argv.slice(2);
+if (dirs.length === 0) { console.error('Usage: check-math.mjs <dir>...'); process.exit(1); }
+const files = dirs.flatMap(d => getFiles(d));
 let hasError = false;
 
 files.forEach(file => {

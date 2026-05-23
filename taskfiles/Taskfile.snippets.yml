@@ -1,0 +1,16 @@
+---
+version: '3'
+
+vars:
+  SERIES_DIR: site/series
+
+tasks:
+  extract:
+    desc: Extract snippets from markdown
+    cmds:
+      - python3 ./scripts/sync_snippets.py extract {{.SERIES_DIR}}
+
+  apply:
+    desc: Apply snippets to markdown
+    cmds:
+      - python3 ./scripts/sync_snippets.py apply {{.SERIES_DIR}}

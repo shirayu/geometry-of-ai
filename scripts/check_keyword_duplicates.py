@@ -62,8 +62,7 @@ def extract_keywords(path: Path) -> list[tuple[int, str, str]]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Detect duplicate keywords in series/keywords.md")
     parser.add_argument(
-        "--file",
-        default="series/keywords.md",
+        "file",
         help="Path to keywords markdown file",
     )
     args = parser.parse_args()
