@@ -20,7 +20,7 @@
 - 総合 format: `task format`
 - snippets 抽出: `task snippets:extract`
 - snippets 反映: `task snippets:apply`
-- 開発サーバー起動: `task site:dev`
+- 開発サーバー起動: `task site:dev` (オプション: `HOST=0.0.0.0 PORT=5174`)
 - サイトビルド: `task site:build`
 
 ## 本文記述注意点
