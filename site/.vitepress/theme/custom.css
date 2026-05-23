@@ -1,0 +1,27 @@
+/* h2: section — 下線のみ */
+.vp-doc h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.4rem;
+    border-top: none;
+    border-left: none;
+    border-bottom: 2px solid var(--vp-c-brand-1);
+}
+
+/* h3: subsection — 左ボーダー細め */
+.vp-doc h3 {
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--vp-c-brand-2);
+    border-bottom: none;
+}
+
+/* h4: subsubsection — ブランドカラーのテキスト + 下線ドット */
+.vp-doc h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    color: var(--vp-c-brand-1);
+    border-bottom: 1px dashed var(--vp-c-divider);
+}
