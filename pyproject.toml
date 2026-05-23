@@ -12,6 +12,9 @@ dev = [
   "ruff >=0.13.0",
 ]
 
+[tool.setuptools]
+packages = []
+
 [tool.ruff]
 line-length = 120
 
