@@ -73,6 +73,7 @@ export default defineConfig({
 
     themeConfig: {
         nav: [
+            { text: '全目次', link: '/series/toc' },
             { text: 'キーワード集', link: '/series/keywords' },
             { text: '参考文献', link: '/series/references' },
         ],
@@ -82,6 +83,7 @@ export default defineConfig({
                 text: '',
                 items: [
                     { text: '重要な前提と制約', link: '/series/intro' },
+                    { text: '全ページ目次', link: '/series/toc' },
                     { text: 'キーワード集', link: '/series/keywords' },
                     { text: '参考文献', link: '/series/references' },
                 ],
