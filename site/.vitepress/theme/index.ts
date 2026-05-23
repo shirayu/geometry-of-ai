@@ -8,8 +8,7 @@ export default {
     extends: DefaultTheme,
     Layout: () => {
         return h(DefaultTheme.Layout, null, {
-            'nav-bar-content-before': () => h(TocToggle),
-            'nav-bar-content-after': () => h(SearchButton),
+            'nav-bar-content-before': () => [h(TocToggle), h(SearchButton)],
         })
     },
 }
