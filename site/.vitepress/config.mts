@@ -183,7 +183,7 @@ export default defineConfig({
         ],
 
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/yuta-h/geometry-of-ai' },
+            { icon: 'github', link: 'https://github.com/shirayu/geometry-of-ai' },
         ],
 
         search: {
