@@ -1,4 +1,4 @@
 
 # 情報幾何学とAIの統一視点
 
-ここにリンクを追加予定
+[https://geometry-of-ai.hayashibe.jp/](https://geometry-of-ai.hayashibe.jp/) よりご覧ください。
