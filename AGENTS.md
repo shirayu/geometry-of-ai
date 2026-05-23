@@ -7,7 +7,7 @@
 - `site/series/`: 講義本文
 - `site/public/series/`: 画像ファイル
 - `snippets/`: 抽出・適用対象のコード片
-- `scripts/`:  文中の Python コード断片の同期元, lint, format対象
+- `scripts/`: lint, format スクリプト群
 
 ## セットアップ
 
@@ -20,6 +20,8 @@
 - 総合 format: `task format`
 - snippets 抽出: `task snippets:extract`
 - snippets 反映: `task snippets:apply`
+- 開発サーバー起動: `task site:dev`
+- サイトビルド: `task site:build`
 
 ## 本文記述注意点
 
@@ -34,11 +36,10 @@
 
 ## PR 前チェック
 
-1. `task format`
-    - markdown中のpythonコードを`snippets/`に反映させるには先に `task snippets:apply`
-    - markdownlint, ruffなどで`.md`, `.py`を整形する
-2. `task snippets:apply`
+1. `task snippets:apply`
     - markdown中のpythonコードは上書きされるので注意
+2. `task format`
+    - markdownlint, ruffなどで`.md`, `.py`を整形する
 3. `task lint`
     - snippetsの同期が取れていないとエラー
 4. 差分に意図しない `snippets/` 変更がないか確認
