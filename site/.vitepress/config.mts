@@ -57,6 +57,10 @@ export default defineConfig({
     description: 'AIの本質を「空間の形」を通して学ぶ全15回の講義',
     lang: 'ja',
 
+    head: [
+        ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+    ],
+
     srcDir: '.',
     outDir: '.vitepress/dist',
     cleanUrls: true,
