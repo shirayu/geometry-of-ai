@@ -1,7 +1,7 @@
 {
     "name": "geometry-of-ai-site",
     "version": "1.0.0",
-    "description": "VitePress site for 情報幾何学とAIの統一視点",
+    "description": "VitePress site for 情報幾何学とAI",
     "scripts": {
         "dev": "vitepress dev",
         "build": "vitepress build",

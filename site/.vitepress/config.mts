@@ -53,8 +53,8 @@ function injectFrontmatter(md: MarkdownIt) {
 }
 
 export default defineConfig({
-    title: '情報幾何学とAIの統一視点',
-    description: 'AIの本質を「空間の形」を通して学ぶ全15回の講義',
+    title: '情報幾何学とAI',
+    description: 'AIの表現空間設計を「幾何学」という言語で読み解く全15回の講義',
     lang: 'ja',
 
     head: [
