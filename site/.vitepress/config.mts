@@ -54,7 +54,7 @@ function injectFrontmatter(md: MarkdownIt) {
 
 export default defineConfig({
     title: '情報幾何学とAIの統一視点',
-    description: '深層学習の歴史で紐解く、超球面上の「プラネタリウム」構築論',
+    description: 'AIの本質を「空間の形」を通して学ぶ全15回の講義',
     lang: 'ja',
 
     srcDir: '.',
