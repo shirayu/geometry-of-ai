@@ -2,7 +2,7 @@
     "author": "",
     "description": "",
     "devDependencies": {
-        "katex": "^0.16.45",
+        "katex": "^0.17.0",
         "markdownlint-cli2": "^0.22.1"
     },
     "engines": {
@@ -17,6 +17,8 @@
     "version": "1.0.0",
     "packageManager": "pnpm@10.5.2",
     "pnpm": {
-        "onlyBuiltDependencies": ["esbuild"]
+        "onlyBuiltDependencies": [
+            "esbuild"
+        ]
     }
 }
