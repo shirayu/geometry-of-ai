@@ -14,6 +14,20 @@ function transformPythonFences(md: MarkdownIt) {
     }
 }
 
+// ```mermaid → MermaidDiagram コンポーネントでクライアント描画
+function transformMermaidFences(md: MarkdownIt) {
+    const original = md.renderer.rules.fence ?? ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
+    md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        const token = tokens[idx]
+        const info = token.info.trim()
+        if (info === 'mermaid') {
+            const codeBase64 = Buffer.from(token.content, 'utf8').toString('base64')
+            return `<MermaidDiagram code-base64="${codeBase64}" />`
+        }
+        return original(tokens, idx, options, env, self)
+    }
+}
+
 // <details>\n<summary>label</summary> → <details v-pre> で Vue 補間を無効化
 function transformDetails(md: MarkdownIt) {
     md.core.ruler.push('details_to_vitepress', (state) => {
@@ -68,6 +82,7 @@ export default defineConfig({
     markdown: {
         math: true,
         config: (md) => {
+            transformMermaidFences(md)
             transformPythonFences(md)
             transformDetails(md)
             transformImagePaths(md)

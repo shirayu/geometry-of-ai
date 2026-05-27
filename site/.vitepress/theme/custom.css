@@ -132,3 +132,24 @@ html.hide-toc .VPDoc.has-aside .content-container {
     color: var(--vp-c-brand-1);
     border-bottom: 1px dashed var(--vp-c-divider);
 }
+
+.mermaid-diagram {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+}
+
+.mermaid-diagram__canvas {
+    min-width: 640px;
+}
+
+.mermaid-diagram__canvas svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.mermaid-diagram__error {
+    white-space: pre-wrap;
+    color: var(--vp-c-danger-1);
+}
