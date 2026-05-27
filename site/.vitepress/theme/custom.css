@@ -147,6 +147,18 @@ html.hide-toc .VPDoc.has-aside .content-container {
     max-width: 100%;
     height: auto;
     margin: 0 auto;
+    overflow: visible;
+}
+
+.mermaid-diagram__canvas foreignObject {
+    overflow: visible;
+}
+
+.mermaid-diagram__canvas .nodeLabel,
+.mermaid-diagram__canvas .edgeLabel,
+.mermaid-diagram__canvas .cluster-label,
+.mermaid-diagram__canvas .label {
+    line-height: 1.35;
 }
 
 .mermaid-diagram__error {
