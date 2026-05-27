@@ -8,6 +8,21 @@ includes:
   site: ./taskfiles/Taskfile.site.yml
 
 tasks:
+  dev:
+    desc: Start dev server
+    cmds:
+      - task: site:dev
+
+  build:
+    desc: Build site
+    cmds:
+      - task: site:build
+
+  preview:
+    desc: Preview built site
+    cmds:
+      - task: site:preview
+
   format:
     cmds:
       - task: format:all
