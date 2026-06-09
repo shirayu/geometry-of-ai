@@ -78,6 +78,9 @@ export default defineConfig({
     srcDir: '.',
     outDir: '.vitepress/dist',
     cleanUrls: true,
+    sitemap: {
+        hostname: 'https://geometry-of-ai.hayashibe.jp',
+    },
 
     markdown: {
         math: true,
