@@ -368,7 +368,7 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
    - 量子化を前提としたアーキテクチャ設計
    - KV cache / 活性まで含めた最適化
 
-## 講義本編との接続まとめ
+## まとめ：量子化の幾何学
 
 | 講義回 | 接続点 |
 | --- | --- |
