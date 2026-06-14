@@ -25,6 +25,7 @@ tasks:
       - snippets
       - terms
       - references
+      - svg_naming
 
   math:
     desc: Check math expressions
@@ -113,3 +114,8 @@ tasks:
         tmpdir=$(mktemp -d)
         python3 ./scripts/sync_snippets.py --snippets-dir "$tmpdir" extract {{.SERIES_DIR}}
         diff -qr "$tmpdir" snippets
+
+  svg_naming:
+    desc: Check SVG file naming convention (NN_name.svg, no fig_ prefix)
+    cmds:
+      - python3 ./scripts/check_svg_naming.py {{.SERIES_DIR}}
