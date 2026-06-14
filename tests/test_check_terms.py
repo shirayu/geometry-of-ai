@@ -181,6 +181,44 @@ class TestVmfParenthesis:
 
 
 # ---------------------------------------------------------------------------
+# no-softmax-katakana
+# ---------------------------------------------------------------------------
+
+
+class TestNoSoftmaxKatakana:
+    def test_ok_english(self, tmp_path, rules):
+        p = _md(tmp_path, "Softmax 関数を適用する。\n")
+        assert "no-softmax-katakana" not in violation_ids(check_file(p, rules))
+
+    def test_violation(self, tmp_path, rules):
+        p = _md(tmp_path, "ソフトマックス回帰では凸関数となる。\n")
+        assert "no-softmax-katakana" in violation_ids(check_file(p, rules))
+
+    def test_ok_in_code_fence(self, tmp_path, rules):
+        p = _md(tmp_path, "```python\n# ソフトマックス\n```\n")
+        assert "no-softmax-katakana" not in violation_ids(check_file(p, rules))
+
+
+# ---------------------------------------------------------------------------
+# no-embedding-katakana
+# ---------------------------------------------------------------------------
+
+
+class TestNoEmbeddingKatakana:
+    def test_ok_japanese(self, tmp_path, rules):
+        p = _md(tmp_path, "埋め込みベクトルを学習する。\n")
+        assert "no-embedding-katakana" not in violation_ids(check_file(p, rules))
+
+    def test_violation(self, tmp_path, rules):
+        p = _md(tmp_path, "エンベディングを使う。\n")
+        assert "no-embedding-katakana" in violation_ids(check_file(p, rules))
+
+    def test_ok_in_code_fence(self, tmp_path, rules):
+        p = _md(tmp_path, "```python\n# エンベディング\n```\n")
+        assert "no-embedding-katakana" not in violation_ids(check_file(p, rules))
+
+
+# ---------------------------------------------------------------------------
 # 複数ルール・複合ケース
 # ---------------------------------------------------------------------------
 

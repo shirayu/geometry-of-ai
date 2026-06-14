@@ -47,3 +47,13 @@ rules:
     description: "von Mises-Fisher の括弧は全角（vMF）。半角 (vMF) は使用禁止"
     pattern: 'von Mises-Fisher \('
     scope: any
+
+  - id: no-softmax-katakana
+    description: "「ソフトマックス」は使用禁止。Softmax で統一"
+    pattern: 'ソフトマックス'
+    scope: any
+
+  - id: no-embedding-katakana
+    description: "「エンベディング」は使用禁止。埋め込み で統一"
+    pattern: 'エンベディング'
+    scope: any

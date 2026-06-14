@@ -55,9 +55,9 @@
 
 | 概念 | 採用 | 排除 | 初出の形式 | 備考 |
 | --- | --- | --- | --- | --- |
-| 単位球面 | 球面 | 超球面 | 球面 $\mathbb{S}^{d-1}$ | 初出時に一度だけ「（高次元では超球面 hypersphere とも呼ぶ）」と注記可。nGPT論文名への言及は例外 |
-| 確率単体 | 単体 | シンプレックス | 確率単体（シンプレックス、probability simplex） | 章内初出のみカタカナ・英語を併記。以降は「単体」または「確率単体」 |
-| von Mises-Fisher 分布 | vMF 分布 | フォン・ミーゼス | von Mises-Fisher（vMF）分布 | 括弧は全角。各章の初出で展開形を使い、以降「vMF 分布」。`vmf`（小文字）は使用禁止 |
+| 単位球面 | 球面 | 超球面 ✓ | 球面 $\mathbb{S}^{d-1}$ ✓ | `style/terms.yaml` で検証。nGPT論文名への言及は例外 |
+| 確率単体 | 単体 | シンプレックス ✓ | 確率単体（シンプレックス、probability simplex） | `style/terms.yaml` で検証。章内初出のみ併記、以降は「単体」または「確率単体」 |
+| von Mises-Fisher 分布 | vMF 分布 | フォン・ミーゼス | von Mises-Fisher（vMF）分布 ✓ | `style/terms.yaml` で検証。括弧は全角。`vmf`（小文字）は使用禁止 ✓ |
 | 測地線距離 | 測地線距離 | 大円距離 | — | |
 
 ##### 統計・情報幾何
@@ -73,14 +73,14 @@
 
 | 概念 | 採用 | 排除 | 備考 |
 | --- | --- | --- | --- |
-| softmax 関数 | Softmax | ソフトマックス | |
-| embedding | 埋め込み | エンベディング | |
+| softmax 関数 | Softmax | ソフトマックス ✓ | `style/terms.yaml` で検証 |
+| embedding | 埋め込み | エンベディング ✓ | `style/terms.yaml` で検証 |
 | attention | Attention | アテンション、注意機構 | 初出に「（注意機構）」併記可 |
 | logit | ロジット | — | 初出のみ "logit" 併記 |
 | token | トークン | — | |
 | margin | マージン | — | |
 | kernel | カーネル | — | |
-| ガウス分布 | 正規分布 | ガウス分布 | 同一章内で混在させない |
+| ガウス分布 | 正規分布 | ガウス分布 | 同一章内で混在させない（linter対象外） |
 
 #### 記号表
 
