@@ -863,7 +863,8 @@ print(f"Parameters saved: ~{(1 - 2 / 8) * 100:.1f}% (for K,V)")
 
 ### Transformer と Attention
 
-- Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). Attention Is All You Need. *NeurIPS 2017*. arXiv: [arXiv:1706.03762](https://arxiv.org/abs/1706.03762).
+- Vaswani, A., et al. (2017). Attention Is All You Need. *NeurIPS 2017*. arXiv: [1706.03762](https://arxiv.org/abs/1706.03762)
+    - Transformerの原論文。本Appendixで扱う効率化手法（MoE、GQA、LoRA等）の対象となるアーキテクチャの一次文献。
 
 ### Pruning（剪定）
 

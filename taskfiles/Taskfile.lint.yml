@@ -24,6 +24,7 @@ tasks:
       - typos
       - snippets
       - terms
+      - references
 
   math:
     desc: Check math expressions
@@ -99,6 +100,11 @@ tasks:
     desc: Check terminology and notation rules
     cmds:
       - uv run python ./scripts/check_terms.py {{.SERIES_DIR}}
+
+  references:
+    desc: Check reference section format
+    cmds:
+      - python3 ./scripts/check_references.py {{.SERIES_DIR}}
 
   snippets:
     desc: Check snippets are in sync with markdown
