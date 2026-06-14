@@ -51,9 +51,9 @@ tasks:
       - python3 ./scripts/check_snippet.py snippets --markdown-dir {{.SERIES_DIR}}
 
   section_order:
-    desc: Check section order
+    desc: Check section structure
     cmds:
-      - python3 ./scripts/check_section_order.py {{.SERIES_DIR}}
+      - python3 ./scripts/check_structure.py {{.SERIES_DIR}}
 
   py:
     desc: Compile-check Python scripts
