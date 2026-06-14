@@ -16,7 +16,8 @@ frequencies = frequencies / frequencies.sum()
 
 # 頻度に比例した「更新回数」でノルムが成長すると仮定
 # （これは単純化したモデルであり、実際のWord2Vecとは異なる）
-norms = np.sqrt(frequencies * 10000)  # 更新回数に比例してノルム成長
+norms = np.sqrt(frequencies * 10000)  # 単純化モデル：更新回数に比例してノルム成長
+# 実際には有意性・情報量がノルムを左右する（本文参照）
 
 # 散布図
 plt.figure(figsize=(10, 4))

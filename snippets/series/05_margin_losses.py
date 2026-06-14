@@ -26,9 +26,11 @@ class CosFace(nn.Module):
 
 
 class SphereFace(nn.Module):
-    """SphereFace: 角度を乗算（簡略化版）
+    """SphereFace: 角度を乗算（教育用簡略版）
 
-    注意: 実際のSphereFaceはより複雑なアニーリング戦略を使用する。
+    注意: 原論文（A-Softmax）は特徴を正規化しない。本実装は球面設計に揃えた
+    教育用簡略版であり、実際のSphereFaceとは定式化が異なる。
+    また実際のSphereFaceはより複雑なアニーリング戦略を使用する。
     """
 
     def __init__(self, in_features, num_classes, scale=30.0, margin=4):

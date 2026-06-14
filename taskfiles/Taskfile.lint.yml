@@ -23,6 +23,9 @@ tasks:
       - ruff_check
       - typos
       - snippets
+      - terms
+      - references
+      - svg_naming
 
   math:
     desc: Check math expressions
@@ -50,9 +53,9 @@ tasks:
       - python3 ./scripts/check_snippet.py snippets --markdown-dir {{.SERIES_DIR}}
 
   section_order:
-    desc: Check section order
+    desc: Check section structure
     cmds:
-      - python3 ./scripts/check_section_order.py {{.SERIES_DIR}}
+      - python3 ./scripts/check_structure.py {{.SERIES_DIR}}
 
   py:
     desc: Compile-check Python scripts
@@ -94,6 +97,16 @@ tasks:
     cmds:
       - typos
 
+  terms:
+    desc: Check terminology and notation rules
+    cmds:
+      - uv run python ./scripts/check_terms.py {{.SERIES_DIR}}
+
+  references:
+    desc: Check reference section format
+    cmds:
+      - python3 ./scripts/check_references.py {{.SERIES_DIR}}
+
   snippets:
     desc: Check snippets are in sync with markdown
     cmds:
@@ -101,3 +114,8 @@ tasks:
         tmpdir=$(mktemp -d)
         python3 ./scripts/sync_snippets.py --snippets-dir "$tmpdir" extract {{.SERIES_DIR}}
         diff -qr "$tmpdir" snippets
+
+  svg_naming:
+    desc: Check SVG file naming convention (NN_name.svg, no fig_ prefix)
+    cmds:
+      - python3 ./scripts/check_svg_naming.py {{.SERIES_DIR}}

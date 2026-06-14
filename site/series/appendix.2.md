@@ -347,10 +347,24 @@ $$d(\mathbf{v}_A, \mathbf{v}_B) + d(\mathbf{v}_B, \mathbf{v}_C) \geq d(\mathbf{v
 > 動態論では「動的な破綻と修理」を扱う。
 > 両方揃えて初めて、AIシステムの幾何学的健全性の全体像が見える。
 
+## まとめ：データ品質の幾何学的限界
+
+| 主題 | 核心 | 現状 |
+| --- | --- | --- |
+| **データ選別の幾何学** | 有害データは多様体の形状を歪める | 理論的には美しいが汎用ツールなし |
+| **ハルシネーションの2類型** | 確信した嘘（内挿）と不確実な嘘（外挿）は異なる問題 | 対処法も異なる |
+| **幾何学的手法の限界** | 実装コスト・タスク依存性・敵対的適応の問題 | 外部フィルタリング・合成データが現実的 |
+| **静的→動的への接続** | データ品質の問題は推論時に偽の極小値として顕在化する | 第8回「CoTのエネルギー地形」へ |
+
 ## 参考文献
 
-- Levina, E. & Bickel, P. J. (2004). Maximum Likelihood Estimation of Intrinsic Dimension. *NeurIPS*.
-- Facco, E. et al. (2017). Estimating the intrinsic dimension of datasets by a minimal neighborhood information. *Scientific Reports*.
-- Carlsson, G. (2009). Topology and Data. *Bulletin of the AMS*.
-- Koh, P. W. & Liang, P. (2017). Understanding Black-box Predictions via Influence Functions. *ICML*.
-- Paul, M. et al. (2021). Deep Learning on a Data Diet: Finding Important Examples Early in Training. *NeurIPS*. （EL2Nスコア）
+- Levina, E., & Bickel, P. J. (2004). Maximum Likelihood Estimation of Intrinsic Dimension. *NeurIPS 2004*, 777–784.
+    - 局所的なk近傍の距離比を使って内在次元を最尤推定する手法。多様体の次元を実用的に推定できる。
+- Facco, E., et al. (2017). Estimating the intrinsic dimension of datasets by a minimal neighborhood information. *Scientific Reports*, 7, 12140. DOI: [10.1038/s41598-017-11873-y](https://doi.org/10.1038/s41598-017-11873-y)
+    - 最近傍2点の距離比のみを使う最小情報量での内在次元推定（TWO-NN法）。
+- Carlsson, G. (2009). Topology and Data. *Bulletin of the American Mathematical Society*, 46(2), 255–308. DOI: [10.1090/S0273-0979-09-01249-X](https://doi.org/10.1090/S0273-0979-09-01249-X)
+    - TDAの創始者による解説論文。データ解析へのトポロジー応用の動機と基本概念を説明。
+- Koh, P. W., & Liang, P. (2017). Understanding Black-box Predictions via Influence Functions. *ICML 2017*, 1885–1894. arXiv: [1703.04730](https://arxiv.org/abs/1703.04730)
+    - 影響関数による個別訓練データの予測への寄与を定量化。データ品質評価の理論的基礎。
+- Paul, M., Ganguli, S., & Dziugaite, G. K. (2021). Deep Learning on a Data Diet: Finding Important Examples Early in Training. *NeurIPS 2021*. arXiv: [2107.07075](https://arxiv.org/abs/2107.07075)
+    - 学習初期の勾配ノルム（EL2Nスコア）で重要サンプルを特定する手法。データプルーニングの効率化。

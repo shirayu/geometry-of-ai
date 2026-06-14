@@ -131,7 +131,7 @@ $$K(u) = u_1^{2k_1} u_2^{2k_2} \cdots u_d^{2k_d}$$
 | [Appendix 2](appendix.2.md)（純度問題） | データの質が loss landscape の谷の形状を変え、RLCTに影響する |
 | [Appendix 5](appendix.5.md)（双対構造） | 正則な幾何の限界を明示し、本Appendixの出発点を与える |
 
-## 講義本編との接続まとめ
+## まとめ：特異点と汎化の接続
 
 | 概念 | 正則な幾何（Appendix 5） | 特異な幾何（Appendix 6） |
 | --- | --- | --- |

@@ -18,6 +18,7 @@
         "node_modules",
         "site/node_modules",
         ".venv",
-        "tmp"
+        "tmp",
+        "writing_instruction"
     ]
 }

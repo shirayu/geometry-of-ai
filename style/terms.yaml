@@ -1,0 +1,59 @@
+## 用語・記法 lint ルール定義
+## スクリプト: scripts/check_terms.py
+## テスト:     tests/test_check_terms.py
+##
+## フィールド説明:
+##   id:                  ルールID（エラーメッセージに表示）
+##   description:         エラーメッセージ本文
+##   pattern:             Python re パターン。マッチしたら違反候補
+##   scope:
+##     "text"  コードフェンス外かつ数式($)外の行テキスト
+##     "math"  $...$ / $$...$$ 内のテキスト
+##     "any"   コードフェンス外（数式内外問わず）
+##   require_absent:      同一行にこのパターンがあれば違反から除外
+##   allow_line_pattern:  同一行にこのパターンがあれば違反から除外（require_absent と同義、可読性のため別名）
+##   allow_section:       このセクション見出し（部分一致）の配下行は除外
+
+rules:
+  - id: sphere-notation
+    description: "球面は $\\mathbb{S}^{d-1}$ で統一。$S^{d-1}$ は使用禁止"
+    pattern: 'S\^\{'
+    scope: any
+    require_absent: 'mathbb'
+
+  - id: no-vmf-lowercase
+    description: "vmf（小文字）は使用禁止。vMF で統一"
+    pattern: '(?<![A-Za-z_])vmf(?![A-Za-z_])'
+    scope: any
+
+  - id: no-boldsymbol-latin
+    description: "ラテン文字ベクトルに \\boldsymbol は使用禁止。\\mathbf で統一"
+    pattern: '\\boldsymbol\{[a-z]'
+    scope: any
+
+  - id: no-chokyu-men
+    description: "「超球面」は使用禁止（用語解説・nGPT論文名への言及は除く）"
+    pattern: '超球面'
+    scope: any
+    allow_section: '球面と超球面の混同'
+
+  - id: no-simplex-katakana
+    description: "「シンプレックス」は初出注記（「確率単体（シンプレックス」）以外で使用禁止"
+    pattern: 'シンプレックス'
+    scope: any
+    allow_line_pattern: '確率単体'
+
+  - id: vmf-parenthesis
+    description: "von Mises-Fisher の括弧は全角（vMF）。半角 (vMF) は使用禁止"
+    pattern: 'von Mises-Fisher \('
+    scope: any
+
+  - id: no-softmax-katakana
+    description: "「ソフトマックス」は使用禁止。Softmax で統一"
+    pattern: 'ソフトマックス'
+    scope: any
+
+  - id: no-embedding-katakana
+    description: "「エンベディング」は使用禁止。埋め込み で統一"
+    pattern: 'エンベディング'
+    scope: any

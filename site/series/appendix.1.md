@@ -240,7 +240,7 @@ LLM推論では、実務上しばしば以下が支配的になる：
 - 活性量子化やKV量子化は「入力により変動する軌道（表現多様体）の分解能低下」
 - したがって、同じW4でも **AやKVの扱い**で体感品質が大きく変わる
 
-## 実装ノート
+## 実装ノート：量子化を実装する
 
 ### 基本的な量子化（PyTorch・概念例）
 
@@ -368,7 +368,7 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
    - 量子化を前提としたアーキテクチャ設計
    - KV cache / 活性まで含めた最適化
 
-## 講義本編との接続まとめ
+## まとめ：量子化の幾何学
 
 | 講義回 | 接続点 |
 | --- | --- |
@@ -383,22 +383,30 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
 
 ### 基礎
 
-- Jacob et al., "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference" (CVPR 2018)
-- Nagel et al., "A White Paper on Neural Network Quantization" (arXiv 2021)
+- Jacob, B., et al. (2018). Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference. *CVPR 2018*, 2704–2713. arXiv: [1712.05877](https://arxiv.org/abs/1712.05877)
+    - 整数演算のみで推論する量子化スキームを提案。INT8量子化の理論的基盤。
+- Nagel, M., et al. (2021). A White Paper on Neural Network Quantization. arXiv: [2106.08295](https://arxiv.org/abs/2106.08295)
+    - 量子化手法の包括的な整理。PTQ・QAT・混合精度の比較と指針を提供。
 
 ### LLM量子化
 
-- Frantar et al., "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers" (ICLR 2023)
-- Lin et al., "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration" (MLSys 2024)
-- Xiao et al., "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models" (ICML 2023)
+- Frantar, E., et al. (2023). GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers. *ICLR 2023*. arXiv: [2210.17323](https://arxiv.org/abs/2210.17323)
+    - ヘシアン情報を使ったPTQ手法。LLMを4ビットに圧縮しながら精度を保つ。
+- Lin, J., et al. (2024). AWQ: Activation-Aware Weight Quantization for On-Device LLM Compression and Acceleration. *MLSys 2024*. arXiv: [2306.00978](https://arxiv.org/abs/2306.00978)
+    - 活性化の大きさに基づく重要重みの保護。エッジデバイス向けLLM量子化のベスト論文。
+- Xiao, G., et al. (2023). SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models. *ICML 2023*. arXiv: [2211.10438](https://arxiv.org/abs/2211.10438)
+    - 活性化の外れ値を重みに移す「スムージング」でINT8量子化の難しさを解消。
 
 ### 極端な量子化
 
-- Wang et al., "BitNet: Scaling 1-bit Transformers for Large Language Models" (arXiv 2023)
-- Ma et al., "The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits" (arXiv 2024)
+- Wang, H., et al. (2023). BitNet: Scaling 1-bit Transformers for Large Language Models. arXiv: [2310.11453](https://arxiv.org/abs/2310.11453)
+    - 重みを±1に限定した1ビットTransformer。メモリ・演算コストを大幅に削減。
+- Ma, S., et al. (2024). The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits. arXiv: [2402.17764](https://arxiv.org/abs/2402.17764)
+    - 重みを{-1, 0, 1}に限定（log₂3 ≈ 1.58ビット）。フルビットモデルと同等の性能を達成。
 
 ### 理論的分析
 
-- Hubara et al., "Quantized Neural Networks: Training Neural Networks with Low Precision Weights and Activations" (JMLR 2018)
-- Banner et al., "Post Training 4-bit Quantization of Convolutional Networks for Rapid-Deployment" (NeurIPS 2019)
-g
+- Hubara, I., et al. (2018). Quantized Neural Networks: Training Neural Networks with Low Precision Weights and Activations. *Journal of Machine Learning Research*, 18(187), 1–30.
+    - 低精度重みと活性化での量子化ニューラルネットワークの学習手法。STE（直線推定量）の理論的基礎。
+- Banner, R., Nahshan, Y., & Soudry, D. (2019). Post Training 4-bit Quantization of Convolutional Networks for Rapid-Deployment. *NeurIPS 2019*. arXiv: [1810.05723](https://arxiv.org/abs/1810.05723)
+    - 4ビットPTQの効率的な手法。クリッピング閾値の最適化を含む。
