@@ -23,6 +23,7 @@ tasks:
       - ruff_check
       - typos
       - snippets
+      - terms
 
   math:
     desc: Check math expressions
@@ -93,6 +94,11 @@ tasks:
     desc: Check typos
     cmds:
       - typos
+
+  terms:
+    desc: Check terminology and notation rules
+    cmds:
+      - uv run python ./scripts/check_terms.py {{.SERIES_DIR}}
 
   snippets:
     desc: Check snippets are in sync with markdown
