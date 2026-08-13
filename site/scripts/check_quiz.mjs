@@ -10,7 +10,10 @@ const forbiddenReferences = [
     { pattern: /(?:表|図|節)を参照/, label: '本文内要素への参照' },
     { pattern: /前述|上記|以下/, label: '前後の本文への参照' },
     { pattern: /次回/, label: '次回への参照' },
-    { pattern: /第\d+回(?:で|の|に|を)?(?:説明|扱|議論|主題|導入|参照)/, label: '別の回への参照' },
+    {
+        pattern: /本講義|本回|本シリーズ|この(?:章|講義|回|付録|シリーズ)|最終(?:メッセージ|的なメッセージ)|第[0-9０-９]+回/,
+        label: '本文・講義への参照',
+    },
 ]
 
 function quizFiles(dir) {
@@ -136,8 +139,10 @@ async function main() {
             const line = lines[i]
             const lineNumber = i + 1
 
-            if (!inQuiz && /^### Q\d+\./.test(line)) {
+            const questionHeading = line.match(/^### Q\d+\.\s*(.+)$/)
+            if (!inQuiz && questionHeading) {
                 questionText = ''
+                checkReferences(questionHeading[1], relative, lineNumber, errors)
                 continue
             }
 

@@ -17,7 +17,7 @@ A: Multi-step推論は中間の足場を使うことで、問題を小さな段�
 
 ### Q2. Chain of Thought
 
-Chain of Thoughtの本質を、この章に沿って説明したものはどれか。
+Chain of Thoughtの本質を説明したものはどれか。
 
 ```quiz
 - モデル内部の連続状態の軌道を完全に観測する
@@ -30,7 +30,7 @@ A: CoTは中間的な言語トークンを通じて推論段階を表す。た�
 
 ### Q3. Test-time Compute Scaling
 
-推論時の計算量を増やす方法として、この章が区別しているものはどれか。
+推論時の計算量を増やす方法として、適切なものはどれか。
 
 ```quiz
 - [x]生成トークン数、サンプリング回数、探索幅、検証回数などを増やす方法
@@ -84,7 +84,7 @@ A: Model Collapseは、生成物に偏ったデータを繰り返し学習する
 
 ### Q7. Dimensional Collapse
 
-Dimensional Collapseを検出する指標として、この章に登場するものはどれか。
+Dimensional Collapseを検出する指標として、適切なものはどれか。
 
 ```quiz
 - [x]表現行列の特異値分解や有効ランクを調べる
