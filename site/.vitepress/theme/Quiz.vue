@@ -5,6 +5,7 @@ interface QuizData {
     choices: string[]
     answer: number
     explanation: string
+    sources: string[]
 }
 
 const props = defineProps<{
@@ -75,6 +76,10 @@ function reset() {
                 <p class="quiz__explanation" v-html="quiz.explanation" />
             </div>
         </Transition>
+        <p class="quiz__sources">
+            本文の対応箇所：
+            <a v-for="source in quiz.sources" :key="source" :href="source">参照する</a>
+        </p>
     </div>
 </template>
 
@@ -238,6 +243,16 @@ function reset() {
     color: var(--vp-c-text-1);
     font-size: 0.95em;
     line-height: 1.7;
+}
+
+.quiz__sources {
+    margin: 0.75rem 0 0;
+    color: var(--vp-c-text-2);
+    font-size: 0.85em;
+}
+
+.quiz__sources a {
+    margin-left: 0.4rem;
 }
 
 .quiz-fade-enter-active {

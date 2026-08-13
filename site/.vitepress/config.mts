@@ -35,6 +35,7 @@ function transformMermaidFences(md: MarkdownIt) {
 //   - [x]選択肢2  (正解)
 //   - 選択肢3
 //   A: 解説文
+//   S: /series/02#見出しslug
 function transformQuizFences(md: MarkdownIt) {
     const original = md.renderer.rules.fence ?? ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
     md.renderer.rules.fence = (tokens, idx, options, env, self) => {
@@ -45,6 +46,7 @@ function transformQuizFences(md: MarkdownIt) {
             let answer = -1
             const choices: string[] = []
             let explanation = ''
+            const sources: string[] = []
             for (const raw of lines) {
                 const line = raw.trim()
                 if (!line) continue
@@ -53,6 +55,12 @@ function transformQuizFences(md: MarkdownIt) {
                         throw new Error(`quizの解説が複数あります: ${env.relativePath ?? 'unknown'}`)
                     }
                     explanation = md.renderInline(line.slice('A:'.length).trim()).trim()
+                } else if (line.startsWith('S:')) {
+                    const source = line.slice('S:'.length).trim()
+                    if (!/^\/series\/[^\s#]+#[^\s#]+$/.test(source)) {
+                        throw new Error(`quizの本文リンクは /series/ファイル#見出しslug 形式にしてください: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    if (!sources.includes(source)) sources.push(source)
                 } else if (line.startsWith('-')) {
                     const body = line.slice(1).trim()
                     const isCorrect = body.startsWith('[x]')
@@ -78,7 +86,10 @@ function transformQuizFences(md: MarkdownIt) {
             if (!explanation) {
                 throw new Error(`quizの解説がありません: ${env.relativePath ?? 'unknown'}`)
             }
-            const data = { choices, answer, explanation }
+            if (sources.length === 0) {
+                throw new Error(`quizの本文リンクS:が少なくとも1つ必要です: ${env.relativePath ?? 'unknown'}`)
+            }
+            const data = { choices, answer, explanation, sources }
             const dataBase64 = Buffer.from(JSON.stringify(data), 'utf8').toString('base64')
             return `<Quiz data-base64="${dataBase64}" />`
         }

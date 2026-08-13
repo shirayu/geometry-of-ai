@@ -25,6 +25,56 @@ function hasMath(source) {
     return /\$\$?[\s\S]*?\$\$?/.test(source)
 }
 
+function slugifyHeading(text) {
+    return text
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\p{L}\p{N}\-]/gu, '')
+}
+
+function sourceFile(href) {
+    const [pathname, fragment] = href.split('#')
+    if (!pathname.startsWith('/series/') || !fragment) return null
+
+    const relative = pathname.slice('/series/'.length)
+    if (!relative || relative.includes('..')) return null
+    const filename = relative.endsWith('.md') ? relative : `${relative}.md`
+    const file = path.resolve(SERIES_DIR, filename)
+    if (!file.startsWith(`${SERIES_DIR}${path.sep}`)) return null
+    return { file, fragment }
+}
+
+function headingSlugs(file) {
+    const slugs = new Set()
+    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
+    let inFence = false
+    for (const line of lines) {
+        if (line.startsWith('```')) {
+            inFence = !inFence
+            continue
+        }
+        if (inFence) continue
+        const heading = line.match(/^#{2,3} (.+)$/)
+        if (heading) slugs.add(slugifyHeading(heading[1].trim()))
+    }
+    return slugs
+}
+
+function checkSource(href, file, line, errors) {
+    const source = sourceFile(href)
+    if (!source) {
+        errors.push(`${file}:${line}: 本文リンクの形式またはパスが不正です: ${href}`)
+        return
+    }
+    if (!fs.existsSync(source.file)) {
+        errors.push(`${file}:${line}: 本文ファイルが存在しません: ${href}`)
+        return
+    }
+    if (!headingSlugs(source.file).has(source.fragment)) {
+        errors.push(`${file}:${line}: 本文の見出しslugが存在しません: ${href}`)
+    }
+}
+
 function checkReferences(text, file, line, errors) {
     for (const { pattern, label } of forbiddenReferences) {
         if (pattern.test(text)) {
@@ -45,6 +95,7 @@ async function main() {
         let choices = 0
         let answers = 0
         let explanation = false
+        let sources = []
         let questionText = ''
 
         for (let i = 0; i < lines.length; i++) {
@@ -64,6 +115,7 @@ async function main() {
                 choices = 0
                 answers = 0
                 explanation = false
+                sources = []
                 checkReferences(questionText, relative, blockStart - 1, errors)
                 continue
             }
@@ -77,6 +129,9 @@ async function main() {
                 }
                 if (!explanation) {
                     errors.push(`${relative}:${blockStart}: 解説A:が必要です`)
+                }
+                if (sources.length === 0) {
+                    errors.push(`${relative}:${blockStart}: 本文リンクS:が少なくとも1つ必要です`)
                 }
                 inQuiz = false
                 continue
@@ -93,6 +148,10 @@ async function main() {
                 } else if (trimmed.startsWith('A:')) {
                     explanation = true
                     text = trimmed.slice(2).trim()
+                } else if (trimmed.startsWith('S:')) {
+                    const source = trimmed.slice(2).trim()
+                    if (!sources.includes(source)) sources.push(source)
+                    checkSource(source, relative, lineNumber, errors)
                 }
 
                 if (text) {
