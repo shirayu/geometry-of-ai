@@ -22,6 +22,7 @@ const PAGES: { file: string; link: string }[] = [
     { file: '00.md', link: '/series/00' },
     { file: '01.md', link: '/series/01' },
     { file: '02.md', link: '/series/02' },
+    { file: '02/quiz.md', link: '/series/02/quiz' },
     { file: '03.md', link: '/series/03' },
     { file: '04.md', link: '/series/04' },
     { file: '05.md', link: '/series/05' },
@@ -89,7 +90,7 @@ export default {
         return PAGES.map(({ file, link }) => {
             const content = fs.readFileSync(path.join(SERIES_DIR, file), 'utf-8')
             const { title, headings } = extractHeadings(content)
-            const id = file.replace('.md', '')
+            const id = file.replace('.md', '').replace(/\//g, '-')
             return { file, link, id, title, headings }
         })
     },

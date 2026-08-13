@@ -28,6 +28,43 @@ function transformMermaidFences(md: MarkdownIt) {
     }
 }
 
+// ```quiz → Quiz コンポーネントでクリック即正誤判定
+// 問題文・レベルは Markdown の見出し（###）側で書く。フェンスは選択肢と解説のみ。
+// フォーマット:
+//   - 選択肢1
+//   - [x]選択肢2  (正解)
+//   - 選択肢3
+//   A: 解説文
+function transformQuizFences(md: MarkdownIt) {
+    const original = md.renderer.rules.fence ?? ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
+    md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        const token = tokens[idx]
+        const info = token.info.trim()
+        if (info === 'quiz') {
+            const lines = token.content.split('\n')
+            let answer = 0
+            const choices: string[] = []
+            let explanation = ''
+            for (const raw of lines) {
+                const line = raw.trim()
+                if (!line) continue
+                if (line.startsWith('A:')) {
+                    explanation = line.slice('A:'.length).trim()
+                } else if (line.startsWith('-')) {
+                    const body = line.slice(1).trim()
+                    const isCorrect = body.startsWith('[x]')
+                    if (isCorrect) answer = choices.length
+                    choices.push(isCorrect ? body.slice(3).trim() : body)
+                }
+            }
+            const data = { choices, answer, explanation }
+            const dataBase64 = Buffer.from(JSON.stringify(data), 'utf8').toString('base64')
+            return `<Quiz data-base64="${dataBase64}" />`
+        }
+        return original(tokens, idx, options, env, self)
+    }
+}
+
 // <details>\n<summary>label</summary> → <details v-pre> で Vue 補間を無効化
 function transformDetails(md: MarkdownIt) {
     md.core.ruler.push('details_to_vitepress', (state) => {
@@ -86,6 +123,7 @@ export default defineConfig({
         math: true,
         config: (md) => {
             transformMermaidFences(md)
+            transformQuizFences(md)
             transformPythonFences(md)
             transformDetails(md)
             transformImagePaths(md)
