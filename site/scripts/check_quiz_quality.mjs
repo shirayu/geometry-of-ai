@@ -54,15 +54,21 @@ function parseQuizzes(file) {
 }
 
 const errors = []
+const warnings = []
 const summaries = []
 
 for (const file of quizFiles(SERIES_DIR).sort()) {
     const relative = path.relative(path.resolve(SERIES_DIR, '..', '..'), file)
     const quizzes = parseQuizzes(file)
-    const positions = [0, 0, 0, 0]
+    const positions = []
+    const eligiblePositions = []
 
     for (const quiz of quizzes) {
-        if (quiz.answer >= 0 && quiz.answer < positions.length) positions[quiz.answer]++
+        for (let index = 0; index < quiz.choices.length; index++) {
+            eligiblePositions[index] = (eligiblePositions[index] ?? 0) + 1
+            positions[index] = positions[index] ?? 0
+        }
+        if (quiz.answer >= 0) positions[quiz.answer] = (positions[quiz.answer] ?? 0) + 1
         const seen = new Set()
         for (const choice of quiz.choices) {
             if (seen.has(choice.text)) {
@@ -78,10 +84,17 @@ for (const file of quizFiles(SERIES_DIR).sort()) {
         }
     }
 
-    if (quizzes.length >= 4 && positions.some((count) => count === 0)) {
-        errors.push(`${relative}: 正解位置が偏っています（${positions.join('/')}）`)
+    // 正解位置の完全均等は要求せず、同じ位置に極端に偏った場合だけ警告する。
+    // 選択肢数が混在する場合も、その位置が存在する問題だけを分母にする。
+    const biasedPositions = positions.flatMap((count, index) => {
+        const eligible = eligiblePositions[index] ?? 0
+        if (eligible < 4 || count / eligible < 0.75) return []
+        return [`${index + 1}番目（${count}/${eligible}問）`]
+    })
+    if (biasedPositions.length > 0) {
+        warnings.push(`${relative}: 正解位置が極端に偏っています（${biasedPositions.join('、')}）`)
     }
-    summaries.push(`${relative}: ${quizzes.length}問, 正解位置 ${positions.join('/')}`)
+    summaries.push(`${relative}: ${quizzes.length}問, 正解位置 ${positions.map((count) => count ?? 0).join('/')}`)
 }
 
 if (errors.length > 0) {
@@ -91,3 +104,4 @@ if (errors.length > 0) {
 
 console.log(`quiz品質チェック: ${summaries.length}ファイル, ${summaries.reduce((sum, line) => sum + Number(line.match(/: (\d+)問/)?.[1] ?? 0), 0)}問`)
 for (const summary of summaries) console.log(`  ${summary}`)
+for (const warning of warnings) console.warn(`⚠️ ${warning}`)
