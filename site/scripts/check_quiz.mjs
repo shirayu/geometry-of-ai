@@ -57,7 +57,7 @@ function headingSlugs(file) {
     const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
     let inFence = false
     for (const line of lines) {
-        if (line.startsWith('```')) {
+        if (/^\s*```/.test(line)) {
             inFence = !inFence
             continue
         }
@@ -91,9 +91,35 @@ function checkReferences(text, file, line, errors) {
     }
 }
 
+function checkChapterQuizLinks(errors) {
+    const chapters = [
+        ...Array.from({ length: 16 }, (_, i) => ({ id: String(i).padStart(2, '0'), file: `${String(i).padStart(2, '0')}.md` })),
+        ...Array.from({ length: 6 }, (_, i) => ({ id: `appendix.${i + 1}`, file: `appendix.${i + 1}.md` })),
+    ]
+
+    for (const { id, file } of chapters) {
+        const bodyFile = path.join(SERIES_DIR, file)
+        const quizFile = path.join(SERIES_DIR, id, 'quiz.md')
+        const relative = path.relative(path.resolve(SITE_DIR, '..'), bodyFile)
+        const href = `./${id}/quiz`
+
+        if (!fs.existsSync(quizFile)) {
+            errors.push(`${relative}: 対応するクイズファイルがありません: ${quizFile}`)
+        }
+        if (!fs.existsSync(bodyFile)) continue
+
+        const body = fs.readFileSync(bodyFile, 'utf8')
+        if (!body.includes(`[理解度チェック](${href})`)) {
+            errors.push(`${relative}: 本文から理解度チェックへのリンクがありません: ${href}`)
+        }
+    }
+}
+
 async function main() {
     const md = await createMarkdownRenderer(SERIES_DIR, { math: true })
     const errors = []
+
+    checkChapterQuizLinks(errors)
 
     for (const file of quizFiles(SERIES_DIR)) {
         const relative = path.relative(path.resolve(SITE_DIR, '..'), file)

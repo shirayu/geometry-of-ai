@@ -52,11 +52,17 @@ const PAGES: { file: string; link: string }[] = [
     { file: '15.md', link: '/series/15' },
     { file: '15/quiz.md', link: '/series/15/quiz' },
     { file: 'appendix.1.md', link: '/series/appendix.1' },
+    { file: 'appendix.1/quiz.md', link: '/series/appendix.1/quiz' },
     { file: 'appendix.2.md', link: '/series/appendix.2' },
+    { file: 'appendix.2/quiz.md', link: '/series/appendix.2/quiz' },
     { file: 'appendix.3.md', link: '/series/appendix.3' },
+    { file: 'appendix.3/quiz.md', link: '/series/appendix.3/quiz' },
     { file: 'appendix.4.md', link: '/series/appendix.4' },
+    { file: 'appendix.4/quiz.md', link: '/series/appendix.4/quiz' },
     { file: 'appendix.5.md', link: '/series/appendix.5' },
+    { file: 'appendix.5/quiz.md', link: '/series/appendix.5/quiz' },
     { file: 'appendix.6.md', link: '/series/appendix.6' },
+    { file: 'appendix.6/quiz.md', link: '/series/appendix.6/quiz' },
 ]
 
 function toSlug(text: string): string {

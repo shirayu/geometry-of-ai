@@ -29,9 +29,9 @@
 
 | 回 | 講義 | 状態 |
 | --- | --- | --- |
-| A1 | [量子化の幾何学](/series/appendix.1) | 準備中 |
-| A2 | [多様体の純度問題](/series/appendix.2) | 準備中 |
-| A3 | [動的剪定の幾何学](/series/appendix.3) | 準備中 |
-| A4 | [空間の「物差し」再考](/series/appendix.4) | 準備中 |
-| A5 | [情報幾何学における双対構造](/series/appendix.5) | 準備中 |
-| A6 | [特異点の幾何学](/series/appendix.6) | 準備中 |
+| A1 | [量子化の幾何学](/series/appendix.1) | [クイズを解く](/series/appendix.1/quiz) |
+| A2 | [多様体の純度問題](/series/appendix.2) | [クイズを解く](/series/appendix.2/quiz) |
+| A3 | [動的剪定の幾何学](/series/appendix.3) | [クイズを解く](/series/appendix.3/quiz) |
+| A4 | [空間の「物差し」再考](/series/appendix.4) | [クイズを解く](/series/appendix.4/quiz) |
+| A5 | [情報幾何学における双対構造](/series/appendix.5) | [クイズを解く](/series/appendix.5/quiz) |
+| A6 | [特異点の幾何学](/series/appendix.6) | [クイズを解く](/series/appendix.6/quiz) |

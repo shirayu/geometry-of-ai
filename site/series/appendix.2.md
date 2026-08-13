@@ -356,6 +356,9 @@ $$d(\mathbf{v}_A, \mathbf{v}_B) + d(\mathbf{v}_B, \mathbf{v}_C) \geq d(\mathbf{v
 | **幾何学的手法の限界** | 実装コスト、タスク依存性、敵対的適応の問題 | 外部フィルタリングや合成データが現実的 |
 | **静的→動的への接続** | データ品質の問題は推論時に偽の極小値として顕在化する | 第8回「CoTのエネルギー地形」へ |
 
+> [!TIP]
+> 読了後に、[理解度チェック](./appendix.2/quiz)で要点を確認できる。
+
 ## 参考文献
 
 - Levina, E., & Bickel, P. J. (2004). Maximum Likelihood Estimation of Intrinsic Dimension. *NeurIPS 2004*, 777–784.
