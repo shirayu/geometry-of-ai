@@ -1,0 +1,93 @@
+import fs from 'node:fs'
+import path from 'node:path'
+
+const SERIES_DIR = path.resolve(import.meta.dirname, '..', 'series')
+
+// 文脈を読まずに誤答だと判断できる断定表現。正解には適用しない。
+const cuePatterns = [
+    /必ず/,
+    /完全に/,
+    /すべての/,
+    /常に/,
+    /絶対に/,
+    /自動的に/,
+    /無条件に/,
+    /保証する/,
+    /証明された/,
+]
+
+function quizFiles(dir) {
+    return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+        const file = path.join(dir, entry.name)
+        if (entry.isDirectory()) return quizFiles(file)
+        return entry.name === 'quiz.md' ? [file] : []
+    })
+}
+
+function parseQuizzes(file) {
+    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
+    const quizzes = []
+    let question = null
+
+    for (let i = 0; i < lines.length; i++) {
+        const heading = lines[i].match(/^### Q\d+\.\s*(.+)$/)
+        if (heading) {
+            question = { heading: heading[1], line: i + 1, choices: [], answer: -1 }
+            continue
+        }
+        if (!question || lines[i].trim() !== '```quiz') continue
+
+        for (i++; i < lines.length && lines[i].trim() !== '```'; i++) {
+            const line = lines[i].trim()
+            if (!line.startsWith('- ')) continue
+            let choice = line.slice(2).trim()
+            if (choice.startsWith('[x]')) {
+                question.answer = question.choices.length
+                choice = choice.slice(3).trim()
+            }
+            question.choices.push({ text: choice, line: i + 1 })
+        }
+        quizzes.push(question)
+        question = null
+    }
+    return quizzes
+}
+
+const errors = []
+const summaries = []
+
+for (const file of quizFiles(SERIES_DIR).sort()) {
+    const relative = path.relative(path.resolve(SERIES_DIR, '..', '..'), file)
+    const quizzes = parseQuizzes(file)
+    const positions = [0, 0, 0, 0]
+
+    for (const quiz of quizzes) {
+        if (quiz.answer >= 0 && quiz.answer < positions.length) positions[quiz.answer]++
+        const seen = new Set()
+        for (const choice of quiz.choices) {
+            if (seen.has(choice.text)) {
+                errors.push(`${relative}:${choice.line}: 選択肢が重複しています`)
+            }
+            seen.add(choice.text)
+        }
+        for (const [index, choice] of quiz.choices.entries()) {
+            if (index === quiz.answer) continue
+            if (cuePatterns.some((pattern) => pattern.test(choice.text))) {
+                errors.push(`${relative}:${choice.line}: 誤答に断定語の手がかりがあります: ${choice.text}`)
+            }
+        }
+    }
+
+    if (quizzes.length >= 4 && positions.some((count) => count === 0)) {
+        errors.push(`${relative}: 正解位置が偏っています（${positions.join('/')}）`)
+    }
+    summaries.push(`${relative}: ${quizzes.length}問, 正解位置 ${positions.join('/')}`)
+}
+
+if (errors.length > 0) {
+    console.error(errors.join('\n'))
+    process.exitCode = 1
+}
+
+console.log(`quiz品質チェック: ${summaries.length}ファイル, ${summaries.reduce((sum, line) => sum + Number(line.match(/: (\d+)問/)?.[1] ?? 0), 0)}問`)
+for (const summary of summaries) console.log(`  ${summary}`)

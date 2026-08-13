@@ -37,6 +37,7 @@ tasks:
     desc: Check quiz format, MathJax rendering, and body references
     cmds:
       - node ./site/scripts/check_quiz.mjs
+      - node ./site/scripts/check_quiz_quality.mjs
 
   math_rules:
     desc: Check markdown math rules
