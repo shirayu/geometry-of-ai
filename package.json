@@ -2,8 +2,8 @@
     "author": "",
     "description": "",
     "devDependencies": {
-        "katex": "^0.17.0",
-        "markdownlint-cli2": "^0.23.0"
+        "katex": "^0.18.3",
+        "markdownlint-cli2": "^0.23.2"
     },
     "engines": {
         "npm": "Use pnpm instead of npm!"
