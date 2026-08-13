@@ -9,6 +9,7 @@ tasks:
     desc: Run all linters in parallel
     deps:
       - math
+      - quiz
       - math_rules
       - insertion
       - fence
@@ -31,6 +32,11 @@ tasks:
     desc: Check math expressions
     cmds:
       - node ./scripts/check-math.mjs {{.SERIES_DIR}}
+
+  quiz:
+    desc: Check quiz format, MathJax rendering, and body references
+    cmds:
+      - node ./site/scripts/check_quiz.mjs
 
   math_rules:
     desc: Check markdown math rules
