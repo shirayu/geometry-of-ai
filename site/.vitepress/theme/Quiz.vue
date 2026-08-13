@@ -35,27 +35,40 @@ function reset() {
             <li
                 v-for="(choice, i) in quiz.choices"
                 :key="i"
-                class="quiz__choice"
-                :class="{
-                    'quiz__choice--correct': selected !== null && i === quiz.answer,
-                    'quiz__choice--wrong': selected === i && i !== quiz.answer,
-                }"
-                @click="select(i)"
+                class="quiz__choice-item"
             >
-                <span class="quiz__choice-num">{{ i + 1 }}</span>
-                <span class="quiz__choice-text" v-html="choice" />
-                <span class="quiz__choice-mark">
-                    <template v-if="selected !== null && i === quiz.answer">&#10003;</template>
-                    <template v-else-if="selected === i && i !== quiz.answer">&#10007;</template>
-                </span>
+                <button
+                    type="button"
+                    class="quiz__choice"
+                    :class="{
+                        'quiz__choice--correct': selected !== null && i === quiz.answer,
+                        'quiz__choice--wrong': selected === i && i !== quiz.answer,
+                    }"
+                    :aria-pressed="selected === i"
+                    :disabled="selected !== null"
+                    @click="select(i)"
+                >
+                    <span class="quiz__choice-num">{{ i + 1 }}</span>
+                    <span class="quiz__choice-text" v-html="choice" />
+                    <span class="quiz__choice-mark" aria-hidden="true">
+                        <template v-if="selected !== null && i === quiz.answer">&#10003;</template>
+                        <template v-else-if="selected === i && i !== quiz.answer">&#10007;</template>
+                    </span>
+                </button>
             </li>
         </ul>
         <Transition name="quiz-fade">
-            <div v-if="selected !== null" class="quiz__result" :class="selected === quiz.answer ? 'quiz__result--correct' : 'quiz__result--wrong'">
+            <div
+                v-if="selected !== null"
+                class="quiz__result"
+                :class="selected === quiz.answer ? 'quiz__result--correct' : 'quiz__result--wrong'"
+                role="status"
+                aria-live="polite"
+            >
                 <div class="quiz__result-head">
                     <p class="quiz__verdict">
                         <span v-if="selected === quiz.answer">正解</span>
-                        <span v-else>不正解（正解: {{ quiz.choices[quiz.answer].replace(/<[^>]+>/g, '') }}）</span>
+                        <span v-else>不正解（正解は選択肢{{ quiz.answer + 1 }}）</span>
                     </p>
                     <button type="button" class="quiz__reset" @click="reset">もう一度</button>
                 </div>
@@ -83,6 +96,10 @@ function reset() {
     gap: 0.6rem;
 }
 
+.quiz__choice-item {
+    margin: 0;
+}
+
 .quiz__choice {
     display: flex;
     align-items: center;
@@ -93,8 +110,15 @@ function reset() {
     border: 1.5px solid var(--vp-c-divider);
     border-radius: 8px;
     cursor: pointer;
+    font: inherit;
+    color: var(--vp-c-text-1);
+    text-align: left;
     line-height: 1.5;
     transition: background-color 0.15s, border-color 0.15s;
+}
+
+.quiz__choice:disabled {
+    cursor: default;
 }
 
 .quiz__choice:hover:not(.quiz__choice--correct):not(.quiz__choice--wrong) {

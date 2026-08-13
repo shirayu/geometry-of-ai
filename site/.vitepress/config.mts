@@ -42,20 +42,41 @@ function transformQuizFences(md: MarkdownIt) {
         const info = token.info.trim()
         if (info === 'quiz') {
             const lines = token.content.split('\n')
-            let answer = 0
+            let answer = -1
             const choices: string[] = []
             let explanation = ''
             for (const raw of lines) {
                 const line = raw.trim()
                 if (!line) continue
                 if (line.startsWith('A:')) {
-                    explanation = line.slice('A:'.length).trim()
+                    if (explanation) {
+                        throw new Error(`quizの解説が複数あります: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    explanation = md.renderInline(line.slice('A:'.length).trim()).trim()
                 } else if (line.startsWith('-')) {
                     const body = line.slice(1).trim()
                     const isCorrect = body.startsWith('[x]')
-                    if (isCorrect) answer = choices.length
-                    choices.push(isCorrect ? body.slice(3).trim() : body)
+                    if (isCorrect) {
+                        if (answer !== -1) {
+                            throw new Error(`quizの正解は1つだけ指定してください: ${env.relativePath ?? 'unknown'}`)
+                        }
+                        answer = choices.length
+                    }
+                    const choice = isCorrect ? body.slice(3).trim() : body
+                    if (!choice) {
+                        throw new Error(`quizの選択肢が空です: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    choices.push(md.renderInline(choice).trim())
                 }
+            }
+            if (choices.length < 3 || choices.length > 5) {
+                throw new Error(`quizの選択肢は3〜5個にしてください: ${env.relativePath ?? 'unknown'}`)
+            }
+            if (answer === -1) {
+                throw new Error(`quizの正解を[x]で1つ指定してください: ${env.relativePath ?? 'unknown'}`)
+            }
+            if (!explanation) {
+                throw new Error(`quizの解説がありません: ${env.relativePath ?? 'unknown'}`)
             }
             const data = { choices, answer, explanation }
             const dataBase64 = Buffer.from(JSON.stringify(data), 'utf8').toString('base64')
