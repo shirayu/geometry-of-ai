@@ -128,7 +128,7 @@ function transformImagePaths(md: MarkdownIt) {
 function injectFrontmatter(md: MarkdownIt) {
     md.core.ruler.push('inject_frontmatter', (state) => {
         const file = (state.env as { relativePath?: string }).relativePath ?? ''
-        if (file !== 'series/keywords.md' && file !== 'series/references.md') return
+        if (file !== 'series/keywords.md' && file !== 'series/references.md' && file !== 'series/quizzes.md') return
         if (state.env && !(state.env as Record<string, unknown>).frontmatter) {
             ;(state.env as Record<string, unknown>).frontmatter = { aside: false }
         }
@@ -167,6 +167,7 @@ export default defineConfig({
         nav: [
             { text: '全目次', link: '/series/toc' },
             { text: 'キーワード集', link: '/series/keywords' },
+            { text: 'クイズ', link: '/series/quizzes' },
             { text: '参考文献', link: '/series/references' },
         ],
 
@@ -177,6 +178,7 @@ export default defineConfig({
                     { text: '重要な前提と制約', link: '/series/intro' },
                     { text: '全ページ目次', link: '/series/toc' },
                     { text: 'キーワード集', link: '/series/keywords' },
+                    { text: 'クイズ', link: '/series/quizzes' },
                     { text: '参考文献', link: '/series/references' },
                 ],
             },
