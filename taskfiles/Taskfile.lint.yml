@@ -36,6 +36,7 @@ tasks:
   quiz:
     desc: Check quiz format, MathJax rendering, and body references
     cmds:
+      - node --test ./site/scripts/check_quiz.test.mjs
       - node ./site/scripts/check_quiz.mjs
       - node ./site/scripts/check_quiz_quality.mjs
 

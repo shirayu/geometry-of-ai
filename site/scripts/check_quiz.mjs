@@ -28,7 +28,7 @@ function hasMath(source) {
     return /\$\$?[\s\S]*?\$\$?/.test(source)
 }
 
-function slugifyHeading(text) {
+export function slugifyHeading(text) {
     const rControl = /[\u0000-\u001f]/g
     const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g
     const rCombining = /[\u0300-\u036F]/g
@@ -223,4 +223,6 @@ async function main() {
     console.log(`✅ quizチェック完了（${quizFiles(SERIES_DIR).length}ファイル）`)
 }
 
-await main()
+if (import.meta.url === `file://${process.argv[1]}`) {
+    await main()
+}
