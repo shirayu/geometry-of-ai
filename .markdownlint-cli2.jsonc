@@ -19,6 +19,6 @@
         "site/node_modules",
         ".venv",
         "tmp",
-        "writing_instruction"
+        ".claude"
     ]
 }
