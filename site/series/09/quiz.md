@@ -54,11 +54,11 @@ S: /series/09#スコア関数の幾何学的意味
 A: スコアは対数密度の勾配であり、その場所から見て確率密度が増える方向を表す。生成ではこの方向を利用してノイズからデータらしい領域へ移動する。
 ```
 
-## SDE・ODE・サンプリング
+## 確率微分方程式（Stochastic Differential Equation、SDE）・常微分方程式（Ordinary Differential Equation、ODE）・サンプリング
 
-### Q5. 確率フローODE
+### Q5. 確率フローODE（Ordinary Differential Equation、常微分方程式）
 
-確率フローODEの特徴として正しいものはどれか。
+確率フローODE（Ordinary Differential Equation、常微分方程式）の特徴として正しいものはどれか。
 
 ```quiz
 - ODEなので確率分布を扱えない

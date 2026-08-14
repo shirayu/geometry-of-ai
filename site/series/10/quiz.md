@@ -15,9 +15,9 @@ S: /series/10#multi-step推論-足場を使った旅
 A: Multi-step推論は中間の足場を使うことで、問題を小さな段階へ分けられる。計算量や誤りの蓄積が増えるため、常に有利とは限らない。
 ```
 
-### Q2. Chain of Thought
+### Q2. Chain of Thought（CoT、思考の連鎖）
 
-Chain of Thoughtの本質を説明したものはどれか。
+Chain of Thought（CoT、思考の連鎖）の本質を説明したものはどれか。
 
 ```quiz
 - 推論時の計算を一回に制限する
@@ -41,9 +41,9 @@ S: /series/10#計算量を増やす方法-分類
 A: Test-time scalingには、長い推論、複数試行、木探索、検証と修正などがある。増やす計算の対象によって効果やコストは異なる。
 ```
 
-### Q4. HMMとの対比
+### Q4. HMM（Hidden Markov Model、隠れマルコフモデル）との対比
 
-HMMとTransformerによるCoTの対比として、適切な説明はどれか。
+HMM（Hidden Markov Model、隠れマルコフモデル）とTransformerによるCoTの対比として、適切な説明はどれか。
 
 ```quiz
 - 両者は同じ確率モデルである

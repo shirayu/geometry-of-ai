@@ -23,14 +23,14 @@ Attentionをミクロな動的剪定と見る理由はどれか。
 - Attentionは重みを学習しないから
 - 各トークン間の情報を同じ強さで使うから
 - Attentionは層全体を削除するから
-- [x]Query-Keyの関係に基づいて、入力ごとに参照の重みを変えるから
+- [x]Softmax後に有意な重みを持つ接続だけが実質的に残り、その接続が入力ごとに変わるから
 S: /series/appendix.3#全結合からの選択的遮断
-A: Attentionは内積とSoftmaxによってトークン間の参照強度を入力ごとに変える。計算を完全に省くとは限らないが、情報の流れを選択的に制御する。
+A: Attentionは内積とSoftmaxによって参照強度を入力ごとに変える。有意な重みを持つ接続の影響が相対的に大きくなるため、重要でない接続を実質的に弱めるソフトな剪定と見なせる。ただし、計算を完全に省くとは限らない。
 ```
 
-### Q3. MoEのルーティング
+### Q3. MoE（Mixture of Experts、専門家混合）のルーティング
 
-MoEをマクロな部分空間スイッチングと見る説明はどれか。
+MoE（Mixture of Experts、専門家混合）をマクロな部分空間スイッチングと見る説明はどれか。
 
 ```quiz
 - MoEは表現空間を使わずにルーティングする
@@ -69,25 +69,25 @@ S: /series/appendix.3#スパース化の有効性-条件依存
 A: 疎性は計算量削減の手がかりになるが、信号対雑音比、タスク、ハードウェア、実装形式に依存する。疎にすれば常に速くなるわけではない。
 ```
 
-### Q6. GQA・LoRA・MoD
+### Q6. GQA（Grouped-Query Attention）、LoRA（Low-Rank Adaptation）、MoD（Mixture-of-Depths）
 
-GQA、LoRA、MoDに共通する設計思想はどれか。
+GQA（Grouped-Query Attention）、LoRA（Low-Rank Adaptation）、MoD（Mixture-of-Depths）に共通する設計思想はどれか。
 
 ```quiz
 - 各計算を増やして表現を密にする
 - いずれもルーティングをランダムにする
-- いずれも同じアルゴリズムでKV cacheを量子化する
+- いずれも同じアルゴリズムでKey-Value cache（KV cache）を量子化する
 - [x]冗長な計算や更新を構造的に減らし、必要な部分へ資源を集中する
 S: /series/appendix.3#統一的整理
-A: GQAはKVの共有、LoRAは更新の低ランク化、MoDは深さ方向の計算選択に関わる。実装は異なるが、冗長性を削って効率化する共通の見方ができる。
+A: GQAはKey-Value（KV）の共有、LoRAは更新の低ランク化、MoDは深さ方向の計算選択に関わる。実装は異なるが、冗長性を削って効率化する共通の見方ができる。
 ```
 
-### Q7. FlashAttention
+### Q7. FlashAttention（メモリ入出力を削減するAttention実装）
 
-FlashAttentionの主な工夫はどれか。
+FlashAttention（メモリ入出力を削減するAttention実装）の主な工夫はどれか。
 
 ```quiz
-- [x]GPUメモリ階層を意識し、タイル化と再計算でメモリI/Oを減らしながら厳密計算する
+- [x]GPUメモリ階層を意識し、タイル化と再計算でメモリ入出力（I/O）を減らしながら厳密計算する
 - 各中間行列をGPUメモリへ保存する
 - Attentionの結果を近似的にランダム化する
 - Attentionのヘッドを削除する

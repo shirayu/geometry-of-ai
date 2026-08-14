@@ -56,9 +56,9 @@ A: 量子化は連続表現を粗くするため、近傍関係や局所構造�
 
 ## 手法と誤差を選ぶ
 
-### Q5. PTQとQAT
+### Q5. PTQ（Post-Training Quantization、学習後量子化）とQAT（Quantization-Aware Training、量子化認識学習）
 
-PTQとQATの違いとして、正しいものはどれか。
+PTQ（Post-Training Quantization、学習後量子化）とQAT（Quantization-Aware Training、量子化認識学習）の違いとして、正しいものはどれか。
 
 ```quiz
 - PTQは学習中に量子化を意識し、QATは学習後にだけ量子化する
@@ -83,9 +83,9 @@ S: /series/appendix.1#層ごとの感度
 A: 量子化誤差の影響は層や入力によって異なる。感度の高い層を高ビットにする混合精度は、容量と性能の折り合いをつける方法になる。
 ```
 
-### Q7. 活性化とKV cache
+### Q7. 活性化とKV cache（Key-Value cache、キー・バリューキャッシュ）
 
-LLMの量子化で、重み以外にも量子化対象になりうるものはどれか。
+LLM（Large Language Model、大規模言語モデル）の量子化で、重み以外にも量子化対象になりうるものはどれか。
 
 ```quiz
 - 重みだけで、活性化やKV cacheは対象にならない

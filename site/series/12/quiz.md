@@ -69,9 +69,9 @@ S: /series/12#測地線の形状
 A: モデル上の見た目と内在的な測地線は区別する必要がある。ポアンカレ円板では境界に直交する円弧などが双曲的な「直線」を表す。
 ```
 
-### Q6. Poincaré Embeddings
+### Q6. Poincaré Embeddings（階層関係の双曲埋め込み）
 
-Poincaré Embeddingsが適したデータの例はどれか。
+Poincaré Embeddings（階層関係の双曲埋め込み）が適したデータの例はどれか。
 
 ```quiz
 - 周期だけを持つデータに限定される

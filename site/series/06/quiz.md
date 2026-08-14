@@ -69,9 +69,9 @@ S: /series/06#multi-head-attention-複数の視点
 A: 各ヘッドは異なる射影空間でAttentionを計算できる。複数の関係や特徴の見方を並行して持ち、出力を統合する仕組みである。
 ```
 
-### Q6. RoPE
+### Q6. RoPE（Rotary Position Embedding、回転位置埋め込み）
 
-RoPEが位置情報を表現する方法として、正しいものはどれか。
+RoPE（Rotary Position Embedding、回転位置埋め込み）が位置情報を表現する方法として、正しいものはどれか。
 
 ```quiz
 - 各位置を同じ角度で回転させる

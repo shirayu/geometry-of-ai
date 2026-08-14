@@ -2,9 +2,9 @@
 
 ## 一撃からプロセスへ
 
-### Q1. GANとVAEの生成
+### Q1. GAN（Generative Adversarial Network、敵対的生成ネットワーク）とVAE（Variational Autoencoder、変分オートエンコーダ）の生成
 
-GANやVAEについて、「一撃変換」と呼ばれる限界は何を指すか。
+GAN（Generative Adversarial Network、敵対的生成ネットワーク）やVAE（Variational Autoencoder、変分オートエンコーダ）について、「一撃変換」と呼ばれる限界は何を指すか。
 
 ```quiz
 - GANが画像を生成できない
@@ -41,9 +41,9 @@ S: /series/08#ベクトル場としてのニューラルネットワーク
 A: ベクトル場の見方では、関数は完成品を一撃で返すのではなく、現在の状態に応じた局所的な変化を返す。反復や積分によって軌道が生じる。
 ```
 
-### Q4. ResNetとNeural ODE
+### Q4. ResNetとNeural ODE（Ordinary Differential Equation、常微分方程式）
 
-ResNetとNeural ODEの関係について、最も慎重な説明はどれか。
+ResNetとNeural ODE（Ordinary Differential Equation、常微分方程式）の関係について、最も慎重な説明はどれか。
 
 ```quiz
 - [x]ResNetをオイラー法による離散的な時間発展と解釈できるが、両者は同一ではない
@@ -56,9 +56,9 @@ A: 残差更新はODEのオイラー法に似た形を持つ。この対応は�
 
 ## 安定した時間発展
 
-### Q5. 正規化層
+### Q5. LayerNorm（Layer Normalization、層正規化）とL2正規化
 
-LayerNormとL2正規化の違いとして、正しいものはどれか。
+LayerNorm（Layer Normalization、層正規化）とL2正規化の違いとして、正しいものはどれか。
 
 ```quiz
 - LayerNormは単位ノルムを実現する
@@ -66,12 +66,12 @@ LayerNormとL2正規化の違いとして、正しいものはどれか。
 - L2正規化は特徴の平均と分散をバッチごとに合わせる
 - 両者は数学的にそのまま同じ操作である
 S: /series/08#正規化層の役割
-A: LayerNormやRMSNormは活性化のスケールを整えるが、L2正規化とは目的と制約が異なる。正規化の名前だけで球面制約と同一視してはいけない。
+A: LayerNormやRMSNorm（Root Mean Square Normalization、二乗平均平方根正規化）は活性化のスケールを整えるが、L2正規化とは目的と制約が異なる。正規化の名前だけで球面制約と同一視してはいけない。
 ```
 
-### Q6. Neural ODEの表現力
+### Q6. Neural ODE（常微分方程式モデル）の表現力
 
-Neural ODEの表現力について注意すべき点はどれか。
+Neural ODE（常微分方程式モデル）の表現力について注意すべき点はどれか。
 
 ```quiz
 - 次元を増やす拡張は連続時間の考え方と矛盾する

@@ -15,9 +15,9 @@ S: /series/11#モダリティごとの構造的特性
 A: 画像の空間的隣接、言語の構文、音声の時間的連続性は異なる。共有空間へ写す場合も、固有構造が取り出しにくくなる可能性を考慮する。
 ```
 
-### Q2. CLIPの対照学習
+### Q2. CLIP（Contrastive Language–Image Pre-training）の対照学習
 
-CLIPの基本的な学習目標はどれか。
+CLIP（Contrastive Language–Image Pre-training）の基本的な学習目標はどれか。
 
 ```quiz
 - 画像とテキストを別々の分類器で学習し、関係を使わない
@@ -69,9 +69,9 @@ S: /series/11#モダリティギャップ
 A: 共有空間への射影は、単一の滑らかな分布や完全な混合を保証しない。モダリティごとの領域分離が残ることをモダリティギャップと呼ぶ。
 ```
 
-### Q6. FEDA
+### Q6. FEDA（Feature Augmentation for Domain Adaptation、ドメイン適応のための特徴拡張）
 
-FEDAの幾何学的な設計はどれか。
+FEDA（Feature Augmentation for Domain Adaptation、ドメイン適応のための特徴拡張）の幾何学的な設計はどれか。
 
 ```quiz
 - 各ドメインを同じ一点へ押し込む
