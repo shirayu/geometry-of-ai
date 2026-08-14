@@ -13,12 +13,28 @@ def is_escaped(s: str, idx: int) -> bool:
     return (backslashes % 2) == 1
 
 
+def block_prefix_end(line: str) -> int:
+    """Index right after leading whitespace/blockquote markers (e.g. '>  > ')."""
+    k = 0
+    n = len(line)
+    while k < n:
+        if line[k].isspace():
+            k += 1
+            continue
+        if line[k] == ">":
+            k += 1
+            continue
+        break
+    return k
+
+
 def process_line(line: str):
     out = []
     issues = []
     i = 0
     in_code_span = False
     code_span_ticks = 0
+    first_nonspace = block_prefix_end(line)
 
     while i < len(line):
         ch = line[i]
@@ -48,6 +64,10 @@ def process_line(line: str):
                 if end == -1:
                     out.append(line[i:])
                     return "".join(out), issues
+
+                if i != first_nonspace:
+                    issues.append((i + 1, "block-math-not-on-own-line"))
+
                 out.append(line[i : end + 2])
                 i = end + 2
                 continue
