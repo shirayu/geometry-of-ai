@@ -27,6 +27,7 @@ tasks:
       - terms
       - references
       - svg_naming
+      - lecture_links
 
   math:
     desc: Check math expressions
@@ -127,3 +128,8 @@ tasks:
     desc: Check SVG file naming convention (NN_name.svg, no fig_ prefix)
     cmds:
       - python3 ./scripts/check_svg_naming.py {{.SERIES_DIR}}
+
+  lecture_links:
+    desc: Check that 第N回/Appendix N references are Markdown links
+    cmds:
+      - python3 ./scripts/check_lecture_links.py {{.SERIES_DIR}}
