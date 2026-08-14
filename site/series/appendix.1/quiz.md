@@ -62,9 +62,9 @@ PTQ（Post-Training Quantization、学習後量子化）とQAT（Quantization-Aw
 
 ```quiz
 - PTQは学習中に量子化を意識し、QATは学習後にだけ量子化する
-- 両者は量子化を使わない
-- QATは推論時だけ量子化する
+- PTQでは推論時も重みがフル精度のまま保たれる
 - [x]PTQは学習後、QATは量子化を模擬して学習する
+- 両者は同じ量子化を適用し、ビット幅の表記だけが異なる
 S: /series/appendix.1#post-training-quantization-ptq
 S: /series/appendix.1#quantization-aware-training-qat
 A: PTQは学習済みモデルへ後から量子化を施す。QATは学習中に量子化誤差を意識させ、量子化後の性能低下を補いやすくする。
@@ -88,10 +88,10 @@ A: 量子化誤差の影響は層や入力によって異なる。感度の高�
 LLM（Large Language Model、大規模言語モデル）の量子化で、重み以外にも量子化対象になりうるものはどれか。
 
 ```quiz
-- 重みだけで、活性化やKV cacheは対象にならない
-- 学習データのラベルだけ
+- 活性化は非線形関数の出力なので、量子化の対象にならない
+- KV cacheはサイズが固定されているため、量子化の必要がない
 - [x]活性化やKV cacheも量子化できる
-- 参考文献の文字列だけ
+- 活性化の量子化はLayerNormと同じ操作で、暗黙に行われる
 S: /series/appendix.1#量子化は「重み」だけでは終わらない-kv-cache-活性
 A: LLM推論では重みだけでなく、活性化や蓄積されるKV cacheもメモリを消費する。それらを量子化すると効率は上がるが、誤差の影響も評価が必要になる。
 ```
