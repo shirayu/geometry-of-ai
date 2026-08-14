@@ -164,12 +164,7 @@ export default defineConfig({
     },
 
     themeConfig: {
-        nav: [
-            { text: '全目次', link: '/series/toc' },
-            { text: 'キーワード集', link: '/series/keywords' },
-            { text: 'クイズ', link: '/series/quizzes' },
-            { text: '参考文献', link: '/series/references' },
-        ],
+        nav: [],
 
         sidebar: [
             {

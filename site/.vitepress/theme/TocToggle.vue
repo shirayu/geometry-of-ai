@@ -66,6 +66,10 @@ watch(() => route.path, () => {
 })
 
 function toggle() {
+  if (window.matchMedia('(max-width: 959px)').matches) {
+    document.querySelector<HTMLElement>('.VPLocalNav .menu')?.click()
+    return
+  }
   hidden.value = !hidden.value
   localStorage.setItem(STORAGE_KEY, hidden.value ? '1' : '0')
   applyClass(hidden.value)

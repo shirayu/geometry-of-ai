@@ -3,6 +3,11 @@
     display: none !important;
 }
 
+/* グローバルnavハンバーガーを非表示（目次は左のトグルボタンに統一） */
+.VPNavBarHamburger {
+    display: none !important;
+}
+
 /* スマホでもヘッダーを画面上部に固定表示 */
 @media (max-width: 959px) {
     .VPNav {
