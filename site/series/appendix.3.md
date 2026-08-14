@@ -859,6 +859,9 @@ print(f"Parameters saved: ~{(1 - 2 / 8) * 100:.1f}% (for K,V)")
 
 </details>
 
+> [!TIP]
+> 読了後に、[理解度チェック](./appendix.3/quiz)で要点を確認できる。
+
 ## 参考文献
 
 ### Transformer と Attention

@@ -4,12 +4,14 @@ import TocToggle from './TocToggle.vue'
 import SearchButton from './SearchButton.vue'
 import TocAside from './TocAside.vue'
 import MermaidDiagram from './MermaidDiagram.vue'
+import Quiz from './Quiz.vue'
 import './custom.css'
 
 export default {
     extends: DefaultTheme,
     enhanceApp({ app }) {
         app.component('MermaidDiagram', MermaidDiagram)
+        app.component('Quiz', Quiz)
     },
     Layout: () => {
         return h(DefaultTheme.Layout, null, {

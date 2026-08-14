@@ -431,6 +431,9 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
 | 第13回（スパース性/MoE） | スパース活性化と量子化の組み合わせ |
 | 第14回（TDA） | 量子化前後のトポロジー保存の分析 |
 
+> [!TIP]
+> 読了後に、[理解度チェック](./appendix.1/quiz)で要点を確認できる。
+
 ## 参考文献
 
 ### 基礎

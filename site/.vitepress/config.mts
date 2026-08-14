@@ -28,6 +28,75 @@ function transformMermaidFences(md: MarkdownIt) {
     }
 }
 
+// ```quiz → Quiz コンポーネントでクリック即正誤判定
+// 問題文・レベルは Markdown の見出し（###）側で書く。フェンスは選択肢と解説のみ。
+// フォーマット:
+//   - 選択肢1
+//   - [x]選択肢2  (正解)
+//   - 選択肢3
+//   A: 解説文
+//   S: /series/02#見出しslug
+function transformQuizFences(md: MarkdownIt) {
+    const original = md.renderer.rules.fence ?? ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
+    md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        const token = tokens[idx]
+        const info = token.info.trim()
+        if (info === 'quiz') {
+            const lines = token.content.split('\n')
+            let answer = -1
+            const choices: string[] = []
+            let explanation = ''
+            const sources: string[] = []
+            for (const raw of lines) {
+                const line = raw.trim()
+                if (!line) continue
+                if (line.startsWith('A:')) {
+                    if (explanation) {
+                        throw new Error(`quizの解説が複数あります: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    explanation = md.renderInline(line.slice('A:'.length).trim()).trim()
+                } else if (line.startsWith('S:')) {
+                    const source = line.slice('S:'.length).trim()
+                    if (!/^\/series\/[^\s#]+#[^\s#]+$/.test(source)) {
+                        throw new Error(`quizの本文リンクは /series/ファイル#見出しslug 形式にしてください: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    if (!sources.includes(source)) sources.push(source)
+                } else if (line.startsWith('-')) {
+                    const body = line.slice(1).trim()
+                    const isCorrect = body.startsWith('[x]')
+                    if (isCorrect) {
+                        if (answer !== -1) {
+                            throw new Error(`quizの正解は1つだけ指定してください: ${env.relativePath ?? 'unknown'}`)
+                        }
+                        answer = choices.length
+                    }
+                    const choice = isCorrect ? body.slice(3).trim() : body
+                    if (!choice) {
+                        throw new Error(`quizの選択肢が空です: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    choices.push(md.renderInline(choice).trim())
+                }
+            }
+            if (choices.length < 3 || choices.length > 5) {
+                throw new Error(`quizの選択肢は3〜5個にしてください: ${env.relativePath ?? 'unknown'}`)
+            }
+            if (answer === -1) {
+                throw new Error(`quizの正解を[x]で1つ指定してください: ${env.relativePath ?? 'unknown'}`)
+            }
+            if (!explanation) {
+                throw new Error(`quizの解説がありません: ${env.relativePath ?? 'unknown'}`)
+            }
+            if (sources.length === 0) {
+                throw new Error(`quizの本文リンクS:が少なくとも1つ必要です: ${env.relativePath ?? 'unknown'}`)
+            }
+            const data = { choices, answer, explanation, sources }
+            const dataBase64 = Buffer.from(JSON.stringify(data), 'utf8').toString('base64')
+            return `<Quiz data-base64="${dataBase64}" />`
+        }
+        return original(tokens, idx, options, env, self)
+    }
+}
+
 // <details>\n<summary>label</summary> → <details v-pre> で Vue 補間を無効化
 function transformDetails(md: MarkdownIt) {
     md.core.ruler.push('details_to_vitepress', (state) => {
@@ -59,7 +128,7 @@ function transformImagePaths(md: MarkdownIt) {
 function injectFrontmatter(md: MarkdownIt) {
     md.core.ruler.push('inject_frontmatter', (state) => {
         const file = (state.env as { relativePath?: string }).relativePath ?? ''
-        if (file !== 'series/keywords.md' && file !== 'series/references.md') return
+        if (file !== 'series/keywords.md' && file !== 'series/references.md' && file !== 'series/quizzes.md') return
         if (state.env && !(state.env as Record<string, unknown>).frontmatter) {
             ;(state.env as Record<string, unknown>).frontmatter = { aside: false }
         }
@@ -86,6 +155,7 @@ export default defineConfig({
         math: true,
         config: (md) => {
             transformMermaidFences(md)
+            transformQuizFences(md)
             transformPythonFences(md)
             transformDetails(md)
             transformImagePaths(md)
@@ -97,6 +167,7 @@ export default defineConfig({
         nav: [
             { text: '全目次', link: '/series/toc' },
             { text: 'キーワード集', link: '/series/keywords' },
+            { text: 'クイズ', link: '/series/quizzes' },
             { text: '参考文献', link: '/series/references' },
         ],
 
@@ -107,6 +178,7 @@ export default defineConfig({
                     { text: '重要な前提と制約', link: '/series/intro' },
                     { text: '全ページ目次', link: '/series/toc' },
                     { text: 'キーワード集', link: '/series/keywords' },
+                    { text: 'クイズ', link: '/series/quizzes' },
                     { text: '参考文献', link: '/series/references' },
                 ],
             },

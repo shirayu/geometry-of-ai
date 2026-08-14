@@ -166,7 +166,7 @@ def main() -> int:
     all_errors: list[str] = []
     for path in sorted(series_dir.glob("*.md")):
         # 構成ファイルはスキップ
-        if path.name in {"intro.md", "toc.md", "references.md", "keywords.md"}:
+        if path.name in {"intro.md", "toc.md", "references.md", "keywords.md", "quizzes.md"}:
             continue
         all_errors.extend(check_file(path))
 
