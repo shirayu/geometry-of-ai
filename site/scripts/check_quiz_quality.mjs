@@ -14,6 +14,8 @@ const cuePatterns = [
     /無条件に/,
     /保証する/,
     /証明された/,
+    /一切/,
+    /まったく/,
 ]
 
 function quizFiles(dir) {

@@ -47,7 +47,7 @@ ResNetとNeural ODE（Ordinary Differential Equation、常微分方程式）の�
 
 ```quiz
 - [x]ResNetをオイラー法による離散的な時間発展と解釈できるが、両者は同一ではない
-- 残差接続と時間発展には関係がない
+- ResNetはオイラー法の近似ではなく、常微分方程式の解を厳密に計算する構造そのものである
 - ResNetは連続時間の微分方程式を厳密に解いている
 - Neural ODEは離散層を持たないため学習できない
 S: /series/08#残差接続の幾何学的再解釈
