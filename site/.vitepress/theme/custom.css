@@ -3,6 +3,21 @@
     display: none !important;
 }
 
+/* スマホでもヘッダーを画面上部に固定表示 */
+@media (max-width: 959px) {
+    .VPNav {
+        position: fixed !important;
+    }
+
+    .VPContent {
+        padding-top: var(--vp-nav-height);
+    }
+
+    .VPContent.has-sidebar {
+        margin-top: var(--vp-layout-top-height, 0px);
+    }
+}
+
 
 /* 目次非表示（左サイドバー＋右アウトライン） */
 html.hide-toc .VPSidebar {

@@ -129,6 +129,13 @@ function applyClass(hide: boolean) {
   align-items: center;
   gap: 12px;
   overflow: hidden;
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .nav-page-title {
+    display: none;
+  }
 }
 
 .nav-h1-title {
