@@ -27,6 +27,12 @@ function quizFiles(dir) {
     })
 }
 
+// 選択肢直後の独立行 <!-- quiz-lint-ignore: 種別[,種別...] - 理由 --> で、
+// 指定した種別の警告（機械検出の誤検知）だけをその選択肢に限定して抑制できる。
+// 種別: length（長さ非対称）, hedge（構文非対称）
+const ignoreCommentPattern = /^<!--\s*quiz-lint-ignore:\s*([a-z,]+)\s*-\s*(.+?)\s*-->$/
+const knownIgnoreKinds = new Set(['length', 'hedge'])
+
 function parseQuizzes(file) {
     const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
     const quizzes = []
@@ -48,7 +54,15 @@ function parseQuizzes(file) {
                 question.answer = question.choices.length
                 choice = choice.slice(3).trim()
             }
-            question.choices.push({ text: choice, line: i + 1 })
+            const next = lines[i + 1]?.trim() ?? ''
+            const ignoreMatch = next.match(ignoreCommentPattern)
+            const ignoreKinds = new Set(
+                (ignoreMatch?.[1] ?? '')
+                    .split(',')
+                    .map((kind) => kind.trim())
+                    .filter((kind) => knownIgnoreKinds.has(kind)),
+            )
+            question.choices.push({ text: choice, line: i + 1, ignoreKinds })
         }
         quizzes.push(question)
         question = null
@@ -83,6 +97,34 @@ for (const file of quizFiles(SERIES_DIR).sort()) {
             if (index === quiz.answer) continue
             if (cuePatterns.some((pattern) => pattern.test(choice.text))) {
                 errors.push(`${relative}:${choice.line}: 誤答に断定語の手がかりがあります: ${choice.text}`)
+            }
+        }
+
+        const answerChoice = quiz.answer >= 0 ? quiz.choices[quiz.answer] : null
+
+        // 長さ非対称: 正解だけが最長（かつ他より大幅に長い）だと、内容を読まずに選べてしまう。
+        if (answerChoice && !answerChoice.ignoreKinds.has('length')) {
+            const lengths = quiz.choices.map((choice) => choice.text.length)
+            const answerLength = lengths[quiz.answer]
+            const others = lengths.filter((_, index) => index !== quiz.answer)
+            const maxOther = Math.max(...others)
+            const avgOther = others.reduce((sum, length) => sum + length, 0) / others.length
+            if (answerLength === Math.max(...lengths) && answerLength > maxOther && answerLength >= avgOther * 1.5) {
+                warnings.push(
+                    `${relative}:${answerChoice.line}: 「${quiz.heading}」の正解が他より大幅に長い可能性があります（正解${answerLength}字 / 誤答平均${avgOther.toFixed(1)}字）`,
+                )
+            }
+        }
+
+        // 構文非対称: 正解だけが「〜が（一方）〜とは限らない／依存する」型の条件付き構文で、
+        // 誤答が単純断定のままだと、歯切れの良さだけで正解が推測できてしまう。
+        const hedgePattern = /(とは限らない|に依存する|場合がある|とは言えない|とは異なる|わけではない)/
+        if (answerChoice && !answerChoice.ignoreKinds.has('hedge')) {
+            const othersHedged = quiz.choices.some((choice, index) => index !== quiz.answer && hedgePattern.test(choice.text))
+            if (hedgePattern.test(answerChoice.text) && !othersHedged) {
+                warnings.push(
+                    `${relative}:${answerChoice.line}: 「${quiz.heading}」正解のみが条件付き構文（${answerChoice.text.match(hedgePattern)?.[0]}）の可能性があります`,
+                )
             }
         }
     }
