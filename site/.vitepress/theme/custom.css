@@ -152,6 +152,16 @@ html.hide-toc .VPDoc.has-aside .content-container {
     color: var(--vp-c-brand-1);
 }
 
+/* quizzes/keywords/intro/references: 目次的ページのため連番を表示しない */
+html.no-h2-counter .vp-doc h2::before {
+    content: none;
+}
+
+/* keywords.md: 見出し自体がリンクなので、下線を付けない */
+.vp-doc h2 > a {
+    text-decoration: none;
+}
+
 /* 全ページ目次（series/toc.md）: ページごとにh2相当へ連番を表示 */
 .toc-section {
     counter-reset: vp-toc-h2;
@@ -178,6 +188,10 @@ html.hide-toc .VPDoc.has-aside .content-container {
 .VPDocAsideOutline .root > li > .outline-link::before {
     content: counter(vp-outline-h2) '. ';
     color: var(--vp-c-brand-1);
+}
+
+html.no-h2-counter .VPDocAsideOutline .root > li > .outline-link::before {
+    content: none;
 }
 
 /* h3: subsection — 左ボーダー細め */

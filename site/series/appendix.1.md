@@ -1,6 +1,10 @@
 
 # Appendix 1: 量子化の幾何学
 
+> [!TIP]
+> 読了後に、[理解度チェック](./appendix.1/quiz)で要点を確認できる。
+> このページで登場した用語は、[キーワード集](/series/keywords#appendix-1-量子化の幾何学)でも確認できる。
+
 ～重みの離散化が多様体に何をするのか～
 
 ## 本Appendixの位置づけ
@@ -432,6 +436,7 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
 
 > [!TIP]
 > 読了後に、[理解度チェック](./appendix.1/quiz)で要点を確認できる。
+> このページで登場した用語は、[キーワード集](/series/keywords#appendix-1-量子化の幾何学)でも確認できる。
 
 ## 参考文献
 
