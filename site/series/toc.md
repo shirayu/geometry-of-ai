@@ -22,13 +22,23 @@ import { data } from './toc.data.ts'
 
 <style scoped>
 .toc-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background-color: var(--vp-c-bg);
+}
+
+.toc-section:nth-child(even) {
+  background-color: var(--vp-c-bg-alt);
 }
 
 .toc-page-title {
-  margin-top: 2rem;
+  margin-top: 0;
   margin-bottom: 0.5rem;
+  border-top: none;
   border-bottom: none;
+  padding-top: 0;
   padding-bottom: 0;
 }
 
@@ -44,6 +54,7 @@ import { data } from './toc.data.ts'
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  padding-left: 1.25rem;
 }
 
 .toc-item a {

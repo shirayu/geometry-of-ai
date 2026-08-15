@@ -129,14 +129,55 @@ html.hide-toc .VPDoc.has-aside .content-container {
     display: none !important;
 }
 
-/* h2: section — 下線のみ */
-.vp-doc h2 {
+/* h2: section — 下線のみ、表示専用の連番付き */
+.vp-doc {
+    counter-reset: vp-h2;
+}
+
+.vp-doc h2:not(.toc-page-title) {
     margin-top: 3.5rem;
     margin-bottom: 1.25rem;
     padding-bottom: 0.4rem;
     border-top: none;
     border-left: none;
     border-bottom: 2px solid var(--vp-c-brand-1);
+}
+
+.vp-doc h2:not(.toc-page-title) {
+    counter-increment: vp-h2;
+}
+
+.vp-doc h2:not(.toc-page-title)::before {
+    content: counter(vp-h2) '. ';
+    color: var(--vp-c-brand-1);
+}
+
+/* 全ページ目次（series/toc.md）: ページごとにh2相当へ連番を表示 */
+.toc-section {
+    counter-reset: vp-toc-h2;
+}
+
+.toc-section .toc-item.toc-h2 {
+    counter-increment: vp-toc-h2;
+}
+
+.toc-section .toc-item.toc-h2 a::before {
+    content: counter(vp-toc-h2) '. ';
+    color: var(--vp-c-brand-1);
+}
+
+/* 右目次: h2相当の項目にも同じ連番を表示 */
+.VPDocAsideOutline .root {
+    counter-reset: vp-outline-h2;
+}
+
+.VPDocAsideOutline .root > li > .outline-link {
+    counter-increment: vp-outline-h2;
+}
+
+.VPDocAsideOutline .root > li > .outline-link::before {
+    content: counter(vp-outline-h2) '. ';
+    color: var(--vp-c-brand-1);
 }
 
 /* h3: subsection — 左ボーダー細め */
