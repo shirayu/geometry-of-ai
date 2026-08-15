@@ -8,6 +8,16 @@ const isTocPage = () => route.path === '/series/toc' || route.path === '/series/
 
 const activeId = ref('')
 
+// 部ごとに循環する色相（寒色→暖色）。Appendixもグラデーションの最後に含める。
+const PART_HUES = [210, 260, 310, 350, 20, 40, 90]
+
+function partHue(part?: string): number | null {
+  if (!part) return null
+  const order = [...new Set(data.map(p => p.part).filter((p): p is string => !!p))]
+  const i = order.indexOf(part)
+  return PART_HUES[i % PART_HUES.length]
+}
+
 let observer: IntersectionObserver | null = null
 
 function setupObserver() {
@@ -51,13 +61,18 @@ watch(() => route.path, () => {
   <div v-if="isTocPage()" class="toc-aside">
     <div class="toc-aside-title">ページ一覧</div>
     <nav>
-      <a
-        v-for="page in data"
-        :key="page.id"
-        :href="'#' + page.id"
-        class="toc-aside-link"
-        :class="{ active: activeId === page.id }"
-      >{{ page.title }}</a>
+      <template v-for="(page, index) in data" :key="page.id">
+        <div
+          v-if="page.part && (index === 0 || data[index - 1].part !== page.part)"
+          class="toc-aside-part"
+          :style="partHue(page.part) !== null ? { '--part-hue': partHue(page.part) } : {}"
+        >{{ page.part }}</div>
+        <a
+          :href="'#' + page.id"
+          class="toc-aside-link"
+          :class="{ active: activeId === page.id }"
+        >{{ page.title }}</a>
+      </template>
     </nav>
   </div>
 </template>
@@ -75,13 +90,34 @@ watch(() => route.path, () => {
   padding: 0 0 0 12px;
 }
 
+.toc-aside-part {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vp-c-text-3);
+  margin-top: 10px;
+  padding: 0 0 2px 12px;
+}
+
+.toc-aside-part:first-child {
+  margin-top: 0;
+}
+
+.toc-aside-part[style*="--part-hue"] {
+  color: hsl(var(--part-hue), 45%, 42%);
+}
+
+.dark .toc-aside-part[style*="--part-hue"] {
+  color: hsl(var(--part-hue), 55%, 72%);
+}
+
 .toc-aside-link {
   display: block;
-  padding: 2px 0 2px 12px;
+  padding: 2px 0 2px 20px;
   font-size: 13px;
   color: var(--vp-c-text-2);
   text-decoration: none;
   line-height: 1.6;
+  border-radius: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

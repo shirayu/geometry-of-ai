@@ -9,6 +9,7 @@ const NO_COUNTER_PATHS = [
   '/series/keywords',
   '/series/intro',
   '/series/references',
+  '/series/toc',
 ]
 
 function apply() {
