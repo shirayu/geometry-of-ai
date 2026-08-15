@@ -28,6 +28,17 @@
 }
 
 
+/* トップページ: サイドバーなしページの本文幅制限(752px/784px)を解除して全幅表示 */
+@media (min-width: 960px) {
+    html.wide-page .VPDoc:not(.has-sidebar) .container {
+        max-width: 100%;
+    }
+
+    html.wide-page .VPDoc:not(.has-sidebar) .content {
+        max-width: 100%;
+    }
+}
+
 /* 目次非表示（左サイドバー＋右アウトライン） */
 html.hide-toc .VPSidebar {
     display: none !important;
