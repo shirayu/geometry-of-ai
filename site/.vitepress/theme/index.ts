@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 import { h } from 'vue'
 import TocToggle from './TocToggle.vue'
 import SearchButton from './SearchButton.vue'
+import NavPageTitle from './NavPageTitle.vue'
 import TocAside from './TocAside.vue'
 import MermaidDiagram from './MermaidDiagram.vue'
 import Quiz from './Quiz.vue'
@@ -17,7 +18,7 @@ export default {
     },
     Layout: () => {
         return h(DefaultTheme.Layout, null, {
-            'nav-bar-content-before': () => [h(TocToggle), h(SearchButton)],
+            'nav-bar-content-before': () => [h(NavPageTitle), h(SearchButton), h(TocToggle)],
             'aside-outline-before': () => h(TocAside),
             'layout-top': () => [h(NoH2Counter), h(WidePage)],
         })

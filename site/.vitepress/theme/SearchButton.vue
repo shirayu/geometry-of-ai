@@ -20,6 +20,7 @@ function openSearch() {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 4px;
   width: 32px;
   height: 32px;
   border-radius: 6px;
