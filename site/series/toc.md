@@ -17,6 +17,9 @@ import { data } from './toc.data.ts'
     >
       <a :href="page.link + '#' + h.slug">{{ h.text }}</a>
     </div>
+    <div v-if="page.quizLink" class="toc-item toc-quiz">
+      <a :href="page.quizLink">→ 理解度チェック</a>
+    </div>
   </div>
 </div>
 
@@ -73,5 +76,14 @@ import { data } from './toc.data.ts'
 .toc-h3 a {
   font-size: 0.875em;
   color: var(--vp-c-text-2);
+}
+
+.toc-quiz {
+  margin-top: 0.35rem;
+}
+
+.toc-quiz a {
+  font-size: 0.875em;
+  color: var(--vp-c-text-3);
 }
 </style>
