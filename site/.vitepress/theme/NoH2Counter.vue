@@ -5,6 +5,7 @@ import { useRoute } from 'vitepress'
 const route = useRoute()
 
 const NO_COUNTER_PATHS = [
+  '/',
   '/series/quizzes',
   '/series/keywords',
   '/series/intro',
