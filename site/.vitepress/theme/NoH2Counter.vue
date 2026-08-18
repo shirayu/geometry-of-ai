@@ -24,4 +24,7 @@ onMounted(apply)
 watch(() => route.path, apply)
 </script>
 
-<template></template>
+<template>
+  <!-- VitePress 1で空コンポーネントがSSRのコメントノードをずらすための安定要素。VitePress 2移行時も要再検証。 -->
+  <span class="layout-effect" aria-hidden="true" />
+</template>

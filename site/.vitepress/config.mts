@@ -135,6 +135,29 @@ function injectFrontmatter(md: MarkdownIt) {
     })
 }
 
+// MathJaxが生成するSVG/MathMLをVueのハイドレーション対象から除外。
+// 出典: https://github.com/vuejs/vitepress/blob/c9b89282f3573998cfc4103bbddbd73d2529cb66/src/node/markdown/markdown.ts#L326-L343
+// VitePress 2では本体に同じ対策が入っているため、移行後にこの関数と呼び出しを削除できる。
+function protectMathFromVue(md: MarkdownIt) {
+    const inline = md.renderer.rules.math_inline
+    if (inline) {
+        md.renderer.rules.math_inline = function (...args) {
+            return inline
+                .apply(this, args)
+                .replace(/^<mjx-container /, '<mjx-container v-pre ')
+        }
+    }
+
+    const block = md.renderer.rules.math_block
+    if (block) {
+        md.renderer.rules.math_block = function (...args) {
+            return block
+                .apply(this, args)
+                .replace(/^<mjx-container /, '<mjx-container v-pre ')
+        }
+    }
+}
+
 export default defineConfig({
     title: '情報幾何学とAI',
     description: 'AIの表現空間設計を「幾何学」という言語で読み解く全15回の講義',
@@ -160,6 +183,7 @@ export default defineConfig({
             transformDetails(md)
             transformImagePaths(md)
             injectFrontmatter(md)
+            protectMathFromVue(md)
         },
     },
 
