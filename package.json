@@ -15,10 +15,5 @@
         "preinstall": "npx only-allow pnpm"
     },
     "version": "1.0.0",
-    "packageManager": "pnpm@10.5.2",
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "esbuild"
-        ]
-    }
+    "packageManager": "pnpm@10.5.2"
 }
