@@ -8,6 +8,20 @@ includes:
   site: ./taskfiles/Taskfile.site.yml
 
 tasks:
+  setup:
+    desc: Install Python and Node dependencies
+    cmds:
+      - mise install
+      - uv sync
+      - pnpm install --frozen-lockfile
+
+  update:
+    desc: Update and install Python and Node dependencies
+    cmds:
+      - mise install
+      - uv sync --upgrade
+      - pnpm install
+
   dev:
     desc: Start dev server
     cmds:
