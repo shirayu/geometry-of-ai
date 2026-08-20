@@ -131,6 +131,7 @@ async function main() {
         let blockStart = 0
         let choices = 0
         let answers = 0
+        let reasons = 0
         let explanation = false
         let sources = []
         let questionText = ''
@@ -153,6 +154,7 @@ async function main() {
                 blockStart = lineNumber
                 choices = 0
                 answers = 0
+                reasons = 0
                 explanation = false
                 sources = []
                 checkReferences(questionText, relative, blockStart - 1, errors)
@@ -165,6 +167,9 @@ async function main() {
                 }
                 if (answers !== 1) {
                     errors.push(`${relative}:${blockStart}: 正解指定[x]は1つだけ必要です`)
+                }
+                if (reasons !== choices) {
+                    errors.push(`${relative}:${blockStart}: 各選択肢にR:（理由）が必要です`)
                 }
                 if (!explanation) {
                     errors.push(`${relative}:${blockStart}: 解説A:が必要です`)
@@ -180,10 +185,19 @@ async function main() {
                 const trimmed = line.trim()
                 let text = ''
                 if (trimmed.startsWith('-')) {
+                    if (reasons !== choices) {
+                        errors.push(`${relative}:${lineNumber}: 選択肢の直後にR:（理由）が必要です`)
+                    }
                     choices++
                     const body = trimmed.slice(1).trim()
                     if (body.startsWith('[x]')) answers++
                     text = body.replace(/^\[x\]/, '').trim()
+                } else if (trimmed.startsWith('R:')) {
+                    reasons++
+                    text = trimmed.slice(2).trim()
+                    if (reasons > choices) {
+                        errors.push(`${relative}:${lineNumber}: R:は選択肢の直後に書いてください`)
+                    }
                 } else if (trimmed.startsWith('A:')) {
                     explanation = true
                     text = trimmed.slice(2).trim()

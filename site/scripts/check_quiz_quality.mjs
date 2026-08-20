@@ -54,7 +54,9 @@ function parseQuizzes(file) {
                 question.answer = question.choices.length
                 choice = choice.slice(3).trim()
             }
-            const next = lines[i + 1]?.trim() ?? ''
+            let lookahead = i + 1
+            if ((lines[lookahead]?.trim() ?? '').startsWith('R:')) lookahead++
+            const next = lines[lookahead]?.trim() ?? ''
             const ignoreMatch = next.match(ignoreCommentPattern)
             const ignoreKinds = new Set(
                 (ignoreMatch?.[1] ?? '')

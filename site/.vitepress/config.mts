@@ -32,8 +32,11 @@ function transformMermaidFences(md: MarkdownIt) {
 // 問題文・レベルは Markdown の見出し（###）側で書く。フェンスは選択肢と解説のみ。
 // フォーマット:
 //   - 選択肢1
+//     R: 選択肢1がなぜ不正解か
 //   - [x]選択肢2  (正解)
+//     R: 選択肢2がなぜ正解か
 //   - 選択肢3
+//     R: 選択肢3がなぜ不正解か
 //   A: 解説文
 //   S: /series/02#見出しslug
 function transformQuizFences(md: MarkdownIt) {
@@ -45,6 +48,7 @@ function transformQuizFences(md: MarkdownIt) {
             const lines = token.content.split('\n')
             let answer = -1
             const choices: string[] = []
+            const reasons: string[] = []
             let explanation = ''
             const sources: string[] = []
             for (const raw of lines) {
@@ -61,7 +65,19 @@ function transformQuizFences(md: MarkdownIt) {
                         throw new Error(`quizの本文リンクは /series/ファイル#見出しslug 形式にしてください: ${env.relativePath ?? 'unknown'}`)
                     }
                     if (!sources.includes(source)) sources.push(source)
+                } else if (line.startsWith('R:')) {
+                    if (choices.length === 0 || reasons.length === choices.length) {
+                        throw new Error(`quizのR:は選択肢の直後に書いてください: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    const reason = md.renderInline(line.slice('R:'.length).trim()).trim()
+                    if (!reason) {
+                        throw new Error(`quizのR:が空です: ${env.relativePath ?? 'unknown'}`)
+                    }
+                    reasons.push(reason)
                 } else if (line.startsWith('-')) {
+                    if (reasons.length !== choices.length) {
+                        throw new Error(`quizの選択肢にはR:が必要です: ${env.relativePath ?? 'unknown'}`)
+                    }
                     const body = line.slice(1).trim()
                     const isCorrect = body.startsWith('[x]')
                     if (isCorrect) {
@@ -83,13 +99,16 @@ function transformQuizFences(md: MarkdownIt) {
             if (answer === -1) {
                 throw new Error(`quizの正解を[x]で1つ指定してください: ${env.relativePath ?? 'unknown'}`)
             }
+            if (reasons.length !== choices.length) {
+                throw new Error(`quizの選択肢にはR:が必要です: ${env.relativePath ?? 'unknown'}`)
+            }
             if (!explanation) {
                 throw new Error(`quizの解説がありません: ${env.relativePath ?? 'unknown'}`)
             }
             if (sources.length === 0) {
                 throw new Error(`quizの本文リンクS:が少なくとも1つ必要です: ${env.relativePath ?? 'unknown'}`)
             }
-            const data = { choices, answer, explanation, sources }
+            const data = { choices, reasons, answer, explanation, sources }
             const dataBase64 = Buffer.from(JSON.stringify(data), 'utf8').toString('base64')
             return `<Quiz data-base64="${dataBase64}" />`
         }
