@@ -20,8 +20,10 @@ export interface PageToc {
 const SERIES_DIR = path.resolve(__dirname, '.')
 
 // サイドバー（config.mts）の部構成と同期させること
-const PAGES: { file: string; link: string; quizFile?: string; quizLink?: string; part?: string }[] = [
-    { file: 'intro.md', link: '/series/intro' },
+const PAGES: { file: string; link: string; quizFile?: string; quizLink?: string; part?: string; noHeadings?: boolean }[] = [
+    { file: 'intro.md', link: '/series/intro', part: 'ガイド' },
+    { file: 'keywords.md', link: '/series/keywords', noHeadings: true, part: 'ガイド' },
+    { file: 'references.md', link: '/series/references', noHeadings: true, part: 'ガイド' },
     { file: '00.md', link: '/series/00', quizFile: '00/quiz.md', quizLink: '/series/00/quiz', part: '第0部 準備と地図' },
     { file: '01.md', link: '/series/01', quizFile: '01/quiz.md', quizLink: '/series/01/quiz', part: '第1部 平坦な世界の限界' },
     { file: '02.md', link: '/series/02', quizFile: '02/quiz.md', quizLink: '/series/02/quiz', part: '第1部 平坦な世界の限界' },
@@ -89,11 +91,11 @@ function extractHeadings(content: string): { title: string; headings: Heading[] 
 
 export default {
     load(): PageToc[] {
-        return PAGES.map(({ file, link, quizLink, part }) => {
+        return PAGES.map(({ file, link, quizLink, part, noHeadings }) => {
             const content = fs.readFileSync(path.join(SERIES_DIR, file), 'utf-8')
             const { title, headings } = extractHeadings(content)
             const id = file.replace('.md', '').replace(/\//g, '-')
-            return { file, link, id, title, headings, quizLink, part }
+            return { file, link, id, title, headings: noHeadings ? [] : headings, quizLink, part }
         })
     },
 }

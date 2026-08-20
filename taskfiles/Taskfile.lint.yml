@@ -28,6 +28,7 @@ tasks:
       - references
       - svg_naming
       - lecture_links
+      - toc_coverage
 
   math:
     desc: Check math expressions
@@ -133,3 +134,8 @@ tasks:
     desc: Check that 第N回/Appendix N references are Markdown links
     cmds:
       - python3 ./scripts/check_lecture_links.py {{.SERIES_DIR}}
+
+  toc_coverage:
+    desc: Check that all series pages are registered in toc.data.ts
+    cmds:
+      - python3 ./scripts/check_toc_coverage.py {{.SERIES_DIR}}

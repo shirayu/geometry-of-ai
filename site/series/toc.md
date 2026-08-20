@@ -9,7 +9,7 @@ function isNewPart(index) {
 }
 
 // 部ごとに循環する色相（寒色→暖色）。Appendixもグラデーションの最後に含める。
-const PART_HUES = [210, 260, 310, 350, 20, 40, 90]
+const PART_HUES = [170, 210, 260, 310, 350, 20, 40, 90]
 const partOrder = [...new Set(data.map(p => p.part).filter(p => p))]
 
 function partHue(part) {
