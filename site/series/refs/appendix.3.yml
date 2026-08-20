@@ -1,0 +1,50 @@
+categories:
+- title: Transformer と Attention
+  entries:
+  - key: vaswani2017
+    note:
+    - Transformerの原論文。本Appendixで扱う効率化手法（MoE、GQA、LoRA等）の対象となるアーキテクチャの一次文献。
+- title: Pruning（剪定）
+  entries:
+  - key: lecun1990
+    note:
+    - ニューラルネットワークの剪定の古典的論文。構造化pruningの場合は実効速度向上が見込めるが、非構造化pruningでは実装次第で速度向上が限定的な場合もある。
+- title: Mixture of Experts (MoE)
+  entries:
+  - key: shazeer2017
+    note:
+    - 現代的MoEの基礎となった論文。
+  - key: fedus2022
+    note:
+    - Top-1 routingによるさらなるスパース化。
+  - key: dai2024
+    note:
+    - 細粒度Expert + 共有Expertの設計。
+  - key: kudugunta2021
+    note:
+    - Expert間の類似度に関する実験的観察。
+  - key: zhou2022
+    note:
+    - Expert Choice Routing（ExpertがトークンをTop-K選択）の提案。ルーティング崩壊への対策の一つ。
+  - key: he2024
+    note:
+    - 補助損失なしでも負荷分散を実現する手法の提案。Load Balancing Lossの代替アプローチの研究例。
+- title: 効率化手法
+  entries:
+  - key: ainslie2023
+    note:
+    - Grouped-Query Attentionの提案。
+  - key: hu2021
+    note:
+    - 低ランク適応によるパラメータ効率的ファインチューニング。
+  - key: raposo2024
+    note:
+    - 深さ方向の動的剪定。
+  - key: dao2022
+    note:
+    - SRAMを活用したメモリ効率的Attention。
+- title: 情報理論と抽象化
+  entries:
+  - key: shannon1948
+    note:
+    - 情報理論の基礎。情報を「予測不可能性」として定式化。

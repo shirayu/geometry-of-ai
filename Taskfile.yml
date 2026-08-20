@@ -4,6 +4,7 @@ version: '3'
 includes:
   format: ./taskfiles/Taskfile.format.yml
   lint: ./taskfiles/Taskfile.lint.yml
+  references: ./taskfiles/Taskfile.references.yml
   snippets: ./taskfiles/Taskfile.snippets.yml
   site: ./taskfiles/Taskfile.site.yml
 

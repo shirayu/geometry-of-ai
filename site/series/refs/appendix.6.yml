@@ -1,0 +1,47 @@
+categories:
+- title: 特異学習理論（SLT）の基礎・総論
+  entries:
+  - key: watanabe2012
+    note:
+    - ベイズ統計の基本を固めつつ、特異モデルを含むベイズ推論の考え方に入る入口として有用。SLTの厳密理論そのものは英語の専門書・論文に譲るが、概念整理に向く。
+    - '出版社ページ: [コロナ社](https://www.coronasha.co.jp/np/isbn/9784339024623/)（ISBN: 978-4-339-02462-3）'
+  - key: watanabe2009
+    note:
+    - SLTの中核（RLCT・ゼータ関数・特異点解消の応用）を体系化した基本文献。数学的詳細まで追いたい人向け。
+  - key: watanabe2006
+    note:
+    - 上記CUP書の日本語版に位置づく専門書。入手性は状況によるが、図書館等で参照できると強い。
+    - '出版社ページ: [hanmoto.com](https://www.hanmoto.com/bd/isbn/9784627813212)（ISBN: 978-4-627-81321-2）'
+- title: WBIC / WAIC / 一般化誤差（論文）
+  entries:
+  - key: watanabe2013
+    note:
+    - WBICの代表的な定式化。Appendixの「自由エネルギーの漸近」と直結する。
+  - key: watanabe2010
+    note:
+    - WAIC・CV・一般化誤差の関係を理論的に結び、SLTの予測（\(2\lambda/n\) 型の関係など）を理解するのに重要。
+- title: 情報幾何学（正則モデル側の基礎）
+  entries:
+  - key: amari2019ja
+    note:
+    - 正則モデルにおけるFisher計量や自然勾配など、[Appendix 5](appendix.5.md)と接続する基礎を日本語で押さえたいときに有用。
+    - '出版社ページ: [サイエンス社](https://www.saiensu.co.jp/search/?isbn=978-4-7819-1463-3&y=2019)（ISBN: 978-4-7819-1463-3）'
+  - key: amari2016
+    note:
+    - 情報幾何の体系的な英語文献。理論と応用の射程が広い。
+- title: 深層学習と特異性・平坦性・grokking
+  entries:
+  - key: wei2020
+    note:
+    - 「ニューラルネットは特異モデルである」という点を前面に出し、古典的なLaplace近似などの限界も含めて議論する。SLTを深層学習理論へ接続する読み物として良い。
+  - key: power2022
+    note:
+    - 長い停滞の後に突然汎化が進む “grokking” を報告した代表的論文。SLTの相転移的な見方と関連づけて議論されることがある。
+  - key: hochreiter1997
+    note:
+    - 「平坦な解（flat minima）が汎化に有利」という古典的主張の代表。RLCTの直感（谷の“広さ”）を説明するときの背景として参照しやすい。
+- title: 数学的背景（代数幾何：特異点解消）
+  entries:
+  - key: hironaka1964
+    note:
+    - 特異点解消の原典。SLTの数学的基盤として歴史的・理論的に重要。

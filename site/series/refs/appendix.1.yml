@@ -1,0 +1,36 @@
+categories:
+- title: 基礎
+  entries:
+  - key: jacob2018
+    note:
+    - 整数演算のみで推論する量子化スキームを提案。INT8量子化の理論的基盤。
+  - key: nagel2021
+    note:
+    - 量子化手法の包括的な整理。PTQ、QAT、混合精度の比較と指針を提供。
+- title: LLM量子化
+  entries:
+  - key: frantar2023
+    note:
+    - ヘシアン情報を使ったPTQ手法。LLMを4ビットに圧縮しながら精度を保つ。
+  - key: lin2024
+    note:
+    - 活性化の大きさに基づく重要重みの保護。エッジデバイス向けLLM量子化のベスト論文。
+  - key: xiao2023
+    note:
+    - 活性化の外れ値を重みに移す「スムージング」でINT8量子化の難しさを解消。
+- title: 極端な量子化
+  entries:
+  - key: wang2023bitnet
+    note:
+    - 重みを±1に限定した1ビットTransformer。メモリ・演算コストを大幅に削減。
+  - key: ma2024
+    note:
+    - 重みを{-1, 0, 1}に限定（log₂3 ≈ 1.58ビット）。フルビットモデルと同等の性能を達成。
+- title: 理論的分析
+  entries:
+  - key: hubara2018
+    note:
+    - 低精度重みと活性化での量子化ニューラルネットワークの学習手法。STE（直線推定量）の理論的基礎。
+  - key: banner2019
+    note:
+    - 4ビットPTQの効率的な手法。クリッピング閾値の最適化を含む。

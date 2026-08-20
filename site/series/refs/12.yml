@@ -1,0 +1,51 @@
+categories:
+- title: 双曲埋め込みの基礎
+  entries:
+  - key: nickel2017
+    note:
+    - 双曲空間への単語埋め込みを提案した先駆的論文。WordNetでの実験で有効性を実証。
+  - key: nickel2018
+    note:
+    - 数値的に安定なローレンツモデルでの双曲埋め込み。
+- title: 理論的背景
+  entries:
+  - key: sarkar2011
+    note:
+    - 木構造の双曲平面（2次元）への低歪み埋め込みを示した理論的研究。双曲空間が木構造に適している理論的根拠を与える。
+  - key: krioukov2010
+    note:
+    - 複雑ネットワークと双曲幾何学の関係を解明した物理学的研究。
+- title: 知識グラフと双曲空間
+  entries:
+  - key: balažević2019
+    note:
+    - 知識グラフの多関係埋め込みへの双曲空間の適用。
+  - key: chami2019
+    note:
+    - グラフニューラルネットワークの双曲空間への拡張。
+- title: Mixed-Curvature Spaces
+  entries:
+  - key: gu2019
+    note:
+    - 球面、双曲、ユークリッドの直積空間での表現学習。
+  - key: bachmann2020
+    note:
+    - 曲率を学習可能にしたグラフネットワーク。
+  - key: law2020
+    note:
+    - 正と負の曲率を混合した擬リーマン多様体での表現学習。NeurIPS 2020。
+  - key: ungar2008
+    note:
+    - 双曲空間におけるベクトル演算（gyrovector spaces）の体系的な理論書。
+- title: 実装とライブラリ
+  entries:
+  - key: kochurov2020
+    note:
+    - PyTorchでのリーマン最適化ライブラリ。本講義のコード例でも使用。
+    - 'GitHub: [https://github.com/geoopt/geoopt](https://github.com/geoopt/geoopt)'
+- title: 双曲幾何学の教科書
+  entries:
+  - key: cannon1997
+    note:
+    - 双曲幾何学の入門的な解説。ポアンカレ円板を含む複数のモデルを扱う。
+    - 'PDF: [https://www.msri.org/publications/books/Book31/files/cannon.pdf](https://www.msri.org/publications/books/Book31/files/cannon.pdf)'

@@ -1,0 +1,25 @@
+categories:
+- title: nGPTと球面上の学習
+  entries:
+  - key: loshchilov2025
+    note:
+    - nGPTの原論文。Transformerのすべての表現を単位球面上に制約する設計。arXiv 2024、ICLR 2025に採択。
+  - key: wang2017
+    note:
+    - 顔認証における球面埋め込みの先駆的研究。
+- title: von Mises-Fisher分布
+  entries:
+  - key: mardia2000
+    note:
+    - 方向統計学の標準的教科書。vMF分布を含む球面上の確率分布を体系的に扱う。
+  - key: banerjee2005
+    note:
+    - vMF分布を用いたクラスタリング。機械学習への応用。
+- title: リーマン最適化
+  entries:
+  - key: bonnabel2013
+    note:
+    - 多様体上の確率的勾配降下法の理論的基礎。
+  - key: absil2008
+    note:
+    - 行列多様体（Stiefel多様体、Grassmann多様体など）上の最適化。球面も特殊ケースとして含む。

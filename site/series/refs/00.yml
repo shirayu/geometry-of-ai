@@ -1,0 +1,43 @@
+categories:
+- title: 情報幾何学とリーマン幾何学（数学的基礎）
+  entries:
+  - key: amari2016
+    note:
+    - 情報幾何学の標準的教科書。フィッシャー情報行列、自然勾配、双対構造などを体系的に扱う。
+  - key: amari1998
+    note:
+    - 自然勾配の一次文献。パラメータ空間の計量構造が学習効率に与える影響を示した古典。
+  - key: lee2018
+    note:
+    - リーマン幾何学の標準的教科書。測地線、曲率、平行移動などの厳密な定義を参照できる。
+    - '著者公式ページ（正誤表・補足）: [https://sites.math.washington.edu/~lee/Books/RM/](https://sites.math.washington.edu/~lee/Books/RM/)'
+- title: 多様体仮説
+  entries:
+  - key: fefferman2016
+    note:
+    - 多様体仮説を理論的にテストする立場の代表的論文。
+    - 'arXiv版: [arXiv:1310.0425](https://arxiv.org/abs/1310.0425) (2013)'
+- title: 幾何学的深層学習（サーベイ）
+  entries:
+  - key: bronstein2021
+    note:
+    - 幾何学的深層学習の統一的サーベイ。対称性、不変性、同変性の観点から深層学習を俯瞰する。
+    - 'Proto-book（章立て・図版が充実）: [https://geometricdeeplearning.com/](https://geometricdeeplearning.com/)'
+- title: 最適化（Adam・自然勾配との関係）
+  entries:
+  - key: kingma2015
+    note:
+    - Adamオプティマイザの一次文献。本文で「自然勾配に似た形になることがある」と述べた際の参照先。
+- title: Mixture of Experts（MoE）
+  entries:
+  - key: shazeer2017
+    note:
+    - 現代的なMoEの基礎論文。スパースゲーティングと条件付き計算の設計を導入。
+  - key: fedus2022
+    note:
+    - MoEの訓練安定化技術（Load Balancing Loss等）を扱う。本文で「MoEの設計原理の中心」として言及した内容の参照先。
+- title: 球面補間（Slerp）
+  entries:
+  - key: shoemake1985
+    note:
+    - 球面線形補間（Slerp）の古典的文献。四元数の文脈で導入されたが、一般の単位球面にも適用可能。

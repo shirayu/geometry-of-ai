@@ -4,23 +4,26 @@
 
 - Vaswani et al., "Attention Is All You Need" (NeurIPS 2017)
 - Deng et al., "ArcFace: Additive Angular Margin Loss for Deep Face Recognition" (CVPR 2019)
-- Loshchilov et al., "nGPT: Normalized Transformer with Representation Learning on the Hypersphere" (arXiv:2410.01131, 2024)
-- Su et al., "RoFormer: Enhanced Transformer with Rotary Position Embedding" (arXiv 2021; Neurocomputing 2024) - RoPEの原論文
+- Loshchilov et al., "nGPT: Normalized Transformer with Representation Learning on the Hypersphere" (ICLR 2025)
+- Su et al., "RoFormer: Enhanced Transformer with Rotary Position Embedding" (Neurocomputing 2024)
+    - RoPEの原論文
 - Nagata et al., "Variance Matters: Detecting Semantic Differences without Corpus/Word Alignment" (EMNLP 2023)
-- Yamagiwa et al., "Revisiting Cosine Similarity via Normalized ICA-transformed Embeddings" (arXiv 2024)
+- Yamagiwa et al., "Revisiting Cosine Similarity via Normalized ICA-transformed Embeddings" (COLING 2025)
 
 ## 離散と連続の界面
 
 - Jang et al., "Categorical Reparameterization with Gumbel-Softmax" (ICLR 2017)
 - Maddison et al., "The Concrete Distribution: A Continuous Relaxation of Discrete Random Variables" (ICLR 2017)
-- Bengio et al., "Estimating or Propagating Gradients Through Stochastic Neurons for Conditional Computation" (arXiv 2013) - STEの原論文
+- Bengio et al., "Estimating or Propagating Gradients Through Stochastic Neurons for Conditional Computation" (arXiv:1308.3432, 2013)
+    - STEの原論文
 
 ## MoE・スパース性
 
-- Shazeer et al., "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer" (ICLR 2017) - MoEの基礎
+- Shazeer et al., "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer" (ICLR 2017)
+    - MoEの基礎
 - Fedus et al., "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity" (JMLR 2022)
-- Jiang et al., "Mixtral of Experts" (arXiv 2024)
-- Dai et al., "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models" (arXiv 2024)
+- Jiang et al., "Mixtral of Experts" (arXiv:2401.04088, 2024)
+- Dai et al., "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models" (ACL 2024)
 
 ## 双曲幾何学
 
@@ -38,32 +41,36 @@
 
 ## 情報幾何
 
-- Amari, "Information Geometry and Its Applications" (Springer 2016)
+- Amari, "Information Geometry and Its Applications" (Springer Japan 2016)
 - Martens & Grosse, "Optimizing Neural Networks with Kronecker-factored Approximate Curvature" (ICML 2015)
 - Liu et al., "Reconstructing Deep Neural Networks: Unleashing the Optimization Potential of Natural Gradient Descent" (NeurIPS 2024)
-- 参考（査読未通過）: Hwang, "FAdam: Adam is a natural gradient optimizer using diagonal empirical Fisher information" (arXiv:2405.12807)
-    - ※ICLR 2025で取り下げ。Adamと自然勾配の関係についての興味深い視点を提供するが、確立された理論ではない点に注意
+- Hwang, "FAdam: Adam is a natural gradient optimizer using diagonal empirical Fisher information" (arXiv:2405.12807, 2025)
+    - 参考（査読未通過）。※ICLR 2025で取り下げ。Adamと自然勾配の関係についての興味深い視点を提供するが、確立された理論ではない点に注意
 
 ## Model Collapse
 
-- Shumailov et al., "The Curse of Recursion: Training on Generated Data Makes Models Forget" (arXiv 2023)
+- Shumailov et al., "The Curse of Recursion: Training on Generated Data Makes Models Forget" (arXiv:2305.17493, 2023)
 
 ## 古典
 
-- 甘利俊一『情報幾何学の新展開』
-- Bishop "Pattern Recognition and Machine Learning" (PRML)
-- Goodfellow et al., "Deep Learning" (2016)
+- 甘利俊一, 『新版 情報幾何学の新展開』 (サイエンス社 2019)
+- Bishop, "Pattern Recognition and Machine Learning" (Springer 2006)
+    - PRML
+- Goodfellow et al., "Deep Learning" (MIT Press 2016)
 
 ## 発展
 
-- Carlsson, "Topology and Data" (Bulletin of the AMS, 2009) - TDA入門
-- Lee, "Introduction to Riemannian Manifolds" (2018) - 数学的基礎
-- Bronstein et al., "Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges" (2021)
+- Carlsson, "Topology and Data" (Bulletin of the American Mathematical Society 2009)
+    - TDA入門
+- Lee, "Introduction to Riemannian Manifolds" (Springer 2018)
+    - 数学的基礎
+- Bronstein et al., "Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges" (arXiv:2104.13478, 2021)
 
 ## 最新動向（2024-2025年）
 
 - Chlenski et al., "Mixed-Curvature Decision Trees and Random Forests" (ICML 2025)
-- Fein-Ashley et al., "Hyperbolic Vision Transformers (HVT)" (2024)
+- Fein-Ashley et al., "Hyperbolic Vision Transformers (HVT)" (arXiv:2409.16897, 2024)
+    - arXivプレプリント（ICLR 2025への投稿は取り下げ済み）
 - Grover et al., "Spectro-Riemannian Graph Neural Networks" (ICLR 2025)
 
 ## オンライン資源

@@ -1,0 +1,53 @@
+categories:
+- title: 次元の呪い・高次元空間の挙動
+  entries:
+  - key: beyer1999
+    note:
+    - 高次元でのkNN崩壊を最初に理論的に示した論文。距離集中の定量的な条件を導出。
+  - key: angiulli2018
+    note:
+    - 高次元空間での距離・近傍・ハブ性の統一的な分析。hubness現象の理論的な背景。
+  - key: radovanović2010
+    note:
+    - 高次元データにおけるハブ（多くの点の近傍になる点）の出現メカニズムを分析。
+- title: 近傍探索・ベクトル検索
+  entries:
+  - key: indyk1998
+    note:
+    - LSH（局所性鋭敏型ハッシュ）による近似近傍探索の理論的基礎。
+  - key: jégou2011
+    note:
+    - 積量子化によるコンパクトなベクトル表現と高速近似近傍探索。大規模ベクトルDBの基礎技術。
+  - key: malkov2020
+    note:
+    - HNSWグラフによる近似近傍探索。現代のベクトル検索で広く参照・実装される代表的アルゴリズム。
+- title: RAGとMoE
+  entries:
+  - key: lewis2020
+    note:
+    - RAGの原論文。検索拡張生成の枠組みを提案。高次元ベクトル検索をLLM推論に組み込む基礎。
+  - key: fedus2022
+    note:
+    - Top-1 MoEルーティングの提案。スパース化による効率的なスケーリング。
+  - key: dai2024
+    note:
+    - 細粒度Expert + 共有Expertの設計。Expert専門化を極限まで追求したMoE設計。
+  - key: jiang2023
+    note:
+    - Mistral 7Bの技術報告。Grouped-Query AttentionとSliding Window Attentionを導入。
+  - key: puigcerver2024
+    note:
+    - 離散的ルーティングを連続化するSoft MoE。高次元の直交性との接続。
+  - key: meta2025
+    note:
+    - Llama 4のMoEアーキテクチャに関する公式発表。マルチモーダルMoEの最新実装例。
+- title: 非ユークリッド幾何学とLLM
+  entries:
+  - key: yang2024
+    note:
+    - 双曲多様体でのLoRA適用（HypLoRA）。大規模言語モデルの双曲ファインチューニング。
+- title: 敵対的事例
+  entries:
+  - key: goodfellow2015
+    note:
+    - FGSM（高速勾配符号法）の提案。高次元空間での線形性が敵対的脆弱性の原因であることを示した。

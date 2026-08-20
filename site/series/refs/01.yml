@@ -1,0 +1,67 @@
+categories:
+- title: 主成分分析（PCA）
+  entries:
+  - key: pearson1901
+    note:
+    - PCAの原論文。最小二乗法の観点から導入。
+  - key: hotelling1933
+    note:
+    - 統計学の文脈でのPCAの再定式化。
+  - key: turk1991
+    note:
+    - 固有顔による顔認識。PCAの画像処理への応用例。
+  - key: tipping1999
+    note:
+    - 確率的PCA（PPCA）を定式化。PCAを確率モデルとして解釈し、等方ガウスノイズ仮定のもとで最尤推定を行う枠組みを与えた。
+- title: 非線形次元削減（多様体学習）
+  entries:
+  - key: hinton2006
+    note:
+    - オートエンコーダによる非線形次元削減。PCAの非線形拡張の代表例。
+  - key: tenenbaum2000
+    note:
+    - Isomapの原論文。測地距離を保存する非線形次元削減。
+  - key: roweis2000
+    note:
+    - LLEの原論文。局所線形構造を保存する次元削減。
+  - key: belkin2003
+    note:
+    - グラフラプラシアンを用いた次元削減。IsomapとLLEの発展。
+  - key: schölkopf1998
+    note:
+    - カーネルPCAの導入。非線形次元削減への別のアプローチ。
+- title: サポートベクターマシン（SVM）
+  entries:
+  - key: cortes1995
+    note:
+    - SVMの原論文。
+- title: トピックモデル
+  entries:
+  - key: hofmann1999
+    note:
+    - pLSAの原論文。
+  - key: blei2003
+    note:
+    - LDAの原論文。トピックモデルの標準的手法。
+- title: 単語重み付けと共起統計
+  entries:
+  - key: sparck1972
+    note:
+    - TF-IDFの原論文。情報検索における単語重み付けの基礎。
+  - key: church1990
+    note:
+    - PMI（点互情報量）を用いた単語関連度の計算。
+  - key: harris1954
+    note:
+    - 分布仮説の原典。「意味が近い単語は似た文脈に出現する」という洞察。
+- title: 単語埋め込み（後続手法への橋渡し）
+  entries:
+  - key: mikolov2013
+    note:
+    - Word2Vecの論文。Bag-of-Wordsからの脱却。
+  - key: pennington2014
+    note:
+    - GloVe。共起統計に基づく単語埋め込み。
+  - key: levy2014
+    note:
+    - Skip-gram Negative Sampling（SGNS）がPMI行列の因子分解として解釈できることを明らかにした。

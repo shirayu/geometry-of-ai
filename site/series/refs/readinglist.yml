@@ -1,0 +1,81 @@
+categories:
+  - title: 基礎（必読）
+    entries:
+      - key: vaswani2017
+      - key: deng2019
+      - key: loshchilov2025
+      - key: su2024
+        note:
+          - RoPEの原論文
+      - key: nagata2023
+      - key: yamagiwa2025
+  - title: 離散と連続の界面
+    entries:
+      - key: jang2017
+      - key: maddison2017
+      - key: bengio2013
+        note:
+          - STEの原論文
+  - title: MoE・スパース性
+    entries:
+      - key: shazeer2017
+        note:
+          - MoEの基礎
+      - key: fedus2022
+      - key: jiang2024
+      - key: dai2024
+  - title: 双曲幾何学
+    entries:
+      - key: nickel2017
+      - key: mathieu2019
+      - key: yang2024
+        note:
+          - ※AQuAで最大13.0%向上。発展版のHoRA（適応的曲率）では17.30%向上との報告あり
+      - key: sinha2024
+      - key: he2025survey
+  - title: 拡散モデル
+    entries:
+      - key: ho2020
+      - key: song2021
+  - title: 情報幾何
+    entries:
+      - key: amari2016
+      - key: martens2015
+      - key: liu2024natural
+      - key: hwang2025
+        note:
+          - 参考（査読未通過）。※ICLR 2025で取り下げ。Adamと自然勾配の関係についての興味深い視点を提供するが、確立された理論ではない点に注意
+  - title: Model Collapse
+    entries:
+      - key: shumailov2023
+  - title: 古典
+    entries:
+      - key: amari2019ja
+      - key: bishop2006
+        note:
+          - PRML
+      - key: goodfellow2016
+  - title: 発展
+    entries:
+      - key: carlsson2009
+        note:
+          - TDA入門
+      - key: lee2018
+        note:
+          - 数学的基礎
+      - key: bronstein2021
+  - title: 最新動向（2024-2025年）
+    entries:
+      - key: chlenski2025
+      - key: feinashley2024
+        note:
+          - arXivプレプリント（ICLR 2025への投稿は取り下げ済み）
+      - key: grover2025
+footer: |
+  ## オンライン資源
+
+  - 3Blue1Brown: "Neural Networks" シリーズ（幾何学的直感）
+  - Distill.pub: インタラクティブな可視化記事
+  - The Annotated Transformer: コード付き解説
+  - Awesome Hyperbolic Representation Learning (GitHub): 双曲表現学習の論文リスト
+  - MoE-Infinity (GitHub): MoE実装のリファレンス

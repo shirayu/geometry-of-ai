@@ -17,7 +17,7 @@
 
 ### 基本概念
 
-量子化とは、ニューラルネットワークの重み（およびアクティベーション）を、より少ないビット数で表現する技術である。言葉にすればそれだけだが、下の表を並べて見ると刻み幅の落差に気づく。FP32からINT4への移動は、単なる「少し粗くする」ではない。約43億通りの値の候補から16通りへの移動であり、桁が違う。
+量子化とは、ニューラルネットワークの重み（およびアクティベーション）を、より少ないビット数で表現する技術である（Jacob et al., 2018）。言葉にすればそれだけだが、下の表を並べて見ると刻み幅の落差に気づく。FP32からINT4への移動は、単なる「少し粗くする」ではない。約43億通りの値の候補から16通りへの移動であり、桁が違う。
 
 | 精度 | ビット数 | 表現（概算） | 用途 |
 | --- | --- | --- | --- |
@@ -98,7 +98,7 @@
 ______|            |______
 ```
 
-図だけ見ると、境界がここまで角ばって性能を保てるとは思えない。ところが実際には、4-bit程度まで削っても平均的な性能はさほど落ちない場合が多いと報告されている。
+図だけ見ると、境界がここまで角ばって性能を保てるとは思えない。ところが実際には、4-bit程度まで削っても平均的な性能はさほど落ちない場合が多いと報告されている（Banner et al., 2019）。
 
 **実務上よく観察される傾向（ただし条件付き）:**
 
@@ -177,7 +177,7 @@ x_renormalized = F.normalize(x_quantized, dim=-1)  # 再正規化
 
 ## 量子化手法の分類と幾何学的特徴
 
-量子化は一枚岩の操作ではない。いつ・どこで丸めるかによって手法が枝分かれし、幾何学的な振る舞いも変わる。
+量子化は一枚岩の操作ではない（Nagel et al., 2021）。いつ・どこで丸めるかによって手法が枝分かれし、幾何学的な振る舞いも変わる。
 
 ### Post-Training Quantization (PTQ)
 
@@ -186,9 +186,9 @@ x_renormalized = F.normalize(x_quantized, dim=-1)  # 再正規化
 | 手法 | 特徴 | 幾何学的解釈 |
 | --- | --- | --- |
 | Round-to-Nearest | 最近傍の格子点に丸め | 最短距離射影 |
-| GPTQ | 量子化誤差を後続層で補正 | 誤差の伝播を抑える射影 |
-| AWQ | 重要な重みを高精度で保持 | 非一様な格子（重要領域は細かく） |
-| SmoothQuant | アクティベーションと重みの分散を均等化 | 空間の「座標変換」後に量子化 |
+| GPTQ（Frantar et al., 2023） | 量子化誤差を後続層で補正 | 誤差の伝播を抑える射影 |
+| AWQ（Lin et al., 2024） | 重要な重みを高精度で保持 | 非一様な格子（重要領域は細かく） |
+| SmoothQuant（Xiao et al., 2023） | アクティベーションと重みの分散を均等化 | 空間の「座標変換」後に量子化 |
 
 ### Quantization-Aware Training (QAT)
 
@@ -196,7 +196,7 @@ PTQは学習後に格子を当てはめる。QATは、格子があることを�
 
 **Straight-Through Estimator (STE) の再登場:**
 
-- STEがここでも活躍
+- STEがここでも活躍（Hubara et al., 2018）
 - Forward: 量子化された重みを使用
 - Backward: 連続的な勾配を伝播
 - **幾何学的解釈:** 「見かけは格子点にいるが、勾配は連続空間から来る」
@@ -210,7 +210,7 @@ forwardとbackwardで別の空間を使うという、この一見都合のよ�
 **BitNet（Microsoft, 2023-2024）:**
 
 - 重みを {-1, +1} の2値に制限（※実装・派生により表現は変わりうる）
-- 行列積が加算と減算中心で計算可能
+- 行列積が加算と減算中心で計算可能（Wang et al., 2023）
 - **幾何学的解釈:**
 
     - 重み空間が超立方体の頂点に制限される
@@ -220,7 +220,7 @@ forwardとbackwardで別の空間を使うという、この一見都合のよ�
 
 **1.58-bit (Ternary):**
 
-- 重みを {-1, 0, +1} の3値に制限
+- 重みを {-1, 0, +1} の3値に制限（Ma et al., 2024）
 - 0を許容することでスパース性も獲得
 - **MoE（[第13回](13.md)）との接続（比喩）:** 0の重みは「その経路/寄与が消える」と解釈でき、スパース性の理解に繋がる
 
@@ -442,18 +442,18 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
 
 ### 基礎
 
-- Jacob, B., et al. (2018). Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference. *CVPR 2018*, 2704–2713. arXiv: [1712.05877](https://arxiv.org/abs/1712.05877)
+- Jacob, B., et al. (2018). Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference. *CVPR 2018*. arXiv: [1712.05877](https://arxiv.org/abs/1712.05877)
     - 整数演算のみで推論する量子化スキームを提案。INT8量子化の理論的基盤。
-- Nagel, M., et al. (2021). A White Paper on Neural Network Quantization. arXiv: [2106.08295](https://arxiv.org/abs/2106.08295)
+- Nagel, M., Fournarakis, M., Amjad, R. A., Bondarenko, Y., van Baalen, M., & Blankevoort, T. (2021). A White Paper on Neural Network Quantization. arXiv: [2106.08295](https://arxiv.org/abs/2106.08295)
     - 量子化手法の包括的な整理。PTQ、QAT、混合精度の比較と指針を提供。
 
 ### LLM量子化
 
-- Frantar, E., et al. (2023). GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers. *ICLR 2023*. arXiv: [2210.17323](https://arxiv.org/abs/2210.17323)
+- Frantar, E., Ashkboos, S., Hoefler, T., & Alistarh, D. (2023). GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers. *ICLR 2023*. arXiv: [2210.17323](https://arxiv.org/abs/2210.17323)
     - ヘシアン情報を使ったPTQ手法。LLMを4ビットに圧縮しながら精度を保つ。
-- Lin, J., et al. (2024). AWQ: Activation-Aware Weight Quantization for On-Device LLM Compression and Acceleration. *MLSys 2024*. arXiv: [2306.00978](https://arxiv.org/abs/2306.00978)
+- Lin, J., et al. (2024). AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration. *MLSys 2024*. arXiv: [2306.00978](https://arxiv.org/abs/2306.00978)
     - 活性化の大きさに基づく重要重みの保護。エッジデバイス向けLLM量子化のベスト論文。
-- Xiao, G., et al. (2023). SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models. *ICML 2023*. arXiv: [2211.10438](https://arxiv.org/abs/2211.10438)
+- Xiao, G., Lin, J., Seznec, M., Wu, H., Demouth, J., & Han, S. (2023). SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models. *ICML 2023*. arXiv: [2211.10438](https://arxiv.org/abs/2211.10438)
     - 活性化の外れ値を重みに移す「スムージング」でINT8量子化の難しさを解消。
 
 ### 極端な量子化
@@ -465,7 +465,7 @@ def visualize_quantization_effect(hidden_orig, hidden_quant):
 
 ### 理論的分析
 
-- Hubara, I., et al. (2018). Quantized Neural Networks: Training Neural Networks with Low Precision Weights and Activations. *Journal of Machine Learning Research*, 18(187), 1–30.
+- Hubara, I., Courbariaux, M., Soudry, D., El-Yaniv, R., & Bengio, Y. (2018). Quantized Neural Networks: Training Neural Networks with Low Precision Weights and Activations. *Journal of Machine Learning Research*, 18(187), 1–30. arXiv: [1609.07061](https://arxiv.org/abs/1609.07061)
     - 低精度重みと活性化での量子化ニューラルネットワークの学習手法。STE（直線推定量）の理論的基礎。
 - Banner, R., Nahshan, Y., & Soudry, D. (2019). Post Training 4-bit Quantization of Convolutional Networks for Rapid-Deployment. *NeurIPS 2019*. arXiv: [1810.05723](https://arxiv.org/abs/1810.05723)
     - 4ビットPTQの効率的な手法。クリッピング閾値の最適化を含む。

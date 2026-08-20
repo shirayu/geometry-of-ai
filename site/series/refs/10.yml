@@ -1,0 +1,35 @@
+categories:
+- title: Chain of Thought
+  entries:
+  - key: wei2022
+    note:
+    - CoTの原論文。中間ステップを出力することで推論能力が向上。
+  - key: kojima2022
+    note:
+    - 「Let's think step by step」というシンプルなプロンプトでもCoT効果が得られる。
+- title: 推論と探索
+  entries:
+  - key: yao2023
+    note:
+    - 複数の思考経路を木構造で探索。
+  - key: wang2023
+    note:
+    - 複数回のCoTサンプリングと多数決による精度向上。
+- title: スケーリング則
+  entries:
+  - key: kaplan2020
+    note:
+    - ニューラル言語モデルのスケーリング則。
+  - key: hoffmann2022
+    note:
+    - Chinchillaスケーリング則。パラメータとデータの最適バランス。
+- title: Model Collapse
+  entries:
+  - key: shumailov2023
+    note:
+    - Model Collapseの分析。自己生成データでの再学習による多様性低下。
+- title: Dimensional Collapse
+  entries:
+  - key: jing2022
+    note:
+    - 対照学習におけるDimensional Collapseの分析。

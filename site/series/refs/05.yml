@@ -1,0 +1,20 @@
+categories:
+- title: ArcFaceと角度マージン手法
+  entries:
+  - key: deng2019
+    note:
+    - ArcFaceの原論文。角度マージンの標準的手法として広く引用されている。
+  - key: wang2018
+    note:
+    - CosFaceの原論文。コサイン空間での減算マージン。
+  - key: liu2017
+    note:
+    - SphereFaceの原論文。角度乗算によるマージンの先駆的研究。
+- title: SVMと最大マージン理論
+  entries:
+  - key: vapnik1995
+    note:
+    - SVMと統計的学習理論の古典的教科書。マージン最大化の理論的基礎。
+  - key: cortes1995
+    note:
+    - SVMの原論文。

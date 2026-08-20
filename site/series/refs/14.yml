@@ -1,0 +1,33 @@
+categories:
+- title: パーシステントホモロジー（数学的基礎）
+  entries:
+  - key: edelsbrunner2010
+    note:
+    - 計算トポロジーの標準的教科書。パーシステントホモロジーの理論的基盤を厳密に扱う。
+  - key: carlsson2009
+    note:
+    - TDAの創始者による解説論文。データ解析へのトポロジー応用の動機と基本概念を説明。
+- title: 深層学習への応用
+  entries:
+  - key: naitzat2020
+    note:
+    - ニューラルネットワークの決定境界のトポロジーを研究。ReLUネットワークとskip connectionの効果を議論。
+  - key: gabrielsson2019
+    note:
+    - ニューラルネットワークの活性化空間のトポロジー解析手法を提案。
+- title: ソフトウェア
+  entries:
+  - key: tralie2018
+    note:
+    - 本回で使用したRipserのPythonバインディング。高速なパーシステントホモロジー計算を提供。
+    - 'GitHub: [https://github.com/scikit-tda/ripser.py](https://github.com/scikit-tda/ripser.py)'
+  - key: gudhi2025
+    nocite: true
+    note:
+    - より包括的なTDAライブラリ。Čech複体、 $\alpha$ 複体など多様な構成法をサポート。
+    - '[gudhi.inria.fr](https://gudhi.inria.fr/)'
+- title: 関連するサーベイ
+  entries:
+  - key: hensel2021
+    note:
+    - TDAと機械学習の交差点に関する包括的なサーベイ。応用事例と課題を整理。
