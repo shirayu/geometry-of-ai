@@ -57,3 +57,9 @@ rules:
     description: "「エンベディング」は使用禁止。埋め込み で統一"
     pattern: 'エンベディング'
     scope: any
+
+  - id: no-probability-space-abbrev
+    description: "「確率空間」「確率分布空間」は使用禁止。「確率分布の空間」で統一（測度論の確率空間との混同を避ける）"
+    pattern: '確率空間|確率分布空間'
+    scope: text
+    allow_line_pattern: '測度論'
