@@ -30,6 +30,9 @@ categories:
   - key: liu2023
     note:
     - 対角ヘシアン推定を前条件として用いる二次最適化手法。自然勾配（Fisher近似）とは異なるアプローチ。
+  - key: chentsov1982
+    note:
+    - Fisher計量の一意性（Chentsovの定理）の原典。統計的な粗視化で距離が増えないという条件を満たすリーマン計量が、定数倍を除いてFisher計量に限ることを示した。
 - title: Gumbel-Softmaxと離散サンプリング
   entries:
   - key: jang2017
