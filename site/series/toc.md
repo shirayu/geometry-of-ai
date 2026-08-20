@@ -30,16 +30,45 @@ function indexInPart(index) {
   }
   return n
 }
+
+const guidePages = data.filter(p => p.part === 'ガイド')
+const restPages = data.filter(p => p.part !== 'ガイド')
+
+function isNewRestPart(index) {
+  const page = restPages[index]
+  if (!page.part) return false
+  return index === 0 || restPages[index - 1].part !== page.part
+}
+
+function indexInRestPart(index) {
+  let n = 0
+  for (let i = 0; i < index; i++) {
+    if (restPages[i].part === restPages[index].part) n++
+  }
+  return n
+}
 </script>
 
 # 全ページ目次
 
-<template v-for="(page, index) in data" :key="page.file">
-  <h2 v-if="isNewPart(index)" class="toc-part-title" :style="partStyle(page.part)">{{ page.part }}</h2>
+<h2 class="toc-part-title" :style="partStyle('ガイド')">ガイド</h2>
+<div
+  class="toc-section toc-section-hued"
+  :style="partStyle('ガイド')"
+>
+  <div class="toc-headings toc-guide-links">
+    <div v-for="page in guidePages" :key="page.file" :id="page.id" class="toc-item toc-guide-link">
+      <a :href="page.link">{{ page.title }}</a>
+    </div>
+  </div>
+</div>
+
+<template v-for="(page, index) in restPages" :key="page.file">
+  <h2 v-if="isNewRestPart(index)" class="toc-part-title" :style="partStyle(page.part)">{{ page.part }}</h2>
   <div
     :id="page.id"
     class="toc-section"
-    :class="{ 'toc-section-hued': partHue(page.part) !== null, 'toc-section-hued-alt': partHue(page.part) !== null && indexInPart(index) % 2 === 1 }"
+    :class="{ 'toc-section-hued': partHue(page.part) !== null, 'toc-section-hued-alt': partHue(page.part) !== null && indexInRestPart(index) % 2 === 1 }"
     :style="partStyle(page.part)"
   >
     <h3 class="toc-page-title">
@@ -130,6 +159,15 @@ function indexInPart(index) {
 .toc-item a {
   text-decoration: none;
   font-weight: 400;
+}
+
+.toc-guide-links {
+  padding-left: 0;
+  gap: 0.5rem;
+}
+
+.toc-guide-link a {
+  font-size: 1.1em;
 }
 
 .toc-item a:hover {
