@@ -9,6 +9,12 @@ includes:
   site: ./taskfiles/Taskfile.site.yml
 
 tasks:
+  default:
+    desc: Run formatters and linters
+    cmds:
+      - task: format
+      - task: lint
+
   setup:
     desc: Install Python and Node dependencies
     cmds:
