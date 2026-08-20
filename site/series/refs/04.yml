@@ -21,6 +21,9 @@ categories:
   - key: george2018
     note:
     - 'EKFAC: K-FACをクロネッカー固有基底で近似する拡張手法。'
+  - key: kingma2015
+    note:
+    - Adamオプティマイザの一次文献。適応的最適化手法と自然勾配の関係を議論する際の参照先。
   - key: kunstner2019
     note:
     - 経験的フィッシャー近似の限界を理論的に分析。Adamと自然勾配の関係を議論する際の重要な参照。

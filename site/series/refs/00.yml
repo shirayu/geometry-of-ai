@@ -4,9 +4,6 @@ categories:
   - key: amari2016
     note:
     - 情報幾何学の標準的教科書。フィッシャー情報行列、自然勾配、双対構造などを体系的に扱う。
-  - key: amari1998
-    note:
-    - 自然勾配の一次文献。パラメータ空間の計量構造が学習効率に与える影響を示した古典。
   - key: lee2018
     note:
     - リーマン幾何学の標準的教科書。測地線、曲率、平行移動などの厳密な定義を参照できる。
@@ -23,11 +20,6 @@ categories:
     note:
     - 幾何学的深層学習の統一的サーベイ。対称性、不変性、同変性の観点から深層学習を俯瞰する。
     - 'Proto-book（章立て・図版が充実）: [https://geometricdeeplearning.com/](https://geometricdeeplearning.com/)'
-- title: 最適化（Adam・自然勾配との関係）
-  entries:
-  - key: kingma2015
-    note:
-    - Adamオプティマイザの一次文献。本文で「自然勾配に似た形になることがある」と述べた際の参照先。
 - title: Mixture of Experts（MoE）
   entries:
   - key: shazeer2017
