@@ -194,7 +194,7 @@ export default defineConfig({
             {
                 text: '',
                 items: [
-                    { text: '重要な前提と制約', link: '/series/intro' },
+                    { text: 'はじめに', link: '/series/intro' },
                     { text: '全ページ目次', link: '/series/toc' },
                     { text: 'キーワード集', link: '/series/keywords' },
                     { text: '理解度チェック', link: '/series/quizzes' },
