@@ -91,4 +91,5 @@ AIはデータを「空間上の点」として扱う。
 - 副査読・インサイトコンサル: [Gemini](https://gemini.google.com/)
 
 > [!Warning]
-> 誤りを含めないように努めましたが、鵜呑みにせず慎重に検討しながらお読みください。
+> 誤りを含めないように努めましたが、鵜呑みにせず慎重に検討しながらお読みください。<br>
+> 誤植などありましたら、[GitHub Issues](https://github.com/shirayu/geometry-of-ai/issues)ヘご連絡ください。
