@@ -29,9 +29,14 @@ function quizFiles(dir) {
 
 // 選択肢直後の独立行 <!-- quiz-lint-ignore: 種別[,種別...] - 理由 --> で、
 // 指定した種別の警告（機械検出の誤検知）だけをその選択肢に限定して抑制できる。
-// 種別: length（長さ非対称）, hedge（構文非対称）
+// 種別: length（長さ非対称）, hedge（構文非対称）, cue（限定キュー）
 const ignoreCommentPattern = /^<!--\s*quiz-lint-ignore:\s*([a-z,]+)\s*-\s*(.+?)\s*-->$/
-const knownIgnoreKinds = new Set(['length', 'hedge'])
+const knownIgnoreKinds = new Set(['length', 'hedge', 'cue'])
+
+// 誤答の限定キュー。断定語とは別に警告のみ（エラーにしない）。
+// 「できるだけ/出来るだけ」（きる/来+だけ）「どれだけ」（れ+だけ）「のみ込む」（のみ+こ）
+// は限定キューではないため除外。
+const restrictionCuePattern = /(?<!れ)(?<!きる)(?<!来)だけ|のみ(?!こ)/
 
 function parseQuizzes(file) {
     const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
@@ -99,6 +104,11 @@ for (const file of quizFiles(SERIES_DIR).sort()) {
             if (index === quiz.answer) continue
             if (cuePatterns.some((pattern) => pattern.test(choice.text))) {
                 errors.push(`${relative}:${choice.line}: 誤答に断定語の手がかりがあります: ${choice.text}`)
+            }
+            if (!choice.ignoreKinds.has('cue') && restrictionCuePattern.test(choice.text)) {
+                warnings.push(
+                    `${relative}:${choice.line}: 「${quiz.heading}」誤答に限定キュー（だけ/のみ）があります（誤解の核心なら quiz-lint-ignore: cue で抑制可）: ${choice.text}`,
+                )
             }
         }
 

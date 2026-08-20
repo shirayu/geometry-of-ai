@@ -35,6 +35,10 @@ export function slugifyHeading(text) {
     return text
         .normalize('NFKD')
         .replace(rCombining, '')
+        // NFKDは濁点・半濁点付き仮名を基底文字+結合濁点・半濁点（U+3099/U+309A）に分解するが、
+        // これらはrCombiningの範囲（U+0300-U+036F）外のため、ここでNFCにより合成済み仮名へ戻す。
+        // ラテン文字のアクセント（U+0300-U+036F）は既に除去済みなので再合成されない（é→eのまま）。
+        .normalize('NFC')
         .replace(rControl, '')
         .replace(rSpecial, '-')
         .replace(/-{2,}/g, '-')

@@ -177,6 +177,29 @@ function protectMathFromVue(md: MarkdownIt) {
     }
 }
 
+// VitePressの既定slugify（NFKD+U+0300-U+036F結合文字除去）は、濁点・半濁点付き仮名の
+// 結合濁点・半濁点（U+3099/U+309A）を除去せず分解形のままでアンカー化する。
+// クイズのS:リンク検証（site/scripts/check_quiz.mjs の slugifyHeading）と同じ規則で
+// NFC再合成まで行い、見出しを合成済み（見た目そのまま）の文字列でリンクできるように揃える。
+function slugifyHeading(text: string): string {
+    const rControl = /[\u0000-\u001f]/g
+    const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g
+    const rCombining = /[\u0300-\u036F]/g
+    return text
+        .normalize('NFKD')
+        .replace(rCombining, '')
+        // NFKDは濁点・半濁点付き仮名を基底文字+結合濁点・半濁点（U+3099/U+309A）に分解するが、
+        // これらはrCombiningの範囲（U+0300-U+036F）外のため、ここでNFCにより合成済み仮名へ戻す。
+        // ラテン文字のアクセント（U+0300-U+036F）は既に除去済みなので再合成されない（é→eのまま）。
+        .normalize('NFC')
+        .replace(rControl, '')
+        .replace(rSpecial, '-')
+        .replace(/-{2,}/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .replace(/^(\d)/, '_$1')
+        .toLowerCase()
+}
+
 export default defineConfig({
     title: '情報幾何学とAI',
     description: 'AIの表現空間設計を「幾何学」という言語で読み解く全15回の講義',
@@ -195,6 +218,9 @@ export default defineConfig({
 
     markdown: {
         math: true,
+        anchor: {
+            slugify: slugifyHeading,
+        },
         config: (md) => {
             transformMermaidFences(md)
             transformQuizFences(md)
