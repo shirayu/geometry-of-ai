@@ -32,7 +32,7 @@ categories:
   - key: rubanova2019
     note:
     - 不規則時系列データへのNeural ODEの応用。
-  - key: lipman2022
+  - key: lipman2023
     note:
     - ODEベースの生成モデルの学習を回帰問題に変換。現代の高性能画像生成モデルの基盤。
   - key: liu2023flow

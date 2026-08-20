@@ -29,7 +29,7 @@
 
 - Nickel & Kiela, "Poincaré Embeddings for Learning Hierarchical Representations" (NeurIPS 2017)
 - Mathieu et al., "Continuous Hierarchical Representations with Poincaré Variational Auto-Encoders" (NeurIPS 2019)
-- Yang et al., "Hyperbolic Fine-Tuning for Large Language Models (HypLoRA)" (arXiv:2410.04010, 2024)
+- Yang et al., "Hyperbolic Fine-Tuning for Large Language Models" (arXiv:2410.04010, 2024)
     - ※AQuAで最大13.0%向上。発展版のHoRA（適応的曲率）では17.30%向上との報告あり
 - Sinha et al., "Learning Structured Representations with Hyperbolic Embeddings" (NeurIPS 2024)
 - He et al., "Hyperbolic Deep Learning for Foundation Models: A Survey" (arXiv:2507.17787, 2025)
@@ -69,7 +69,7 @@
 ## 最新動向（2024-2025年）
 
 - Chlenski et al., "Mixed-Curvature Decision Trees and Random Forests" (ICML 2025)
-- Fein-Ashley et al., "Hyperbolic Vision Transformers (HVT)" (arXiv:2409.16897, 2024)
+- Fein-Ashley et al., "HVT: A Comprehensive Vision Framework for Learning in Non-Euclidean Space" (arXiv:2409.16897, 2024)
     - arXivプレプリント（ICLR 2025への投稿は取り下げ済み）
 - Grover et al., "Spectro-Riemannian Graph Neural Networks" (ICLR 2025)
 
