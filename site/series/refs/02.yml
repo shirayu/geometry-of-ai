@@ -1,0 +1,42 @@
+categories:
+- title: 次元の呪いと距離の集中
+  entries:
+  - key: bellman1957
+    note:
+    - 「次元の呪い」という用語の起源。
+  - key: beyer1999
+    note:
+    - 高次元での距離の集中と、kNNの困難を分析。
+  - key: aggarwal2001
+    note:
+    - さまざまな距離尺度の高次元での挙動を比較。
+- title: 単語埋め込みとノルム
+  entries:
+  - key: mikolov2013
+    note:
+    - Word2Vecの論文。
+  - key: schakel2015
+    note:
+    - Word2Vecにおけるノルムと頻度の関係を分析。
+- title: RBMとカプセルネットワーク
+  entries:
+  - key: hinton2002
+    note:
+    - RBMの学習アルゴリズム（Contrastive Divergence）。
+  - key: hinton2006
+    note:
+    - 深層オートエンコーダとRBMによる事前学習。
+  - key: sabour2017
+    note:
+    - カプセルネットワークの原論文。
+  - key: peer2021
+    note:
+    - カプセルネットワークの限界（計算コスト、動的ルーティングの効果の疑問）を実験的に分析。
+  - key: gu2020
+    note:
+    - カプセルネットワークの改良と、大規模データセットでの課題を議論。
+- title: 球面符号と高次元幾何
+  entries:
+  - key: conway1999
+    note:
+    - 球面符号とパッキング問題の包括的な参考書。

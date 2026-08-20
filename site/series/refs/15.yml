@@ -1,0 +1,73 @@
+categories:
+- title: 深層学習と幾何学の接続
+  entries:
+  - key: amari2016
+    note:
+    - 情報幾何学の標準的教科書。フィッシャー情報行列、自然勾配、双対構造などを体系的に扱う。本講義全体を通じた数学的基盤。
+  - key: bronstein2021
+    note:
+    - 幾何学的深層学習の統一的サーベイ。対称性、不変性、同変性の観点から深層学習を俯瞰する。本講義の立場と最も近い視点を持つ文献。
+- title: Transformer とAttention
+  entries:
+  - key: vaswani2017
+    note:
+    - Transformerの原論文。本講義で繰り返し参照したScaled Dot-Product AttentionとMulti-head Attentionの一次文献。
+- title: 拡散モデル
+  entries:
+  - key: ho2020
+    note:
+    - DDPMの原論文。[第9回](09.md)で詳しく扱った現代的拡散モデルの基礎。
+  - key: song2021
+    note:
+    - SDEに基づく統一的な定式化。VP-SDE、VE-SDE、確率フローODEを導入。
+- title: Mixture of Experts
+  entries:
+  - key: fedus2022
+    note:
+    - MoEの訓練安定化技術（Load Balancing Loss等）を扱う。本講義のMoE設計の中心的参照先。
+  - key: dai2024
+    note:
+    - 細粒度Expert + 共有Expertの設計。[第13回](13.md)と[第0回](00.md)で言及したMoEのルーティング幾何の実装例。
+  - key: puigcerver2024
+    note:
+    - 離散的ルーティングを連続化するSoft MoE。[Appendix 3](appendix.3.md)で扱ったルーティング崩壊への一つの回答。
+  - key: meta2025
+    note:
+    - Llama 4のMoEアーキテクチャに関する公式発表。マルチモーダルMoEの最新実装例。
+- title: 正規化と球面化
+  entries:
+  - key: ioffe2015
+    note:
+    - Batch Normalizationの原論文。[第8回](08.md)の正規化層の議論の基礎。
+  - key: ba2016
+    note:
+    - Layer Normalizationの原論文。Transformerで広く使用され、本講義で繰り返し登場。
+  - key: loshchilov2025
+    note:
+    - すべての表現を単位球面上に制約するTransformer設計。[第3回](03.md)、[第6回](06.md)、[第8回](08.md)で言及した球面化設計の集大成。
+- title: 位置符号化
+  entries:
+  - key: su2024
+    note:
+    - RoPEの原論文。[第6回](06.md)で扱った回転による相対位置表現の一次文献。
+- title: Mixed-curvature spaces
+  entries:
+  - key: gu2019
+    note:
+    - 球面、双曲、ユークリッドの直積空間での表現学習。[第12回](12.md)の補足として紹介。
+  - key: liu2025
+    note:
+    - 混合曲率空間の組合せ最適化への応用。曲率設計が実問題に効く事例。
+- title: 双曲幾何学とAI
+  entries:
+  - key: nickel2017
+    note:
+    - 双曲空間への埋め込みの先駆的論文。[第12回](12.md)の中心的参照先。
+  - key: chami2019
+    note:
+    - グラフニューラルネットワークの双曲空間への拡張。[第12回](12.md)で言及。
+- title: Topological Data Analysis
+  entries:
+  - key: carlsson2009
+    note:
+    - TDAの創始者による解説論文。[第14回](14.md)の中心的参照先。

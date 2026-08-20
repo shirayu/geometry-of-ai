@@ -129,7 +129,7 @@ Softmaxは、この類似度を確率分布に変換する。結果として、*
 
 Attentionが切り落とすのはトークン間の接続だった。MoEが切り落とすのは、それより一段大きな単位、モデル自体のどの部分を働かせるかである。
 
-[第13回](13.md)で導入したMixture of Experts（MoE）は、複数の「専門家」（Expert）ネットワークを用意し、**入力に応じて一部の専門家だけを活性化する**アーキテクチャである。
+[第13回](13.md)で導入したMixture of Experts（MoE）は、複数の「専門家」（Expert）ネットワークを用意し、**入力に応じて一部の専門家だけを活性化する**アーキテクチャである（Shazeer et al., 2017）。
 
 ```txt
 入力 x
@@ -289,7 +289,7 @@ Load Balancing Lossは、入力空間の分割を均等化するよう促す**�
 
 - **Capacity Factor**：各Expertが受け入れるトークン数に上限を設ける。上限を超えたトークンは他のExpertに割り当てられる。
 - **Expert Choice Routing**（Zhou et al., 2022）：トークンがExpertを選ぶのではなく、ExpertがトークンをTop-K選択する。
-- **Shared Expert**：すべての入力に対して常に活性化する共通Expertを設ける（DeepSeekMoE, Dai et al., 2024で明示的に採用）。共通知識の重複を防ぎつつ、専門化を促進。Shared Expertは負荷分散の直接的な手段ではないが、専門Expertの役割を明確化する効果がある。
+- **Shared Expert**：すべての入力に対して常に活性化する共通Expertを設ける（Dai et al., 2024）。共通知識の重複を防ぎつつ、専門化を促進。Shared Expertは負荷分散の直接的な手段ではないが、専門Expertの役割を明確化する効果がある。
 
 #### 実装ノートとの接続
 
@@ -298,7 +298,7 @@ Load Balancing Lossは、入力空間の分割を均等化するよう促す**�
 実際のMoE（Mixtral、Switch Transformer、DeepSeek-V3等）では、この補助損失が訓練の安定性と性能を左右する。Load Balancing Lossや類似の負荷分散機構なしで訓練すると、**ルーティング崩壊が発生しやすく**、実運用規模では何らかの負荷分散機構（補助損失、ルーターバイアス調整、Capacity Factor等）が**重要**となる。
 
 > [!NOTE]
-> **負荷分散の多様性**：Load Balancing Lossは代表的な手法だが、唯一の解ではない。ルーター設計、初期化、Top-Kの選び方、Capacity Factorの調整などでも負荷分散に影響する。近年は「補助損失なし／弱い補助損失」でも負荷を保つ手法の研究もある（例：Auxiliary-Loss-Free Load Balancing Strategy, He et al., 2024）。
+> **負荷分散の多様性**：Load Balancing Lossは代表的な手法だが、唯一の解ではない。ルーター設計、初期化、Top-Kの選び方、Capacity Factorの調整などでも負荷分散に影響する。近年は「補助損失なし／弱い補助損失」でも負荷を保つ手法の研究もある（He et al., 2024）。
 
 ## スパース性（疎性）の幾何学：条件依存の有効性
 
@@ -570,7 +570,7 @@ Attention、MoE、GQA、LoRA、MoD。名前も対象も別々のこれらの手�
 動的剪定は、この抽象化を**動的に、文脈依存的に**行う。同じ情報でも、文脈が変われば重要度が変わる。これは、人間の注意（Attention）の働きに近い。
 
 > [!NOTE]
-> **知能の本質としての選択:** 情報理論の創始者Claude Shannon は、「情報は予測不可能性である」と述べた。しかし、予測不可能性をそのまま保持することは、ノイズを保持することでもある。知能は、予測可能な（冗長な）情報を捨て、予測不可能な（真に新しい）情報を保持する能力である。この意味で、選択的処理は知能の中核的機能と言える。
+> **知能の本質としての選択:** 情報理論の創始者Claude Shannon は、「情報は予測不可能性である」と述べた（Shannon, 1948）。しかし、予測不可能性をそのまま保持することは、ノイズを保持することでもある。知能は、予測可能な（冗長な）情報を捨て、予測不可能な（真に新しい）情報を保持する能力である。この意味で、選択的処理は知能の中核的機能と言える。
 
 ### 本資料の位置づけと限界
 
@@ -881,42 +881,31 @@ print(f"Parameters saved: ~{(1 - 2 / 8) * 100:.1f}% (for K,V)")
 
 ### Mixture of Experts (MoE)
 
-- Shazeer, N., Mirhoseini, A., Maziarz, K., Davis, A., Le, Q., Hinton, G., & Dean, J. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. *ICLR 2017*. arXiv: [arXiv:1701.06538](https://arxiv.org/abs/1701.06538).
+- Shazeer, N., et al. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. *ICLR 2017*. arXiv: [1701.06538](https://arxiv.org/abs/1701.06538)
     - 現代的MoEの基礎となった論文。
-
-- Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. *JMLR*, 23(120):1-39. arXiv: [arXiv:2101.03961](https://arxiv.org/abs/2101.03961).
+- Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. *Journal of Machine Learning Research*, 23(120), 1–39. arXiv: [2101.03961](https://arxiv.org/abs/2101.03961) (2021)
     - Top-1 routingによるさらなるスパース化。
-
-- Dai, D., Deng, C., Zhao, C., Xu, R. X., Gao, H., Chen, D., Li, J., Ding, W., Li, X., Xie, Y., Wang, Z., Chen, Y., Wei, Z., Liang, Y., Wu, Y., Yuan, Z., Zhou, J., Zhang, L., & Yu, F. R. (2024). DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models. arXiv: [arXiv:2401.06066](https://arxiv.org/abs/2401.06066).
+- Dai, D., et al. (2024). DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models. *ACL 2024*, 1280–1297. arXiv: [2401.06066](https://arxiv.org/abs/2401.06066)
     - 細粒度Expert + 共有Expertの設計。
-
-- Puigcerver, J., Riquelme, C., Mustafa, B., & Houlsby, N. (2024). From Sparse to Soft Mixtures of Experts. *ICLR 2024*. arXiv: [arXiv:2308.00951](https://arxiv.org/abs/2308.00951).
-    - 離散的ルーティングを連続化するSoft MoE。
-
-- Kudugunta, S., Huang, Y., Bapna, A., Krikun, M., Lepikhin, D., Luong, M., & Firat, O. (2021). Beyond Distillation: Task-level Mixture-of-Experts for Efficient Inference. *Findings of EMNLP 2021*. arXiv: [arXiv:2110.03742](https://arxiv.org/abs/2110.03742).
+- Kudugunta, S., et al. (2021). Beyond Distillation: Task-level Mixture-of-Experts for Efficient Inference. *Findings of EMNLP 2021*. arXiv: [2110.03742](https://arxiv.org/abs/2110.03742)
     - Expert間の類似度に関する実験的観察。
-
-- Zhou, Y., Lei, T., Liu, H., Du, N., Huang, Y., Zhao, V., Dai, A., Chen, Z., Le, Q., & Laudon, J. (2022). Mixture-of-Experts with Expert Choice Routing. *NeurIPS 2022*. arXiv: [arXiv:2202.09368](https://arxiv.org/abs/2202.09368).
+- Zhou, Y., et al. (2022). Mixture-of-Experts with Expert Choice Routing. *NeurIPS 2022*. arXiv: [2202.09368](https://arxiv.org/abs/2202.09368)
     - Expert Choice Routing（ExpertがトークンをTop-K選択）の提案。ルーティング崩壊への対策の一つ。
-
-- He, X., Shen, C., Gan, Z., Tan, L., Wang, G., Zhao, Y., Chen, W., & Xu, Y. (2024). Auxiliary-Loss-Free Load Balancing Strategy for Mixture-of-Experts. arXiv: [arXiv:2408.15664](https://arxiv.org/abs/2408.15664).
+- He, X., et al. (2024). Auxiliary-Loss-Free Load Balancing Strategy for Mixture-of-Experts. arXiv: [2408.15664](https://arxiv.org/abs/2408.15664)
     - 補助損失なしでも負荷分散を実現する手法の提案。Load Balancing Lossの代替アプローチの研究例。
 
 ### 効率化手法
 
-- Ainslie, J., Lee-Thorp, J., de Jong, M., Zemlyanskiy, Y., Lebrón, F., & Sanghai, S. (2023). GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints. *EMNLP 2023*. arXiv: [arXiv:2305.13245](https://arxiv.org/abs/2305.13245).
+- Ainslie, J., Lee-Thorp, J., de Jong, M., Zemlyanskiy, Y., Lebrón, F., & Sanghai, S. (2023). GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints. *EMNLP 2023*. arXiv: [2305.13245](https://arxiv.org/abs/2305.13245)
     - Grouped-Query Attentionの提案。
-
-- Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., & Chen, W. (2021). LoRA: Low-Rank Adaptation of Large Language Models. *ICLR 2022*. arXiv: [arXiv:2106.09685](https://arxiv.org/abs/2106.09685).
+- Hu, E. J., et al. (2021). LoRA: Low-Rank Adaptation of Large Language Models. *ICLR 2022*. arXiv: [2106.09685](https://arxiv.org/abs/2106.09685)
     - 低ランク適応によるパラメータ効率的ファインチューニング。
-
-- Raposo, D., Ritter, S., Richards, B., Lillicrap, T., Conway, P. W., & Santoro, A. (2024). Mixture-of-Depths: Dynamically Allocating Compute in Transformer-Based Language Models. arXiv: [arXiv:2404.02258](https://arxiv.org/abs/2404.02258).
+- Raposo, D., Ritter, S., Richards, B., Lillicrap, T., Conway, P. W., & Santoro, A. (2024). Mixture-of-Depths: Dynamically Allocating Compute in Transformer-Based Language Models. arXiv: [2404.02258](https://arxiv.org/abs/2404.02258)
     - 深さ方向の動的剪定。
-
-- Dao, T., Fu, D. Y., Ermon, S., Rudra, A., & Ré, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. *NeurIPS 2022*. arXiv: [arXiv:2205.14135](https://arxiv.org/abs/2205.14135).
+- Dao, T., Fu, D. Y., Ermon, S., Rudra, A., & Ré, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. *NeurIPS 2022*. arXiv: [2205.14135](https://arxiv.org/abs/2205.14135)
     - SRAMを活用したメモリ効率的Attention。
 
 ### 情報理論と抽象化
 
-- Shannon, C. E. (1948). A Mathematical Theory of Communication. *Bell System Technical Journal*, 27(3):379-423.
+- Shannon, C. E. (1948). A Mathematical Theory of Communication. *Bell System Technical Journal*, 27(3), 379–423.
     - 情報理論の基礎。情報を「予測不可能性」として定式化。

@@ -26,6 +26,7 @@ tasks:
       - snippets
       - terms
       - references
+      - citations
       - svg_naming
       - lecture_links
       - toc_coverage
@@ -113,9 +114,14 @@ tasks:
       - uv run python ./scripts/check_terms.py {{.SERIES_DIR}}
 
   references:
-    desc: Check reference section format
+    desc: Check 参考文献 sections are in sync with references.bib + refs/*.yml
     cmds:
-      - python3 ./scripts/check_references.py {{.SERIES_DIR}}
+      - uv run python ./scripts/sync_references.py check
+
+  citations:
+    desc: Check body citations （著者, 年） against chapter reference lists
+    cmds:
+      - uv run python ./scripts/check_citations.py {{.SERIES_DIR}}
 
   snippets:
     desc: Check snippets are in sync with markdown

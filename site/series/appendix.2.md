@@ -86,10 +86,10 @@
 | 手法 | 何をしているか | 測定量 | モデル依存性 | 幾何学的解釈 | 限界 |
 | ------ | --------------- | -------- | ------------- | ------------- | ------ |
 | **人手ラベリング** | 人間が「良い/悪い」を判定 | - | なし | 外部の神託 | スケールしない |
-| **EL2Nスコア** | 予測誤差の大きいデータを選別 | **距離** | モデル・学習段階に依存 | 損失距離の代理 | 「難しい」と「間違い」の区別不能 |
-| **Influence Functions** | 除去時の損失変化を逆算 | **曲率** | モデル・近似手法に依存 | Hessian近傍の寄与 | 計算コスト、近似の不安定さ |
+| **EL2Nスコア**（Paul et al., 2021） | 予測誤差の大きいデータを選別 | **距離** | モデル・学習段階に依存 | 損失距離の代理 | 「難しい」と「間違い」の区別不能 |
+| **Influence Functions**（Koh & Liang, 2017） | 除去時の損失変化を逆算 | **曲率** | モデル・近似手法に依存 | Hessian近傍の寄与 | 計算コスト、近似の不安定さ |
 | **kNN外れ値検出** | 近傍密度が低い点を除去 | **密度** | 層・正規化・距離関数で結果が激変 | 疎領域の検出 | 「珍しい」と「間違い」の区別不能 |
-| **TDA異常検知** | Persistenceの異常を検出 | **位相** | 近傍閾値・埋め込みスケールで位相が変わる | トポロジーの破綻 | 高次元での計算困難 |
+| **TDA異常検知**（Carlsson, 2009） | Persistenceの異常を検出 | **位相** | 近傍閾値・埋め込みスケールで位相が変わる | トポロジーの破綻 | 高次元での計算困難 |
 | **合成データ** | 論理エンジンで生成 | - | 生成ルールに依存 | 多様体の「設計」 | 分布の偏り、自己参照 |
 
 ### 測定空間に関する注意
@@ -145,7 +145,7 @@
 
 > [!CAUTION]
 > 「高次元だから必ず破綻する」わけではない（[第13回](13.md)の注意事項参照）。
-> 内在次元が低い場合や、強い構造がある場合は緩和されうる。
+> 内在次元が低い場合や、強い構造がある場合は緩和されうる（Levina & Bickel, 2004; Facco et al., 2017）。
 > ただし、汎用的なデータ選別ツールとしては信頼性が不足している。
 
 ### 鶏と卵問題
@@ -368,7 +368,7 @@ $$d(\mathbf{v}_A, \mathbf{v}_B) + d(\mathbf{v}_B, \mathbf{v}_C) \geq d(\mathbf{v
 
 - Levina, E., & Bickel, P. J. (2004). Maximum Likelihood Estimation of Intrinsic Dimension. *NeurIPS 2004*, 777–784.
     - 局所的なk近傍の距離比を使って内在次元を最尤推定する手法。多様体の次元を実用的に推定できる。
-- Facco, E., et al. (2017). Estimating the intrinsic dimension of datasets by a minimal neighborhood information. *Scientific Reports*, 7, 12140. DOI: [10.1038/s41598-017-11873-y](https://doi.org/10.1038/s41598-017-11873-y)
+- Facco, E., d'Errico, M., Rodriguez, A., & Laio, A. (2017). Estimating the intrinsic dimension of datasets by a minimal neighborhood information. *Scientific Reports*, 7, 12140. DOI: [10.1038/s41598-017-11873-y](https://doi.org/10.1038/s41598-017-11873-y)
     - 最近傍2点の距離比のみを使う最小情報量での内在次元推定（TWO-NN法）。
 - Carlsson, G. (2009). Topology and Data. *Bulletin of the American Mathematical Society*, 46(2), 255–308. DOI: [10.1090/S0273-0979-09-01249-X](https://doi.org/10.1090/S0273-0979-09-01249-X)
     - TDAの創始者による解説論文。データ解析へのトポロジー応用の動機と基本概念を説明。

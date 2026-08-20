@@ -1,0 +1,56 @@
+categories:
+- title: Softmaxと最大エントロピー
+  entries:
+  - key: jaynes1957
+    note:
+    - 最大エントロピー原理の古典的論文。統計力学との接続を示した。
+  - key: boyd2004
+    note:
+    - '凸最適化の標準的教科書。Log-Sum-Exp関数の凸性や、凸関数の合成規則などを扱う。オンライン版: [https://web.stanford.edu/~boyd/cvxbook/](https://web.stanford.edu/~boyd/cvxbook/)'
+  - key: hinton2015
+    note:
+    - 知識蒸留の原論文。温度パラメータの実用的な使い方を示した。
+- title: 情報幾何学と自然勾配
+  entries:
+  - key: amari1998
+    note:
+    - 自然勾配の一次文献。パラメータ空間の計量構造が学習効率に与える影響を示した古典。
+  - key: martens2015
+    note:
+    - 'K-FAC: クロネッカー積によるブロック対角近似を用いた自然勾配の実用的な近似手法。'
+  - key: george2018
+    note:
+    - 'EKFAC: K-FACをクロネッカー固有基底で近似する拡張手法。'
+  - key: kunstner2019
+    note:
+    - 経験的フィッシャー近似の限界を理論的に分析。Adamと自然勾配の関係を議論する際の重要な参照。
+  - key: liu2023
+    note:
+    - 対角ヘシアン推定を前条件として用いる二次最適化手法。自然勾配（Fisher近似）とは異なるアプローチ。
+- title: Gumbel-Softmaxと離散サンプリング
+  entries:
+  - key: jang2017
+    note:
+    - Gumbel-Softmaxの原論文。
+  - key: maddison2017
+    note:
+    - Gumbel-Softmaxと独立に提案された「Concrete分布」。
+- title: 条件付き確率場（CRF）と構造化予測
+  entries:
+  - key: lafferty2001
+    note:
+    - CRFの原論文。系列ラベリングにおける構造化予測の古典。
+  - key: sutton2012
+    note:
+    - CRFの包括的なサーベイ論文。理論から実装まで網羅。
+  - key: devlin2019
+    note:
+    - BERTの原論文。Transformerによる文脈表現学習の基盤。
+  - key: souza2019
+    note:
+    - BERT+CRFのハイブリッドモデルの実例（固有表現抽出）。この構成は多くのNERタスクで採用されている。
+- title: 情報幾何学の教科書
+  entries:
+  - key: amari2016
+    note:
+    - 情報幾何学の標準的教科書。フィッシャー情報行列、自然勾配、双対構造などを体系的に扱う。

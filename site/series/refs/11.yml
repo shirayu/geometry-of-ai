@@ -1,0 +1,34 @@
+categories:
+- title: CLIPと対照学習
+  entries:
+  - key: radford2021
+    note:
+    - CLIPの原論文。対照学習によるテキスト-画像の統一空間を提案。
+  - key: oord2018
+    note:
+    - InfoNCE損失を提案。対照学習の理論的基盤。
+- title: ドメイン適応と空間の拡張
+  entries:
+  - key: daumé2007
+    note:
+    - 空間を拡張し、共通/固有情報を直交化する手法を提案。シンプルだが強力なドメイン適応の古典的傑作。
+- title: モダリティギャップ
+  entries:
+  - key: liang2022
+    note:
+    - モダリティギャップを発見・分析した論文。統一空間の限界を示す。
+- title: CLIPの限界と構成性
+  entries:
+  - key: yuksekgonul2023
+    note:
+    - CLIPの構成的理解の限界を分析。属性と物体の組み合わせにおける問題を指摘。
+- title: ImageBindと多モダリティ統合
+  entries:
+  - key: girdhar2023
+    note:
+    - 6モダリティを単一空間に統合。画像をアンカーとした設計を提案。
+- title: マルチモーダル学習のサーベイ
+  entries:
+  - key: baltrusaitis2019
+    note:
+    - マルチモーダル学習の包括的なサーベイ。表現、融合、アライメントなどの観点から整理。

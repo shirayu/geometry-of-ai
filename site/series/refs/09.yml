@@ -1,0 +1,45 @@
+categories:
+- title: 拡散モデルの基礎
+  entries:
+  - key: ho2020
+    note:
+    - DDPMの原論文。現代の拡散モデルの基礎。
+  - key: sohldickstein2015
+    note:
+    - 拡散モデルの初期の定式化。非平衡熱力学との接続。
+- title: スコアベース生成モデル
+  entries:
+  - key: song2019
+    note:
+    - スコアマッチングに基づく生成モデル。
+  - key: song2021
+    note:
+    - SDEに基づく統一的な定式化。VP-SDE、VE-SDE、確率フローODEを導入。
+- title: 高速サンプリング
+  entries:
+  - key: song2021denoising
+    note:
+    - DDIMの原論文。確率フローODEに基づく高速サンプリング。
+  - key: lu2022
+    note:
+    - 高速ODEソルバー。10～20ステップでの高品質サンプリング。
+- title: Flow Matching
+  entries:
+  - key: lipman2023
+    note:
+    - Flow Matchingの原論文。拡散モデルと連続正規化フローの統一。
+- title: スコアマッチング
+  entries:
+  - key: hyvärinen2005
+    note:
+    - スコアマッチングの原論文。
+- title: エネルギーベースモデル
+  entries:
+  - key: lecun2006
+    note:
+    - EBMのチュートリアル。
+- title: Langevin動力学
+  entries:
+  - key: welling2011
+    note:
+    - 確率的勾配Langevin動力学（SGLD）。ベイズ学習への応用。

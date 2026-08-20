@@ -1,0 +1,60 @@
+categories:
+- title: 情報幾何学（基礎）
+  entries:
+  - key: amari2016
+    note:
+    - 情報幾何学の標準的教科書。フィッシャー情報行列、KLダイバージェンス、双対構造などを体系的に扱う。
+  - key: amari2000
+    note:
+    - 情報幾何学の古典。数学的に厳密な定式化を提供。
+- title: 自然勾配法
+  entries:
+  - key: amari1998
+    note:
+    - 自然勾配法の一次文献。パラメータ空間の計量構造が学習効率に与える影響を示した古典。
+  - key: martens2015
+    note:
+    - K-FAC（Kronecker-Factored Approximate Curvature）の提案。大規模モデルでの自然勾配法の近似手法。
+- title: KLダイバージェンスと損失関数
+  entries:
+  - key: kullback1951
+    note:
+    - KLダイバージェンスの一次文献。情報理論における基礎概念。
+  - key: bishop2006
+    note:
+    - 機械学習におけるKLダイバージェンス、クロスエントロピー、最尤推定の関係を詳しく解説。
+- title: 双曲幾何学（階層構造）
+  entries:
+  - key: nickel2017
+    note:
+    - 双曲空間（Poincaré球モデル）での埋め込み手法。階層構造の表現に適していることを実験的に示した。
+  - key: ganea2018
+    note:
+    - 双曲空間でのニューラルネットワークの一般化。
+- title: Attention と内積
+  entries:
+  - key: vaswani2017
+    note:
+    - Transformer と Scaled Dot-Product Attention の一次文献。
+- title: フィンスラー幾何学とシンプレクティック幾何学
+  entries:
+  - key: bao2000
+    note:
+    - フィンスラー幾何学の標準的教科書。リーマン計量の一般化としての定式化を体系的に扱う。可逆と非可逆の区別についても参照。
+  - key: amari2016
+    note:
+    - 本文「情報幾何学（基礎）」にも掲載。双対接続（ $\alpha$ -接続）、Amari–Chentsovテンソル、ダイバージェンス幾何など、KLの非対称性の幾何化に関する標準的な枠組みを提供。フィンスラー節のNOTEで言及した内容の数学的基盤。
+  - key: greydanus2019
+    note:
+    - ハミルトン系の構造をニューラルネットワークに組み込んだHNNの提案。シンプレクティック積分器との組み合わせによりエネルギードリフトを構造的に抑制する。
+  - key: chen2020
+    note:
+    - シンプレクティック積分器をリカレントネットワークに導入し、長期安定性を実現。
+- title: MoE（Mixture of Experts）
+  entries:
+  - key: shazeer2017
+    note:
+    - 現代的MoEの基礎論文。スパースゲーティングと条件付き計算の設計。
+  - key: fedus2022
+    note:
+    - MoEの訓練安定化技術（Load Balancing Loss等）を扱う。

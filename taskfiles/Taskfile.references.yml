@@ -1,0 +1,8 @@
+---
+version: '3'
+
+tasks:
+  apply:
+    desc: Generate 参考文献 sections from references.bib + site/series/refs/*.yml
+    cmds:
+      - uv run python ./scripts/sync_references.py apply

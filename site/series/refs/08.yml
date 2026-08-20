@@ -1,0 +1,53 @@
+categories:
+- title: 残差接続とResNet
+  entries:
+  - key: he2016
+    note:
+    - ResNetの原論文。残差接続が深いネットワークの学習を可能にすることを示した。
+  - key: he2016identity
+    note:
+    - Pre-activation ResNetの提案。残差接続の設計についてさらに分析。
+- title: 正規化層
+  entries:
+  - key: ioffe2015
+    note:
+    - Batch Normalizationの原論文。
+  - key: ba2016
+    note:
+    - Layer Normalizationの原論文。Transformerで広く使用される。
+  - key: zhang2019
+    note:
+    - RMSNormの原論文。大規模LLMで採用例が増加。
+- title: Neural ODE
+  entries:
+  - key: chen2018
+    note:
+    - Neural ODEの原論文。連続深度モデルと随伴法による効率的な学習を提案。NeurIPS 2018 Best Papersの一つに選出。
+  - key: dupont2019
+    note:
+    - Neural ODEの表現力の限界と、次元を拡張することによる解決策。
+  - key: grathwohl2019
+    note:
+    - Neural ODEを正規化フローへ応用。密度変化に現れるdivergence（ヤコビアンのトレース）をHutchinson推定量でスケーラブルに推定する手法を提案。
+  - key: rubanova2019
+    note:
+    - 不規則時系列データへのNeural ODEの応用。
+  - key: lipman2023
+    note:
+    - ODEベースの生成モデルの学習を回帰問題に変換。現代の高性能画像生成モデルの基盤。
+  - key: liu2023flow
+    note:
+    - Rectified Flowの提案。データとノイズを直線軌道で結ぶ連続正規化フローの枠組み。Flow Matchingと並ぶODEベース生成モデルの基盤。
+- title: 古典的生成モデル
+  entries:
+  - key: goodfellow2014
+    note:
+    - GANの原論文。敵対的学習による生成モデル。
+  - key: kingma2014
+    note:
+    - VAEの原論文。変分推論による生成モデル。
+- title: 拡散モデル（次回への接続）
+  entries:
+  - key: ho2020
+    note:
+    - DDPMの原論文。次回で詳しく扱う。

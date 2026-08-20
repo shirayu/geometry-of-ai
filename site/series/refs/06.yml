@@ -1,0 +1,24 @@
+categories:
+- title: Transformer
+  entries:
+  - key: vaswani2017
+    note:
+    - Transformerの原論文。Scaled Dot-Product AttentionとMulti-head Attentionを導入。
+- title: RoPE
+  entries:
+  - key: su2024
+    note:
+    - RoPEの原論文。回転による相対位置表現を提案。最初の提案は2021年（arXiv）、2024年にNeurocomputing誌に掲載。
+  - key: press2022
+    note:
+    - ALiBi（Attention with Linear Biases）の原論文。RoPEとは異なるアプローチで相対位置を導入。
+- title: nGPTと正規化設計
+  entries:
+  - key: loshchilov2025
+    note:
+    - すべての表現を単位球面上に制約するTransformer設計。arXiv 2024、ICLR 2025に採択。
+- title: カーネル法とAttentionの関係
+  entries:
+  - key: tsai2019
+    note:
+    - Attentionとカーネル法の関係を分析。
