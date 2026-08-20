@@ -21,5 +21,12 @@ tasks:
 
   preview:
     desc: Preview built site
+    vars:
+      HOST: '{{.HOST | default ""}}'
+      PORT: '{{.PORT | default ""}}'
     cmds:
-      - pnpm --filter geometry-of-ai-site preview
+      - |
+        args=""
+        {{ if .HOST }}args="$args --host {{.HOST}}"{{ end }}
+        {{ if .PORT }}args="$args --port {{.PORT}}"{{ end }}
+        pnpm --filter geometry-of-ai-site preview $args

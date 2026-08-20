@@ -24,8 +24,14 @@ tasks:
 
   dev:
     desc: Start dev server
+    vars:
+      HOST: '{{.HOST | default ""}}'
+      PORT: '{{.PORT | default ""}}'
     cmds:
       - task: site:dev
+        vars:
+          HOST: '{{.HOST}}'
+          PORT: '{{.PORT}}'
 
   build:
     desc: Build site
@@ -34,8 +40,14 @@ tasks:
 
   preview:
     desc: Preview built site
+    vars:
+      HOST: '{{.HOST | default ""}}'
+      PORT: '{{.PORT | default ""}}'
     cmds:
       - task: site:preview
+        vars:
+          HOST: '{{.HOST}}'
+          PORT: '{{.PORT}}'
 
   format:
     cmds:
