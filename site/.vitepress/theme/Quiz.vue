@@ -57,6 +57,19 @@ function reset() {
                         <template v-else-if="selected === i && i !== quiz.answer">&#10007;</template>
                     </span>
                 </button>
+                <div
+                    v-if="selected !== null"
+                    class="quiz__reason"
+                    :class="{
+                        'quiz__reason--correct': i === quiz.answer,
+                        'quiz__reason--selected-wrong': selected === i && i !== quiz.answer,
+                    }"
+                >
+                    <span class="quiz__reason-label">
+                        選択肢{{ i + 1 }}（{{ i === quiz.answer ? '正解' : '不正解' }}）
+                    </span>
+                    <span v-html="quiz.reasons[i]" />
+                </div>
             </li>
         </ul>
         <Transition name="quiz-fade">
@@ -74,16 +87,6 @@ function reset() {
                     </p>
                     <button type="button" class="quiz__reset" @click="reset">もう一度</button>
                 </div>
-                <ul class="quiz__reasons">
-                    <li v-if="selected !== null && selected !== quiz.answer" class="quiz__reason quiz__reason--wrong">
-                        <span class="quiz__reason-label">選択肢{{ selected + 1 }}（不正解）</span>
-                        <span v-html="quiz.reasons[selected]" />
-                    </li>
-                    <li class="quiz__reason quiz__reason--correct">
-                        <span class="quiz__reason-label">選択肢{{ quiz.answer + 1 }}（正解）</span>
-                        <span v-html="quiz.reasons[quiz.answer]" />
-                    </li>
-                </ul>
                 <p class="quiz__explanation" v-html="quiz.explanation" />
             </div>
         </Transition>
@@ -109,7 +112,7 @@ function reset() {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.8rem;
 }
 
 .quiz__choice-item {
@@ -249,21 +252,14 @@ function reset() {
     color: var(--vp-c-red-1);
 }
 
-.quiz__reasons {
-    list-style: none;
-    margin: 0 0 0.75rem;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
 .quiz__reason {
-    margin: 0;
+    margin: 0.35rem 0.5rem 0;
     padding: 0.5rem 0.7rem;
     border-radius: 6px;
     font-size: 0.9em;
     line-height: 1.6;
+    background: var(--vp-c-bg-mute);
+    color: var(--vp-c-text-1);
 }
 
 .quiz__reason-label {
@@ -275,19 +271,17 @@ function reset() {
 
 .quiz__reason--correct {
     background: var(--vp-c-green-soft);
-    color: var(--vp-c-text-1);
 }
 
 .quiz__reason--correct .quiz__reason-label {
     color: var(--vp-c-green-1);
 }
 
-.quiz__reason--wrong {
+.quiz__reason--selected-wrong {
     background: var(--vp-c-red-soft);
-    color: var(--vp-c-text-1);
 }
 
-.quiz__reason--wrong .quiz__reason-label {
+.quiz__reason--selected-wrong .quiz__reason-label {
     color: var(--vp-c-red-1);
 }
 
