@@ -21,7 +21,15 @@ def iter_markdown_files(root: Path) -> list[Path]:
 def remove_dash_only_lines(text: str) -> str:
     has_trailing_newline = text.endswith("\n")
     lines = text.split("\n")
-    filtered = [line for line in lines if not DASH_ONLY_RE.match(line)]
+
+    frontmatter_end = -1
+    if lines and lines[0] == "---":
+        for i in range(1, len(lines)):
+            if lines[i] == "---":
+                frontmatter_end = i
+                break
+
+    filtered = [line for i, line in enumerate(lines) if i <= frontmatter_end or not DASH_ONLY_RE.match(line)]
     updated = "\n".join(filtered)
     if has_trailing_newline and not updated.endswith("\n"):
         updated += "\n"
