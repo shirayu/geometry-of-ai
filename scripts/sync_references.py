@@ -9,6 +9,8 @@
 生成物:
   - 各章 md の `## 参考文献` セクション（ファイル末尾まで置換）
   - site/series/references.md 全体
+  - 本文中の（著者, 年）引用を、章の参考文献セクション内アンカー（#ref-<key>）への
+    Markdown リンクに変換（`（[著者, 年](#ref-key)）`）
 
 正規形の書誌レンダリング（00.md の水準）:
   - 著者: 「A, X., B, Y., & C, Z.」／2名「A, X., & B, Y.」／7名以上「A, X., et al.」
@@ -38,6 +40,7 @@ ET_AL_AUTHOR_THRESHOLD = 7
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
 EPRINT_RE = re.compile(r"^\d{4}\.\d{4,5}(v\d+)?$")
 REQUIRED_FIELDS = ("author", "title", "year")
+CITE_ITEM_RE = re.compile(r"^(?P<authors>.+), (?P<year>\d{4}[a-z]?)$")
 
 
 @dataclass
@@ -269,15 +272,27 @@ def load_yml(path: Path) -> dict:
         return yaml.safe_load(fh) or {}
 
 
+def ref_anchor_id(key: str) -> str:
+    return f"ref-{key}"
+
+
 def render_ref_section(data: dict, bib: dict[str, BibEntry]) -> str:
-    """章の `## 参考文献` セクション（見出し〜ファイル末尾）を生成する。"""
+    """章の `## 参考文献` セクション（見出し〜ファイル末尾）を生成する。
+
+    各項目の先頭に本文からのアンカーリンク用 id を埋め込む（同一キーが章内で
+    複数回掲載される場合、id の重複を避けるため2回目以降には付与しない）。
+    """
     lines = [REF_SECTION_HEADER, ""]
+    seen_keys: set[str] = set()
     for cat in data.get("categories", []):
         if cat.get("title"):
             lines.append(f"### {cat['title']}")
             lines.append("")
         for ent in cat.get("entries", []):
-            lines.append(f"- {render_entry(bib[ent['key']])}")
+            key = ent["key"]
+            anchor = f'<a id="{ref_anchor_id(key)}"></a>' if key not in seen_keys else ""
+            seen_keys.add(key)
+            lines.append(f"- {anchor}{render_entry(bib[key])}")
             for note in ent.get("note", []):
                 lines.append(f"    - {note}")
         lines.append("")
@@ -374,6 +389,10 @@ def validate_yml(refs_dir: Path) -> list[str]:
 
 
 REF_SECTION_LINE_RE = re.compile(rf"^({re.escape(REF_SECTION_HEADER)})[ \t]*$", re.MULTILINE)
+FENCE_RE = re.compile(r"^[ \t]*(`{3,}|~{3,})")
+# （著者部, 年）: 既にリンク済み（（[…](#…)）等）は対象外。check_citations.py の
+# FULLWIDTH_CITE_RE と同じ著者部パターンだが、直前に "[" が続く場合は除外する。
+FULLWIDTH_CITE_RE = re.compile(r"（([^（）\[\]]+?, \d{4}[a-z]?(?:; [^（）\[\]]+?, \d{4}[a-z]?)*)）")
 
 
 def md_path_for(yml_path: Path) -> Path:
@@ -382,7 +401,60 @@ def md_path_for(yml_path: Path) -> Path:
     return yml_path.parent.parent / f"{yml_path.stem}.md"
 
 
-def apply_chapter(yml_path: Path, bib: dict[str, BibEntry], dry_run: bool) -> str | None:
+def linkify_citations(body: str, chapter_keys: list[str], labels: dict[str, list[str]]) -> str:
+    """本文中の（著者, 年）を、章の参考文献に解決できる場合に限りアンカーリンク化する。
+
+    - 対象はコードフェンス外かつ `## 参考文献` セクションより前の部分のみ。
+    - セミコロン区切りの複数引用（（A, 2020; B, 2021））は要素ごとに個別リンク化する。
+    - ラベルが章内の複数キーに衝突する場合はリンク化をスキップする（year_suffix 等で
+      本来は一意になるはずだが、安全側に倒す）。
+    """
+    chapter_key_set = set(chapter_keys)
+
+    def resolve(label: str) -> str | None:
+        keys = [k for k in labels.get(label, []) if k in chapter_key_set]
+        if len(keys) != 1:
+            return None
+        return keys[0]
+
+    def replace_item(part: str) -> str:
+        m = CITE_ITEM_RE.match(part.strip())
+        if not m:
+            return part
+        label = f"{m.group('authors').strip()}, {m.group('year')}"
+        key = resolve(label)
+        if key is None:
+            return part
+        return f"[{label}]({'#' + ref_anchor_id(key)})"
+
+    def replace_match(m: re.Match) -> str:
+        parts = m.group(1).split("; ")
+        return "（" + "; ".join(replace_item(p) for p in parts) + "）"
+
+    out_lines: list[str] = []
+    in_fence = False
+    marker_char = ""
+    marker_len = 0
+    for line in body.splitlines():
+        fm = FENCE_RE.match(line)
+        if fm:
+            marker = fm.group(1)
+            if not in_fence:
+                in_fence = True
+                marker_char = marker[0]
+                marker_len = len(marker)
+            elif marker[0] == marker_char and len(marker) >= marker_len and line.strip() == marker:
+                in_fence = False
+            out_lines.append(line)
+            continue
+        out_lines.append(line if in_fence else FULLWIDTH_CITE_RE.sub(replace_match, line))
+    result = "\n".join(out_lines)
+    if body.endswith("\n"):
+        result += "\n"
+    return result
+
+
+def apply_chapter(yml_path: Path, bib: dict[str, BibEntry], labels: dict[str, list[str]], dry_run: bool) -> str | None:
     """章 md の参考文献セクションを生成物で置き換える。変更があれば報告文を返す。"""
     md_path = md_path_for(yml_path)
     data = load_yml(yml_path)
@@ -400,13 +472,24 @@ def apply_chapter(yml_path: Path, bib: dict[str, BibEntry], dry_run: bool) -> st
     m = REF_SECTION_LINE_RE.search(text)
     if not m:
         return f"{md_path}: {REF_SECTION_HEADER} セクションが見つかりません"
-    new_text = text[: m.start()] + render_ref_section(data, bib)
+
+    chapter_keys = [ent["key"] for cat in data.get("categories", []) for ent in cat.get("entries", [])]
+    body = linkify_citations(text[: m.start()], chapter_keys, labels)
+    new_text = body + render_ref_section(data, bib)
     if new_text == text:
         return None
     if not dry_run:
         md_path.write_text(new_text, encoding="utf-8")
         return None
     return f"{md_path}: 参考文献セクションが乖離しています"
+
+
+def build_labels(bib: dict[str, BibEntry]) -> dict[str, list[str]]:
+    labels: dict[str, list[str]] = {}
+    for key, e in bib.items():
+        if "author" in e.fields and "year" in e.fields:
+            labels.setdefault(citation_label(e), []).append(key)
+    return labels
 
 
 def run(check: bool, series_dir: Path, bib_path: Path) -> int:
@@ -420,9 +503,10 @@ def run(check: bool, series_dir: Path, bib_path: Path) -> int:
     errors += validate_bib(bib)
     errors += validate_refs(refs_dir, bib)
     errors += validate_yml(refs_dir)
+    labels = build_labels(bib)
 
     for yml_path in sorted(refs_dir.glob("*.yml")):
-        result = apply_chapter(yml_path, bib, dry_run=check)
+        result = apply_chapter(yml_path, bib, labels, dry_run=check)
         if result:
             errors.append(result)
 

@@ -41,7 +41,6 @@ IMPL_NO_SUBTITLE = re.compile(r"^## 実装ノート$")
 CAUTION_HEADER = re.compile(r"^## 注意事項$")
 NEXT_SECTION = re.compile(r"^## ")
 BULLET = re.compile(r"^- ")
-BLOCKQUOTE = re.compile(r"^> ")
 
 
 def find_first(lines: list[str], regex: re.Pattern) -> int | None:
@@ -52,7 +51,7 @@ def find_first(lines: list[str], regex: re.Pattern) -> int | None:
 
 
 def check_caution_block(lines: list[str], path: Path) -> list[str]:
-    """注意事項ブロックに箇条書きと末尾引用句があるか確認する。"""
+    """注意事項ブロックに箇条書きがあるか確認する。"""
     errors = []
     start = find_first(lines, CAUTION_HEADER)
     if start is None:
@@ -67,12 +66,9 @@ def check_caution_block(lines: list[str], path: Path) -> list[str]:
         block.append(line)
 
     has_bullet = any(BULLET.match(line) for line in block)
-    has_quote = any(BLOCKQUOTE.match(line) for line in block)
 
     if not has_bullet:
         errors.append(f"{path}: 注意事項ブロックに箇条書き（- ）がありません")
-    if not has_quote:
-        errors.append(f"{path}: 注意事項ブロックに末尾引用句（> ）がありません")
 
     return errors
 

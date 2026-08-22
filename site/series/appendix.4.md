@@ -112,7 +112,7 @@ $$\text{cosine similarity} = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \
 
 ### Attentionとの関係
 
-[第6回](06.md)で扱ったAttention機構（標準的なscaled dot-product attention）は、QueryとKeyの **内積（dot product）** を基本としている（Vaswani et al., 2017）：
+[第6回](06.md)で扱ったAttention機構（標準的なscaled dot-product attention）は、QueryとKeyの **内積（dot product）** を基本としている（[Vaswani et al., 2017](#ref-vaswani2017)）：
 
 $$\text{score}(q_i, k_j) = \frac{q_i^\top k_j}{\sqrt{d_k}}$$
 
@@ -159,11 +159,11 @@ print(f"コサイン類似度: {cosine_similarity(u, v):.4f}")
 - **中心から離れるほど空間が指数的に広がる**
 - **階層構造（木構造）の埋め込みに適している**
 
-例えば、Poincaré球モデルでは、距離は以下のように定義される（Nickel & Kiela, 2017）：
+例えば、Poincaré球モデルでは、距離は以下のように定義される（[Nickel & Kiela, 2017](#ref-nickel2017)）：
 
 $$d(\mathbf{u}, \mathbf{v}) = \text{arcosh}\left(1 + 2\frac{\|\mathbf{u} - \mathbf{v}\|^2}{(1-\|\mathbf{u}\|^2)(1-\|\mathbf{v}\|^2)}\right)$$
 
-この距離は、中心（原点）の近くでは「親」を表し、境界に近いほど「深い子孫」を表現できる（Ganea et al., 2018）。
+この距離は、中心（原点）の近くでは「親」を表し、境界に近いほど「深い子孫」を表現できる（[Ganea et al., 2018](#ref-ganea2018)）。
 
 > [!NOTE]
 > **実装上の注意**：Poincaré球モデルでは、すべての点が $\|\mathbf{u}\| < 1$ を満たす必要がある（開球内）。実装時には数値安定性のため、以下の対策が推奨される：
@@ -194,7 +194,7 @@ $$d(\mathbf{u}, \mathbf{v}) = \text{arcosh}\left(1 + 2\frac{\|\mathbf{u} - \math
 
 ### KLダイバージェンス：分布の非対称な隔たり
 
-**KLダイバージェンス（Kullback-Leibler divergence）** は、2つの確率分布 $P$ と $Q$ の「隔たり」を測るが、行きと帰りで値が異なる（Kullback & Leibler, 1951）：
+**KLダイバージェンス（Kullback-Leibler divergence）** は、2つの確率分布 $P$ と $Q$ の「隔たり」を測るが、行きと帰りで値が異なる（[Kullback & Leibler, 1951](#ref-kullback1951)）：
 
 $$D_{\text{KL}}(P \| Q) = \sum_x P(x) \log \frac{P(x)}{Q(x)}$$
 
@@ -246,7 +246,7 @@ print(f"非対称性: {abs(kl_pq - kl_qp):.4f}")
 
 この非対称性こそが、**損失関数として学習（パラメータ更新）を駆動するエネルギー**となる。
 
-例えば、クロスエントロピー損失は、KLダイバージェンスと密接に関連している（Bishop, 2006）：
+例えば、クロスエントロピー損失は、KLダイバージェンスと密接に関連している（[Bishop, 2006](#ref-bishop2006)）：
 
 $$\mathcal{L} _{\text{CE}} = -\sum _x P(x) \log Q(x) = D _{\text{KL}}(P \| Q) + H(P)$$
 
@@ -276,7 +276,7 @@ $$\mathcal{L} _{\text{CE}} = -\sum _x P(x) \log Q(x) = D _{\text{KL}}(P \| Q) + 
 
 ### フィッシャー情報行列：分布の感度を測る
 
-**フィッシャー情報行列（Fisher Information Matrix）** は、パラメータ $\theta$ を少し変えたとき、予測分布 $p(x; \theta)$ がどれだけ敏感に変化するかを測る尺度である（Amari, 2016）。
+**フィッシャー情報行列（Fisher Information Matrix）** は、パラメータ $\theta$ を少し変えたとき、予測分布 $p(x; \theta)$ がどれだけ敏感に変化するかを測る尺度である（[Amari, 2016](#ref-amari2016)）。
 
 数学的には、スコア関数（対数尤度の勾配）の共分散として定義される：
 
@@ -352,7 +352,7 @@ $$F_{\boldsymbol{\mu}\boldsymbol{\mu}} \propto \kappa \quad \text{（高次元�
 
 通常の勾配降下法は、パラメータ空間を **平坦なユークリッド空間** として扱う。しかし、統計多様体は一般に曲がっている。
 
-**自然勾配法（Natural Gradient Descent）** は、フィッシャー情報行列を計量として用いることで、曲がった空間での「真の勾配」を計算する（Amari, 1998）：
+**自然勾配法（Natural Gradient Descent）** は、フィッシャー情報行列を計量として用いることで、曲がった空間での「真の勾配」を計算する（[Amari, 1998](#ref-amari1998)）：
 
 $$\theta_{t+1} = \theta_t - \eta F(\theta_t)^{-1} \nabla_\theta \mathcal{L}$$
 
@@ -360,7 +360,7 @@ $$\theta_{t+1} = \theta_t - \eta F(\theta_t)^{-1} \nabla_\theta \mathcal{L}$$
 
 #### 座標不変性：パラメータ化によらない学習
 
-自然勾配法の最も重要な動機は、**座標不変性（coordinate invariance）** である（Amari & Nagaoka, 2000）。
+自然勾配法の最も重要な動機は、**座標不変性（coordinate invariance）** である（[Amari & Nagaoka, 2000](#ref-amari2000)）。
 
 通常の勾配降下法は、パラメータの定義の仕方（座標系の選び方）に依存してしまう。例えば、同じ分布を表すパラメータでも、 $\theta$ を使うか $\phi = f(\theta)$ を使うかで、勾配の方向が変わってしまう。
 
@@ -407,7 +407,7 @@ $$\theta_{t+1} = \theta_t - \eta F(\theta_t)^{-1} \nabla_\theta \mathcal{L}$$
 
 このため、実用的には以下の近似手法が用いられる：
 
-- **K-FAC（Kronecker-Factored Approximate Curvature）**（Martens & Grosse, 2015）：行列をブロック対角化し、各ブロックをKronecker積で近似
+- **K-FAC（Kronecker-Factored Approximate Curvature）**（[Martens & Grosse, 2015](#ref-martens2015)）：行列をブロック対角化し、各ブロックをKronecker積で近似
 - **対角近似**：行列の対角成分のみを使用（Adam等と類似）
 
 ### AttentionとMoEとの比喩的対応
@@ -418,7 +418,7 @@ $$\theta_{t+1} = \theta_t - \eta F(\theta_t)^{-1} \nabla_\theta \mathcal{L}$$
 Attention機構やMoE（Mixture of Experts）は、計算資源を動的に配分する仕組みである。これを「情報密度」との比喩的対応で理解することができる：
 
 - **Attention**：情報密度（内積による類似度）の高いTokenに重みを置く
-- **MoE**（Shazeer et al., 2017）：情報密度（入力の特徴）に応じて、適切なExpertに計算を振り分ける
+- **MoE**（[Shazeer et al., 2017](#ref-shazeer2017)）：情報密度（入力の特徴）に応じて、適切なExpertに計算を振り分ける
 
 ただし、因果関係は双方向的である：
 
@@ -428,7 +428,7 @@ Attention機構やMoE（Mixture of Experts）は、計算資源を動的に配�
 つまり、Attentionが「情報密度を読み取る」だけでなく、学習によって「情報密度を作り出す」側面もある。
 
 > [!NOTE]
-> **[第13回](13.md)との接続**：[第13回](13.md)で扱うMoEは、入力に応じて計算を動的に配分する（Fedus et al., 2022）。これは、「情報のある場所に計算を集中させる」という意味で、フィッシャー情報の比喩と緩やかに対応する。ただし、MoEのルーティング機構は、厳密にはフィッシャー情報に基づいていない。
+> **[第13回](13.md)との接続**：[第13回](13.md)で扱うMoEは、入力に応じて計算を動的に配分する（[Fedus et al., 2022](#ref-fedus2022)）。これは、「情報のある場所に計算を集中させる」という意味で、フィッシャー情報の比喩と緩やかに対応する。ただし、MoEのルーティング機構は、厳密にはフィッシャー情報に基づいていない。
 
 ## 実装ノート：距離、ダイバージェンス、計量を実装する
 
@@ -669,7 +669,7 @@ print("収束の比較を gradient_comparison.png に保存")
 
 リーマン計量では、各点での「長さの測り方」が内積（2次形式）で決まる。その結果、単位球は必ず楕円体になり、方向ごとの長さの測り方は二次関数的な範囲に留まる。
 
-**フィンスラー計量（Finsler metric）** は、この制約を緩め、各点に**一般の（滑らかな）凸体**を単位球として許容する一般化である（Bao et al., 2000）。いわば「向かい風のある空間」であり、進む方向によって同じ距離が「遠く」も「近く」もなりうる計量である。
+**フィンスラー計量（Finsler metric）** は、この制約を緩め、各点に**一般の（滑らかな）凸体**を単位球として許容する一般化である（[Bao et al., 2000](#ref-bao2000)）。いわば「向かい風のある空間」であり、進む方向によって同じ距離が「遠く」も「近く」もなりうる計量である。
 
 ただし注意が必要なのは、**フィンスラー計量が常に非対称な距離を導くわけではない**という点だ。フィンスラー計量 $F(x, v)$ が**可逆**（ $F(x, v) = F(x, -v)$ ）であれば、誘導される距離は $d(A, B) = d(B, A)$ を満たす。距離の非対称性（ $d(A, B) \neq d(B, A)$ ）を扱いたい場合は、可逆性を外した**非可逆フィンスラー計量（non-reversible Finsler metric）** を明示的に考える必要がある。
 
@@ -689,7 +689,7 @@ print("収束の比較を gradient_comparison.png に保存")
 
 深層学習との接点は、特に物理シミュレーションAIの領域で具体化している：
 
-- **Hamiltonian Neural Networks（HNN）**（Greydanus et al., 2019）：ニューラルネットワークでハミルトニアン $H$ を学習し、そこから導かれるハミルトン方程式に従って力学系を記述する。連続時間の理想化では $H$ が保存量として働く一方、離散時間の数値積分では誤差により保存量がドリフトしうる。そこでシンプレクティック積分器（例：leapfrog / Störmer–Verletなど）を用いると、**シンプレクティック構造（2-形式保存）を保ったまま誤差の蓄積を抑えやすく**、長期安定性が向上する（Chen et al., 2020）。
+- **Hamiltonian Neural Networks（HNN）**（[Greydanus et al., 2019](#ref-greydanus2019)）：ニューラルネットワークでハミルトニアン $H$ を学習し、そこから導かれるハミルトン方程式に従って力学系を記述する。連続時間の理想化では $H$ が保存量として働く一方、離散時間の数値積分では誤差により保存量がドリフトしうる。そこでシンプレクティック積分器（例：leapfrog / Störmer–Verletなど）を用いると、**シンプレクティック構造（2-形式保存）を保ったまま誤差の蓄積を抑えやすく**、長期安定性が向上する（[Chen et al., 2020](#ref-chen2020)）。
 - **可逆ネットワークとの関係**：情報を消失させずに変換するアーキテクチャ（RevNet、Neural ODEなど）は、「情報を捨てない」という点で保存的な発想に近い。ただし、**可逆性（invertibility）とシンプレクティック性（位相空間の2-形式保存）は別の概念**である。両者が一致するのは、ハミルトン系として設計したりシンプレクティック積分器を用いるなど、追加の構造的制約を課した場合に限られる。
 
 > [!TIP]
@@ -719,51 +719,51 @@ print("収束の比較を gradient_comparison.png に保存")
 
 ### 情報幾何学（基礎）
 
-- Amari, S. (2016). *Information Geometry and Its Applications*. Applied Mathematical Sciences, Vol. 194. Springer Japan. DOI: [10.1007/978-4-431-55978-8](https://doi.org/10.1007/978-4-431-55978-8)
+- <a id="ref-amari2016"></a>Amari, S. (2016). *Information Geometry and Its Applications*. Applied Mathematical Sciences, Vol. 194. Springer Japan. DOI: [10.1007/978-4-431-55978-8](https://doi.org/10.1007/978-4-431-55978-8)
     - 情報幾何学の標準的教科書。フィッシャー情報行列、KLダイバージェンス、双対構造などを体系的に扱う。
-- Amari, S., & Nagaoka, H. (2000). *Methods of Information Geometry*. Translations of Mathematical Monographs, Vol. 191. American Mathematical Society. DOI: [10.1090/mmono/191](https://doi.org/10.1090/mmono/191)
+- <a id="ref-amari2000"></a>Amari, S., & Nagaoka, H. (2000). *Methods of Information Geometry*. Translations of Mathematical Monographs, Vol. 191. American Mathematical Society. DOI: [10.1090/mmono/191](https://doi.org/10.1090/mmono/191)
     - 情報幾何学の古典。数学的に厳密な定式化を提供。
 
 ### 自然勾配法
 
-- Amari, S. (1998). Natural Gradient Works Efficiently in Learning. *Neural Computation*, 10(2), 251–276. DOI: [10.1162/089976698300017746](https://doi.org/10.1162/089976698300017746)
+- <a id="ref-amari1998"></a>Amari, S. (1998). Natural Gradient Works Efficiently in Learning. *Neural Computation*, 10(2), 251–276. DOI: [10.1162/089976698300017746](https://doi.org/10.1162/089976698300017746)
     - 自然勾配法の一次文献。パラメータ空間の計量構造が学習効率に与える影響を示した古典。
-- Martens, J., & Grosse, R. (2015). Optimizing Neural Networks with Kronecker-factored Approximate Curvature. *ICML 2015*. arXiv: [1503.05671](https://arxiv.org/abs/1503.05671)
+- <a id="ref-martens2015"></a>Martens, J., & Grosse, R. (2015). Optimizing Neural Networks with Kronecker-factored Approximate Curvature. *ICML 2015*. arXiv: [1503.05671](https://arxiv.org/abs/1503.05671)
     - K-FAC（Kronecker-Factored Approximate Curvature）の提案。大規模モデルでの自然勾配法の近似手法。
 
 ### KLダイバージェンスと損失関数
 
-- Kullback, S., & Leibler, R. A. (1951). On Information and Sufficiency. *The Annals of Mathematical Statistics*, 22(1), 79–86. DOI: [10.1214/aoms/1177729694](https://doi.org/10.1214/aoms/1177729694)
+- <a id="ref-kullback1951"></a>Kullback, S., & Leibler, R. A. (1951). On Information and Sufficiency. *The Annals of Mathematical Statistics*, 22(1), 79–86. DOI: [10.1214/aoms/1177729694](https://doi.org/10.1214/aoms/1177729694)
     - KLダイバージェンスの一次文献。情報理論における基礎概念。
-- Bishop, C. M. (2006). *Pattern Recognition and Machine Learning*. Springer.
+- <a id="ref-bishop2006"></a>Bishop, C. M. (2006). *Pattern Recognition and Machine Learning*. Springer.
     - 機械学習におけるKLダイバージェンス、クロスエントロピー、最尤推定の関係を詳しく解説。
 
 ### 双曲幾何学（階層構造）
 
-- Nickel, M., & Kiela, D. (2017). Poincaré Embeddings for Learning Hierarchical Representations. *NeurIPS 2017*. arXiv: [1705.08039](https://arxiv.org/abs/1705.08039)
+- <a id="ref-nickel2017"></a>Nickel, M., & Kiela, D. (2017). Poincaré Embeddings for Learning Hierarchical Representations. *NeurIPS 2017*. arXiv: [1705.08039](https://arxiv.org/abs/1705.08039)
     - 双曲空間（Poincaré球モデル）での埋め込み手法。階層構造の表現に適していることを実験的に示した。
-- Ganea, O., Bécigneul, G., & Hofmann, T. (2018). Hyperbolic Neural Networks. *NeurIPS 2018*. arXiv: [1805.09112](https://arxiv.org/abs/1805.09112)
+- <a id="ref-ganea2018"></a>Ganea, O., Bécigneul, G., & Hofmann, T. (2018). Hyperbolic Neural Networks. *NeurIPS 2018*. arXiv: [1805.09112](https://arxiv.org/abs/1805.09112)
     - 双曲空間でのニューラルネットワークの一般化。
 
 ### Attention と内積
 
-- Vaswani, A., et al. (2017). Attention Is All You Need. *NeurIPS 2017*. arXiv: [1706.03762](https://arxiv.org/abs/1706.03762)
+- <a id="ref-vaswani2017"></a>Vaswani, A., et al. (2017). Attention Is All You Need. *NeurIPS 2017*. arXiv: [1706.03762](https://arxiv.org/abs/1706.03762)
     - Transformer と Scaled Dot-Product Attention の一次文献。
 
 ### フィンスラー幾何学とシンプレクティック幾何学
 
-- Bao, D., Chern, S.-S., & Shen, Z. (2000). *An Introduction to Riemann-Finsler Geometry*. Graduate Texts in Mathematics, Vol. 200. Springer. DOI: [10.1007/978-1-4612-1268-3](https://doi.org/10.1007/978-1-4612-1268-3)
+- <a id="ref-bao2000"></a>Bao, D., Chern, S.-S., & Shen, Z. (2000). *An Introduction to Riemann-Finsler Geometry*. Graduate Texts in Mathematics, Vol. 200. Springer. DOI: [10.1007/978-1-4612-1268-3](https://doi.org/10.1007/978-1-4612-1268-3)
     - フィンスラー幾何学の標準的教科書。リーマン計量の一般化としての定式化を体系的に扱う。可逆と非可逆の区別についても参照。
 - Amari, S. (2016). *Information Geometry and Its Applications*. Applied Mathematical Sciences, Vol. 194. Springer Japan. DOI: [10.1007/978-4-431-55978-8](https://doi.org/10.1007/978-4-431-55978-8)
     - 本文「情報幾何学（基礎）」にも掲載。双対接続（ $\alpha$ -接続）、Amari–Chentsovテンソル、ダイバージェンス幾何など、KLの非対称性の幾何化に関する標準的な枠組みを提供。フィンスラー節のNOTEで言及した内容の数学的基盤。
-- Greydanus, S., Dzamba, M., & Yosinski, J. (2019). Hamiltonian Neural Networks. *NeurIPS 2019*. arXiv: [1906.01563](https://arxiv.org/abs/1906.01563)
+- <a id="ref-greydanus2019"></a>Greydanus, S., Dzamba, M., & Yosinski, J. (2019). Hamiltonian Neural Networks. *NeurIPS 2019*. arXiv: [1906.01563](https://arxiv.org/abs/1906.01563)
     - ハミルトン系の構造をニューラルネットワークに組み込んだHNNの提案。シンプレクティック積分器との組み合わせによりエネルギードリフトを構造的に抑制する。
-- Chen, Z., Zhang, J., Arjovsky, M., & Bottou, L. (2020). Symplectic Recurrent Neural Networks. *ICLR 2020*. arXiv: [1909.13334](https://arxiv.org/abs/1909.13334)
+- <a id="ref-chen2020"></a>Chen, Z., Zhang, J., Arjovsky, M., & Bottou, L. (2020). Symplectic Recurrent Neural Networks. *ICLR 2020*. arXiv: [1909.13334](https://arxiv.org/abs/1909.13334)
     - シンプレクティック積分器をリカレントネットワークに導入し、長期安定性を実現。
 
 ### MoE（Mixture of Experts）
 
-- Shazeer, N., et al. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. *ICLR 2017*. arXiv: [1701.06538](https://arxiv.org/abs/1701.06538)
+- <a id="ref-shazeer2017"></a>Shazeer, N., et al. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. *ICLR 2017*. arXiv: [1701.06538](https://arxiv.org/abs/1701.06538)
     - 現代的MoEの基礎論文。スパースゲーティングと条件付き計算の設計。
-- Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. *Journal of Machine Learning Research*, 23(120), 1–39. arXiv: [2101.03961](https://arxiv.org/abs/2101.03961) (2021)
+- <a id="ref-fedus2022"></a>Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. *Journal of Machine Learning Research*, 23(120), 1–39. arXiv: [2101.03961](https://arxiv.org/abs/2101.03961) (2021)
     - MoEの訓練安定化技術（Load Balancing Loss等）を扱う。

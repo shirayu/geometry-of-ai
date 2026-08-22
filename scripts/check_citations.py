@@ -25,11 +25,13 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_BIB = REPO_ROOT / "references.bib"
 REF_SECTION_RE = re.compile(r"^## 参考文献[ \t]*$", re.MULTILINE)
 FENCE_RE = re.compile(r"^[ \t]*(`{3,}|~{3,})")
+# sync_references.py がアンカーリンク化した [著者, 年](#ref-key) を 著者, 年 に戻す（検証前の前処理）。
+CITE_LINK_RE = re.compile(r"\[([^\[\]]+?, \d{4}[a-z]?)\]\(#ref-[^()]+\)")
 
 # （著者部, 年）: 著者部は大文字開始、括弧を含まない。セミコロン区切りの複数引用も扱う。
+CITE_ITEM_RE = re.compile(r"^(?P<authors>.+), (?P<year>\d{4}[a-z]?)$")
 FULLWIDTH_CITE_RE = re.compile(r"（([^（）]+?, \d{4}[a-z]?(?:; [^（）]+?, \d{4}[a-z]?)*)）")
 HALFWIDTH_CITE_RE = re.compile(r"\(([^()]+?, \d{4}[a-z]?(?:; [^()]+?, \d{4}[a-z]?)*)\)")
-CITE_ITEM_RE = re.compile(r"^(?P<authors>.+), (?P<year>\d{4}[a-z]?)$")
 # 会議名形式: （X et al., ICLR 2024）
 VENUE_STYLE_RE = re.compile(r"[（(]([A-Z][^（）()]*? et al\., [A-Za-z]+ \d{4})[）)]")
 # 叙述形式: X et al.（2024）/ 著者名（2024）
@@ -109,6 +111,7 @@ def check_chapter(
             )
 
     body = strip_fences_and_refs(md_path.read_text(encoding="utf-8"))
+    body = CITE_LINK_RE.sub(r"\1", body)
 
     for m in VENUE_STYLE_RE.finditer(body):
         errors.append(f"{md_path}: 会議名形式の引用があります（年号で引用してください）: （{m.group(1)}）")

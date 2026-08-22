@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 680 320"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg">
+  <defs id="defs1">
+    <marker
+       id="arrowhead-sw"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon points="10,3 0,6 0,0" fill="#495057" id="polygon-arrow" />
+    </marker>
+    <linearGradient id="rollGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4c6ef5;stop-opacity:1" id="stop-a" />
+      <stop offset="50%" style="stop-color:#63e6be;stop-opacity:1" id="stop-b" />
+      <stop offset="100%" style="stop-color:#ffd43b;stop-opacity:1" id="stop-c" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left panel: rolled 2D strip in 3D -->
+  <g id="left-panel">
+    <text x="165" y="28" font-family="Arial, sans-serif" font-size="15px"
+          font-weight="bold" text-anchor="middle" fill="#333333" id="title-left">
+      3次元空間で巻かれた2次元の帯
+    </text>
+
+    <!-- Swiss roll spiral: strip drawn as a set of concentric arcs with varying color = intrinsic coordinate -->
+    <g id="spiral" transform="translate(165,175)">
+      <!-- Outer to inner arcs approximating a roll seen at an angle -->
+      <path d="M -95,-10 C -95,-70 -35,-95 25,-80 C 75,-68 90,-30 75,10 C 62,42 25,55 -5,42"
+            fill="none" stroke="url(#rollGrad)" stroke-width="22" stroke-linecap="round" id="path-spiral-outer" opacity="0.85"/>
+      <path d="M -60,-5 C -58,-42 -20,-58 15,-48 C 45,-40 52,-15 40,8 C 30,26 8,32 -8,22"
+            fill="none" stroke="url(#rollGrad)" stroke-width="20" stroke-linecap="round" id="path-spiral-mid" opacity="0.9"/>
+      <path d="M -28,0 C -26,-20 -5,-28 12,-20 C 26,-14 28,2 18,12 C 10,20 -2,20 -8,14"
+            fill="none" stroke="url(#rollGrad)" stroke-width="16" stroke-linecap="round" id="path-spiral-inner" opacity="0.95"/>
+
+      <!-- axis hint: rolling direction -->
+      <path d="M -95,-10 Q -110,20 -85,55" fill="none" stroke="#868e96" stroke-width="1.5"
+            stroke-dasharray="3,3" marker-end="url(#arrowhead-sw)" id="path-axis"/>
+      <text x="-118" y="35" font-family="Arial, sans-serif" font-size="11px" fill="#495057" id="text-axis">巻く方向</text>
+    </g>
+
+    <text x="165" y="255" font-family="Arial, sans-serif" font-size="12px"
+          text-anchor="middle" fill="#495057" font-style="italic" id="text-left-note">
+      色は帯に沿った1次元の位置を表す
+    </text>
+    <text x="165" y="275" font-family="Arial, sans-serif" font-size="13px"
+          text-anchor="middle" fill="#333333" id="text-left-caption">
+      本質的な自由度は2（帯の中の位置）
+    </text>
+  </g>
+
+  <!-- Arrow between panels -->
+  <path d="M 320,175 L 380,175" fill="none" stroke="#868e96" stroke-width="2"
+        marker-end="url(#arrowhead-sw)" id="path-connector"/>
+  <text x="350" y="163" font-family="Arial, sans-serif" font-size="12px"
+        text-anchor="middle" fill="#495057" font-weight="bold" id="text-connector">PCA射影</text>
+
+  <!-- Right panel: flattened / collapsed projection -->
+  <g id="right-panel">
+    <text x="520" y="28" font-family="Arial, sans-serif" font-size="15px"
+          font-weight="bold" text-anchor="middle" fill="#333333" id="title-right">
+      線形射影（PCA）で潰れた2次元
+    </text>
+
+    <rect x="420" y="80" width="200" height="190" fill="#f8f9fa" stroke="#adb5bd"
+          stroke-width="1.5" id="rect-frame"/>
+
+    <!-- Overlapping bands representing collapsed roll: same colors as left, now overlapping -->
+    <g id="collapsed-bands" opacity="0.75">
+      <rect x="435" y="95" width="170" height="24" fill="#4c6ef5" id="band-1"/>
+      <rect x="435" y="125" width="170" height="24" fill="#63e6be" id="band-2"/>
+      <rect x="435" y="155" width="170" height="24" fill="#ffd43b" id="band-3"/>
+      <rect x="435" y="140" width="170" height="24" fill="#4c6ef5" opacity="0.6" id="band-4"/>
+      <rect x="435" y="185" width="170" height="24" fill="#63e6be" opacity="0.6" id="band-5"/>
+      <rect x="435" y="200" width="170" height="24" fill="#ffd43b" opacity="0.6" id="band-6"/>
+    </g>
+
+    <!-- collision markers -->
+    <g id="collision-marks" stroke="#e03131" stroke-width="2">
+      <line x1="470" y1="132" x2="482" y2="152" id="x1a"/>
+      <line x1="482" y1="132" x2="470" y2="152" id="x1b"/>
+      <line x1="540" y1="192" x2="552" y2="212" id="x2a"/>
+      <line x1="552" y1="192" x2="540" y2="212" id="x2b"/>
+    </g>
+
+    <text x="520" y="250" font-family="Arial, sans-serif" font-size="12px"
+          text-anchor="middle" fill="#e03131" font-weight="bold" id="text-right-note">
+      別々の層が重なって区別できない
+    </text>
+    <text x="520" y="290" font-family="Arial, sans-serif" font-size="13px"
+          text-anchor="middle" fill="#333333" id="text-right-caption">
+      直線的な射影は「巻き」をほどけない
+    </text>
+  </g>
+</svg>

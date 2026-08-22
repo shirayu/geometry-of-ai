@@ -40,7 +40,7 @@ x = relu(x)
 
 同じ単語が、隣に置かれた単語しだいで別のものに化ける。「I saw a bat in the cave」の「bat」は動物であり、「I saw a bat on the field」の「bat」は野球道具である。地図を持ち歩く手法なら、この違いに気づく術がない。
 
-Transformer（Vaswani et al., 2017）の登場は、この前提を根本から覆した。Attention機構は、**入力データ自身が計算経路を決定する**設計である。周囲のトークン（cave vs field）との関係性によって、**異なる重み付けのAttentionパターン**が生まれる。
+Transformer（[Vaswani et al., 2017](#ref-vaswani2017)）の登場は、この前提を根本から覆した。Attention機構は、**入力データ自身が計算経路を決定する**設計である。周囲のトークン（cave vs field）との関係性によって、**異なる重み付けのAttentionパターン**が生まれる。
 
 これは、**動的な回路**を持つことに等しい。入力が変われば、情報の流れ自体が変化する。
 
@@ -96,7 +96,7 @@ Softmaxは、この類似度を確率分布に変換する。結果として、*
 
 ### 情報的剪定としてのAttention：計算は省かない
 
-「剪定」と聞けば、切り落とした枝が消えることを想像する。従来の剪定（Pruning）は、ニューラルネットワークの重みやニューロンを恒久的に削除する**計算的剪定**であり（LeCun et al., 1990）、その想像どおりに動く。
+「剪定」と聞けば、切り落とした枝が消えることを想像する。従来の剪定（Pruning）は、ニューラルネットワークの重みやニューロンを恒久的に削除する**計算的剪定**であり（[LeCun et al., 1990](#ref-lecun1990)）、その想像どおりに動く。
 
 しかし、標準Attention（Scaled Dot-Product Attention）はそうではない。これは**情報的剪定**であり、重要な違いがある。
 
@@ -129,7 +129,7 @@ Softmaxは、この類似度を確率分布に変換する。結果として、*
 
 Attentionが切り落とすのはトークン間の接続だった。MoEが切り落とすのは、それより一段大きな単位、モデル自体のどの部分を働かせるかである。
 
-[第13回](13.md)で導入したMixture of Experts（MoE）は、複数の「専門家」（Expert）ネットワークを用意し、**入力に応じて一部の専門家だけを活性化する**アーキテクチャである（Shazeer et al., 2017）。
+[第13回](13.md)で導入したMixture of Experts（MoE）は、複数の「専門家」（Expert）ネットワークを用意し、**入力に応じて一部の専門家だけを活性化する**アーキテクチャである（[Shazeer et al., 2017](#ref-shazeer2017)）。
 
 ```txt
 入力 x
@@ -211,7 +211,7 @@ $$\text{output} = \sum_{i \in \text{TopK}(g(x))} g_i(x) \cdot \text{Expert}_i(x)
 > - **学習条件依存**：Expert間の分化の程度は、補助損失（Load Balancing Loss）、学習率、データ分布、モデルサイズなどに強く依存する。
 > - **測定の困難**：「Expert間の直交性」を定量的に測定する方法自体が研究課題である。
 >
-> 一部の研究（Kudugunta et al., 2021）では学習が進むとExpert間の類似度が下がる傾向が観察されているが、これが普遍的かつ「直交部分空間への分離」を意味するかは未解明である。
+> 一部の研究（[Kudugunta et al., 2021](#ref-kudugunta2021)）では学習が進むとExpert間の類似度が下がる傾向が観察されているが、これが普遍的かつ「直交部分空間への分離」を意味するかは未解明である。
 
 ### より現実的なMoE解釈
 
@@ -253,7 +253,7 @@ Expert4: ██ (4%)
 
 #### 対策：Load Balancing Loss（負荷分散損失）
 
-ルーティング崩壊を防ぐため、**Load Balancing Loss**が訓練時に追加される。Switch Transformer（Fedus et al., 2022）では、以下のような補助損失が導入される：
+ルーティング崩壊を防ぐため、**Load Balancing Loss**が訓練時に追加される。Switch Transformer（[Fedus et al., 2022](#ref-fedus2022)）では、以下のような補助損失が導入される：
 
 $$\mathcal{L} _{\text{balance}} = \alpha \cdot N _{\text{experts}} \cdot \sum _{i=1}^{N _{\text{experts}}} f _i \cdot p _i$$
 
@@ -288,8 +288,8 @@ Load Balancing Lossは、入力空間の分割を均等化するよう促す**�
 #### 他の対策
 
 - **Capacity Factor**：各Expertが受け入れるトークン数に上限を設ける。上限を超えたトークンは他のExpertに割り当てられる。
-- **Expert Choice Routing**（Zhou et al., 2022）：トークンがExpertを選ぶのではなく、ExpertがトークンをTop-K選択する。
-- **Shared Expert**：すべての入力に対して常に活性化する共通Expertを設ける（Dai et al., 2024）。共通知識の重複を防ぎつつ、専門化を促進。Shared Expertは負荷分散の直接的な手段ではないが、専門Expertの役割を明確化する効果がある。
+- **Expert Choice Routing**（[Zhou et al., 2022](#ref-zhou2022)）：トークンがExpertを選ぶのではなく、ExpertがトークンをTop-K選択する。
+- **Shared Expert**：すべての入力に対して常に活性化する共通Expertを設ける（[Dai et al., 2024](#ref-dai2024)）。共通知識の重複を防ぎつつ、専門化を促進。Shared Expertは負荷分散の直接的な手段ではないが、専門Expertの役割を明確化する効果がある。
 
 #### 実装ノートとの接続
 
@@ -298,7 +298,7 @@ Load Balancing Lossは、入力空間の分割を均等化するよう促す**�
 実際のMoE（Mixtral、Switch Transformer、DeepSeek-V3等）では、この補助損失が訓練の安定性と性能を左右する。Load Balancing Lossや類似の負荷分散機構なしで訓練すると、**ルーティング崩壊が発生しやすく**、実運用規模では何らかの負荷分散機構（補助損失、ルーターバイアス調整、Capacity Factor等）が**重要**となる。
 
 > [!NOTE]
-> **負荷分散の多様性**：Load Balancing Lossは代表的な手法だが、唯一の解ではない。ルーター設計、初期化、Top-Kの選び方、Capacity Factorの調整などでも負荷分散に影響する。近年は「補助損失なし／弱い補助損失」でも負荷を保つ手法の研究もある（He et al., 2024）。
+> **負荷分散の多様性**：Load Balancing Lossは代表的な手法だが、唯一の解ではない。ルーター設計、初期化、Top-Kの選び方、Capacity Factorの調整などでも負荷分散に影響する。近年は「補助損失なし／弱い補助損失」でも負荷を保つ手法の研究もある（[He et al., 2024](#ref-he2024)）。
 
 ## スパース性（疎性）の幾何学：条件依存の有効性
 
@@ -379,7 +379,7 @@ AttentionとMoEだけが、無駄を削る手立てではない。近年のTrans
 
 Multi-head Attentionでは、各ヘッドが独立した $Q, K, V$ を持つ。設計としては筋が通っている。だが、すべてのヘッドが完全に独立な情報を捉えているとは限らない。
 
-**GQA**（Ainslie et al., 2023）は、複数のQueryヘッドで**同じKeyとValueを共有**する設計である。
+**GQA**（[Ainslie et al., 2023](#ref-ainslie2023)）は、複数のQueryヘッドで**同じKeyとValueを共有**する設計である。
 
 ```txt
 標準Multi-head Attention:
@@ -441,7 +441,7 @@ $$\text{KVキャッシュ削減率} = 1 - \frac{2}{8} = 75\%$$
 
 ### LoRA (Low-Rank Adaptation)：更新ランクの削減
 
-ファインチューニングのたびに $d \times d$ の重み行列をまるごと更新するのは、いかにも大仰である。**LoRA**（Hu et al., 2021）は、この更新自体を低次元に押し込めることで応じる。重み行列の**低ランク分解**を学習する手法である。
+ファインチューニングのたびに $d \times d$ の重み行列をまるごと更新するのは、いかにも大仰である。**LoRA**（[Hu et al., 2021](#ref-hu2021)）は、この更新自体を低次元に押し込めることで応じる。重み行列の**低ランク分解**を学習する手法である。
 
 元の重み行列 $W \in \mathbb{R}^{d \times d}$ を更新する代わりに、低ランク行列 $BA$ を学習する：
 
@@ -451,7 +451,7 @@ $$W' = W + BA, \quad B \in \mathbb{R}^{d \times r}, A \in \mathbb{R}^{r \times d
 
 ### MoD (Mixture of Depths)：深さ方向の剪定
 
-GQAとLoRAは、どちらも設計時・学習時に固定された剪定だった。ここまで見た剪定のうち、Attentionだけが動的だったわけではない。**MoD**（Raposo et al., 2024）は、各トークンが通過する**層の数を動的に変える**設計である。
+GQAとLoRAは、どちらも設計時・学習時に固定された剪定だった。ここまで見た剪定のうち、Attentionだけが動的だったわけではない。**MoD**（[Raposo et al., 2024](#ref-raposo2024)）は、各トークンが通過する**層の数を動的に変える**設計である。
 
 ```txt
 標準Transformer:
@@ -508,7 +508,7 @@ Token3: L1 → skip → skip → L4 （L2, L3をスキップ）
 
 ### FlashAttentionの仕組み：I/O削減と再計算戦略
 
-**FlashAttention**（Dao et al., 2022）は、この詰まりに狙いを定める。以下の**複数の技術の組合せ**である：
+**FlashAttention**（[Dao et al., 2022](#ref-dao2022)）は、この詰まりに狙いを定める。以下の**複数の技術の組合せ**である：
 
 1. **タイリング（ブロック分割）**：行列を小さなタイル（ブロック）に分割し、各タイルをSRAMに載せて高速計算
 2. **オンラインSoftmax**：Softmaxの計算を段階的に更新することで、全行列を一度にメモリに載せる必要を回避
@@ -570,7 +570,7 @@ Attention、MoE、GQA、LoRA、MoD。名前も対象も別々のこれらの手�
 動的剪定は、この抽象化を**動的に、文脈依存的に**行う。同じ情報でも、文脈が変われば重要度が変わる。これは、人間の注意（Attention）の働きに近い。
 
 > [!NOTE]
-> **知能の本質としての選択:** 情報理論の創始者Claude Shannon は、「情報は予測不可能性である」と述べた（Shannon, 1948）。しかし、予測不可能性をそのまま保持することは、ノイズを保持することでもある。知能は、予測可能な（冗長な）情報を捨て、予測不可能な（真に新しい）情報を保持する能力である。この意味で、選択的処理は知能の中核的機能と言える。
+> **知能の本質としての選択:** 情報理論の創始者Claude Shannon は、「情報は予測不可能性である」と述べた（[Shannon, 1948](#ref-shannon1948)）。しかし、予測不可能性をそのまま保持することは、ノイズを保持することでもある。知能は、予測可能な（冗長な）情報を捨て、予測不可能な（真に新しい）情報を保持する能力である。この意味で、選択的処理は知能の中核的機能と言える。
 
 ### 本資料の位置づけと限界
 
@@ -871,41 +871,41 @@ print(f"Parameters saved: ~{(1 - 2 / 8) * 100:.1f}% (for K,V)")
 
 ### Transformer と Attention
 
-- Vaswani, A., et al. (2017). Attention Is All You Need. *NeurIPS 2017*. arXiv: [1706.03762](https://arxiv.org/abs/1706.03762)
+- <a id="ref-vaswani2017"></a>Vaswani, A., et al. (2017). Attention Is All You Need. *NeurIPS 2017*. arXiv: [1706.03762](https://arxiv.org/abs/1706.03762)
     - Transformerの原論文。本Appendixで扱う効率化手法（MoE、GQA、LoRA等）の対象となるアーキテクチャの一次文献。
 
 ### Pruning（剪定）
 
-- LeCun, Y., Denker, J. S., & Solla, S. A. (1990). Optimal Brain Damage. *NeurIPS 1989*.
+- <a id="ref-lecun1990"></a>LeCun, Y., Denker, J. S., & Solla, S. A. (1990). Optimal Brain Damage. *NeurIPS 1989*.
     - ニューラルネットワークの剪定の古典的論文。構造化pruningの場合は実効速度向上が見込めるが、非構造化pruningでは実装次第で速度向上が限定的な場合もある。
 
 ### Mixture of Experts (MoE)
 
-- Shazeer, N., et al. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. *ICLR 2017*. arXiv: [1701.06538](https://arxiv.org/abs/1701.06538)
+- <a id="ref-shazeer2017"></a>Shazeer, N., et al. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. *ICLR 2017*. arXiv: [1701.06538](https://arxiv.org/abs/1701.06538)
     - 現代的MoEの基礎となった論文。
-- Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. *Journal of Machine Learning Research*, 23(120), 1–39. arXiv: [2101.03961](https://arxiv.org/abs/2101.03961) (2021)
+- <a id="ref-fedus2022"></a>Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. *Journal of Machine Learning Research*, 23(120), 1–39. arXiv: [2101.03961](https://arxiv.org/abs/2101.03961) (2021)
     - Top-1 routingによるさらなるスパース化。
-- Dai, D., et al. (2024). DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models. *ACL 2024*, 1280–1297. arXiv: [2401.06066](https://arxiv.org/abs/2401.06066)
+- <a id="ref-dai2024"></a>Dai, D., et al. (2024). DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models. *ACL 2024*, 1280–1297. arXiv: [2401.06066](https://arxiv.org/abs/2401.06066)
     - 細粒度Expert + 共有Expertの設計。
-- Kudugunta, S., et al. (2021). Beyond Distillation: Task-level Mixture-of-Experts for Efficient Inference. *Findings of EMNLP 2021*. arXiv: [2110.03742](https://arxiv.org/abs/2110.03742)
+- <a id="ref-kudugunta2021"></a>Kudugunta, S., et al. (2021). Beyond Distillation: Task-level Mixture-of-Experts for Efficient Inference. *Findings of EMNLP 2021*. arXiv: [2110.03742](https://arxiv.org/abs/2110.03742)
     - Expert間の類似度に関する実験的観察。
-- Zhou, Y., et al. (2022). Mixture-of-Experts with Expert Choice Routing. *NeurIPS 2022*. arXiv: [2202.09368](https://arxiv.org/abs/2202.09368)
+- <a id="ref-zhou2022"></a>Zhou, Y., et al. (2022). Mixture-of-Experts with Expert Choice Routing. *NeurIPS 2022*. arXiv: [2202.09368](https://arxiv.org/abs/2202.09368)
     - Expert Choice Routing（ExpertがトークンをTop-K選択）の提案。ルーティング崩壊への対策の一つ。
-- He, X., et al. (2024). Auxiliary-Loss-Free Load Balancing Strategy for Mixture-of-Experts. arXiv: [2408.15664](https://arxiv.org/abs/2408.15664)
+- <a id="ref-he2024"></a>He, X., et al. (2024). Auxiliary-Loss-Free Load Balancing Strategy for Mixture-of-Experts. arXiv: [2408.15664](https://arxiv.org/abs/2408.15664)
     - 補助損失なしでも負荷分散を実現する手法の提案。Load Balancing Lossの代替アプローチの研究例。
 
 ### 効率化手法
 
-- Ainslie, J., Lee-Thorp, J., de Jong, M., Zemlyanskiy, Y., Lebrón, F., & Sanghai, S. (2023). GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints. *EMNLP 2023*. arXiv: [2305.13245](https://arxiv.org/abs/2305.13245)
+- <a id="ref-ainslie2023"></a>Ainslie, J., Lee-Thorp, J., de Jong, M., Zemlyanskiy, Y., Lebrón, F., & Sanghai, S. (2023). GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints. *EMNLP 2023*. arXiv: [2305.13245](https://arxiv.org/abs/2305.13245)
     - Grouped-Query Attentionの提案。
-- Hu, E. J., et al. (2021). LoRA: Low-Rank Adaptation of Large Language Models. *ICLR 2022*. arXiv: [2106.09685](https://arxiv.org/abs/2106.09685)
+- <a id="ref-hu2021"></a>Hu, E. J., et al. (2021). LoRA: Low-Rank Adaptation of Large Language Models. *ICLR 2022*. arXiv: [2106.09685](https://arxiv.org/abs/2106.09685)
     - 低ランク適応によるパラメータ効率的ファインチューニング。
-- Raposo, D., Ritter, S., Richards, B., Lillicrap, T., Conway, P. W., & Santoro, A. (2024). Mixture-of-Depths: Dynamically Allocating Compute in Transformer-Based Language Models. arXiv: [2404.02258](https://arxiv.org/abs/2404.02258)
+- <a id="ref-raposo2024"></a>Raposo, D., Ritter, S., Richards, B., Lillicrap, T., Conway, P. W., & Santoro, A. (2024). Mixture-of-Depths: Dynamically Allocating Compute in Transformer-Based Language Models. arXiv: [2404.02258](https://arxiv.org/abs/2404.02258)
     - 深さ方向の動的剪定。
-- Dao, T., Fu, D. Y., Ermon, S., Rudra, A., & Ré, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. *NeurIPS 2022*. arXiv: [2205.14135](https://arxiv.org/abs/2205.14135)
+- <a id="ref-dao2022"></a>Dao, T., Fu, D. Y., Ermon, S., Rudra, A., & Ré, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. *NeurIPS 2022*. arXiv: [2205.14135](https://arxiv.org/abs/2205.14135)
     - SRAMを活用したメモリ効率的Attention。
 
 ### 情報理論と抽象化
 
-- Shannon, C. E. (1948). A Mathematical Theory of Communication. *Bell System Technical Journal*, 27(3), 379–423.
+- <a id="ref-shannon1948"></a>Shannon, C. E. (1948). A Mathematical Theory of Communication. *Bell System Technical Journal*, 27(3), 379–423.
     - 情報理論の基礎。情報を「予測不可能性」として定式化。
