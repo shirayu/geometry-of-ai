@@ -15,30 +15,30 @@
 
 ## P0. 技術的正確性（最優先・全て検証済みで妥当）
 
-- [ ] **第5回** `site/series/05.md` L182-186: ArcFace決定境界の不等式 $\cos(\theta_A+m)>\cos(\theta_B) \to \theta_A+m<\theta_B$ の変形（$\cos$の単調減少性を使う）を1文補足する。（検証: `review1/05.md` 指摘#1/#2）
-- [ ] **第5回** 同章: 「なぜ角度マージンが効くか」の因果鎖（クラス内集約とクラス間分離を同時達成するメカニズム）が本文に閉じていない。章の核心なので優先的に補う。（`review1/05.md` 指摘#2）
-- [ ] **第7回** `site/series/07.md` L224: von Mises-Fisher分布のエントロピー近似式 $H\approx-\log\kappa+\text{const.}$ に係数 $(d-1)/2$ が欠落。正しくは $H \approx \frac{d-1}{2}\log\left(\frac{2\pi e}{\kappa}\right)$。$d=768$で約384倍の差が出るため数値例を使う箇所は要再確認。（`review1/07.md` 指摘#1、数式を実際に導出済み）
-- [ ] **第7回** L610-613実装: `log_kappa`という変数名だが実際は`softplus`+`sigmoid`でスケーリングしており、本文L376の「$\log\kappa$を出力、$\exp$で復元」という説明と実装が食い違う。変数名 or 本文どちらかを修正。（`review1/07.md` 指摘#8）
-- [ ] **第9回** `site/series/09.md` L460: nGPTの参照先「[第6回](06.md)」は誤り。nGPTの本格導入（設計思想・コード込み）は`site/series/03.md` L26-103。「第3回」への参照に修正。（`review1/09.md` 指摘#2、`review1/cross-chapter.md` 検出漏れ節で二重確認済み）
-- [ ] **第12回 / 全体** 記号 $K$ の衝突: 第4回でカテゴリ数として広く使用（`site/series/04.md`）、第12回 L292/L407で曲率パラメータとして再利用（`site/series/12.md`）。曲率側の記号を変更するか、初出時に注記を入れる。（`review1/12.md` 追加所見、`review1/keywords.md` 指摘#1、`review1/cross-chapter.md` 指摘#1で三重確認）
-- [ ] **第15回** `site/series/15.md`: `## 注意事項` セクションが存在しない（grep 0件）。最終回は仮説（意識、物理法則の比喩など）が多いので他章以上に必要。STYLE_GUIDEの構成順序に合わせて追加する。（`review1/15.md` 指摘#1）
-- [ ] **第15回** 同章: 第1・4・7・10回への言及が本文・参考文献を含めて皆無（第8回は参考文献にのみ言及あり、本文年表には未出）。全書回収の年表に該当章を加筆する。（`review1/15.md` 指摘#2、行番号根拠つきで再検証済み）
-- [ ] **Appendix 5** `site/series/appendix.5.md` L295: `## 参考文献` セクションが空。`site/series/refs/appendix.5.yml` も `categories: []`。既存キー（amari2016等、appendix.4/6.ymlと共通のものを再利用）でyml整備し `task references:apply` を実行する。（`review1/appendix.5.md` 指摘#1）
+- [x] **第5回** `site/series/05.md` L182-186: ArcFace決定境界の不等式 $\cos(\theta_A+m)>\cos(\theta_B) \to \theta_A+m<\theta_B$ の変形（$\cos$の単調減少性を使う）を1文補足する。（検証: `review1/05.md` 指摘#1/#2）
+- [x] **第5回** 同章: 「なぜ角度マージンが効くか」の因果鎖（クラス内集約とクラス間分離を同時達成するメカニズム）が本文に閉じていない。章の核心なので優先的に補う。（`review1/05.md` 指摘#2）
+- [x] **第7回** `site/series/07.md` L224: von Mises-Fisher分布のエントロピー近似式 $H\approx-\log\kappa+\text{const.}$ に係数 $(d-1)/2$ が欠落。正しくは $H \approx \frac{d-1}{2}\log\left(\frac{2\pi e}{\kappa}\right)$。$d=768$で約384倍の差が出るため数値例を使う箇所は要再確認。（`review1/07.md` 指摘#1、数式を実際に導出済み）
+- [x] **第7回** L610-613実装: `log_kappa`という変数名だが実際は`softplus`+`sigmoid`でスケーリングしており、本文L376の「$\log\kappa$を出力、$\exp$で復元」という説明と実装が食い違う。変数名 or 本文どちらかを修正。（`review1/07.md` 指摘#8）
+- [x] **第9回** `site/series/09.md` L460: nGPTの参照先「[第6回](06.md)」は誤り。nGPTの本格導入（設計思想・コード込み）は`site/series/03.md` L26-103。「第3回」への参照に修正。（`review1/09.md` 指摘#2、`review1/cross-chapter.md` 検出漏れ節で二重確認済み）
+- [x] **第12回 / 全体** 記号 $K$ の衝突: 第4回でカテゴリ数として広く使用（`site/series/04.md`）、第12回 L292/L407で曲率パラメータとして再利用（`site/series/12.md`）。曲率側の記号を変更するか、初出時に注記を入れる。（`review1/12.md` 追加所見、`review1/keywords.md` 指摘#1、`review1/cross-chapter.md` 指摘#1で三重確認）
+- [x] **第15回** `site/series/15.md`: `## 注意事項` セクションが存在しない（grep 0件）。最終回は仮説（意識、物理法則の比喩など）が多いので他章以上に必要。STYLE_GUIDEの構成順序に合わせて追加する。（`review1/15.md` 指摘#1）
+- [x] **第15回** 同章: 第1・4・7・10回への言及が本文・参考文献を含めて皆無（第8回は参考文献にのみ言及あり、本文年表には未出）。全書回収の年表に該当章を加筆する。（`review1/15.md` 指摘#2、行番号根拠つきで再検証済み）
+- [x] **Appendix 5** `site/series/appendix.5.md` L295: `## 参考文献` セクションが空。`site/series/refs/appendix.5.yml` も `categories: []`。既存キー（amari2016等、appendix.4/6.ymlと共通のものを再利用）でyml整備し `task references:apply` を実行する。（`review1/appendix.5.md` 指摘#1）
 
 ## P1. 構成・参照の実害（機械的修正・著者判断不要）
 
-- [ ] **第1回** `site/series/01.md` L688 と `references.bib` L1595-1596: Tipping & Bishopの著者名が`Tipping, C. M. and Bishop, C. E.`と誤り。正しくは Michael E. Tipping, Christopher M. Bishop。`references.bib`を修正し`task references:apply`。（`review1/01.md` 指摘#1）
-- [ ] **第1回** L293: SVMの制約条件で $y_i\in\{-1,+1\}$ が未定義のままL344まで進む。L293付近で先に定義する。（`review1/01.md` 指摘#2）
-- [ ] **Appendix 1** `site/series/appendix.1.md`: 実装ノート(L285)→未解決問題(L380)→まとめ(L423)の順序がSTYLE_GUIDE正規形（本文→まとめ→実装ノート→参考文献）と逆転。並べ替える。（`review1/appendix.1.md` 指摘#1）
-- [ ] **Appendix 1** 同章: 「本Appendixの位置づけ」(L10-14)が第13回にしか触れておらず、実際に前提となる第3回・第7回・第13回・第14回（TDA言及あり）の列挙がない。（`review1/appendix.1.md` 指摘#2、追加所見で第14回追加を推奨）
-- [ ] **Appendix 2** `site/series/appendix.2.md` L8, L28: 見出し名が「問題の所在」「本Appendixの射程」でSTYLE_GUIDE標準の「本Appendixの位置づけ」と異なる。統一する。（`review1/appendix.2.md` 指摘#1）
-- [ ] **Appendix 2** L354: まとめが4行の要約表のみで、本編（第8回）への接続が1行に留まる。正規形の「本編との接続まとめ」を満たす形に拡充。（`review1/appendix.2.md` 指摘#2）
-- [ ] **Appendix 3** `site/series/appendix.3.md` L7: 「本Appendixの位置づけ」セクションが存在しない（`## 注意事項`から開始）。追加する。（`review1/appendix.3.md` 指摘#1）
-- [ ] **Appendix 3** L552, L607: 「結論：知能と抽象化」と「まとめ：動的剪定の統一視点」が両方存在し締めくくりが二重化（約54行が哲学的考察に費やされている）。「結論」を圧縮して「まとめ」に統合する。（`review1/appendix.3.md` 指摘#2）
-- [ ] **Appendix 4** `site/series/appendix.4.md` L7: 「本Appendixの位置づけ」セクションが存在しない。追加する。（`review1/appendix.4.md` 指摘#1）
-- [ ] **Appendix 4** L433, L597: 実装ノート→まとめの順で正規形と逆転。並べ替える。（`review1/appendix.4.md` 指摘#2）
-- [ ] **Appendix 6** `site/series/appendix.6.md` L7-9: 「本Appendixの位置づけ」に相当する文言がNOTEブロック内に埋没し、独立した`##`見出しがない。見出し化する。（`review1/appendix.6.md` 指摘#1）
-- [ ] **Appendix 6** L102-108: RLCT（実対数閾値）が指数 $k_i$ からどう計算されるかの具体的な公式が示されていない。標準的な決定公式を1行補う。（`review1/appendix.6.md` 指摘#2）
+- [x] **第1回** `site/series/01.md` L688 と `references.bib` L1595-1596: Tipping & Bishopの著者名が`Tipping, C. M. and Bishop, C. E.`と誤り。正しくは Michael E. Tipping, Christopher M. Bishop。`references.bib`を修正し`task references:apply`。（`review1/01.md` 指摘#1）
+- [x] **第1回** L293: SVMの制約条件で $y_i\in\{-1,+1\}$ が未定義のままL344まで進む。L293付近で先に定義する。（`review1/01.md` 指摘#2）
+- [x] **Appendix 1** `site/series/appendix.1.md`: 実装ノート(L285)→未解決問題(L380)→まとめ(L423)の順序がSTYLE_GUIDE正規形（本文→まとめ→実装ノート→参考文献）と逆転。並べ替える。（`review1/appendix.1.md` 指摘#1）
+- [x] **Appendix 1** 同章: 「本Appendixの位置づけ」(L10-14)が第13回にしか触れておらず、実際に前提となる第3回・第7回・第13回・第14回（TDA言及あり）の列挙がない。（`review1/appendix.1.md` 指摘#2、追加所見で第14回追加を推奨）
+- [x] **Appendix 2** `site/series/appendix.2.md` L8, L28: 見出し名が「問題の所在」「本Appendixの射程」でSTYLE_GUIDE標準の「本Appendixの位置づけ」と異なる。統一する。（`review1/appendix.2.md` 指摘#1）
+- [x] **Appendix 2** L354: まとめが4行の要約表のみで、本編（第8回）への接続が1行に留まる。正規形の「本編との接続まとめ」を満たす形に拡充。（`review1/appendix.2.md` 指摘#2）
+- [x] **Appendix 3** `site/series/appendix.3.md` L7: 「本Appendixの位置づけ」セクションが存在しない（`## 注意事項`から開始）。追加する。（`review1/appendix.3.md` 指摘#1）
+- [x] **Appendix 3** L552, L607: 「結論：知能と抽象化」と「まとめ：動的剪定の統一視点」が両方存在し締めくくりが二重化（約54行が哲学的考察に費やされている）。「結論」を圧縮して「まとめ」に統合する。（`review1/appendix.3.md` 指摘#2）
+- [x] **Appendix 4** `site/series/appendix.4.md` L7: 「本Appendixの位置づけ」セクションが存在しない。追加する。（`review1/appendix.4.md` 指摘#1）
+- [x] **Appendix 4** L433, L597: 実装ノート→まとめの順で正規形と逆転。並べ替える。（`review1/appendix.4.md` 指摘#2）
+- [x] **Appendix 6** `site/series/appendix.6.md` L7-9: 「本Appendixの位置づけ」に相当する文言がNOTEブロック内に埋没し、独立した`##`見出しがない。見出し化する。（`review1/appendix.6.md` 指摘#1）
+- [x] **Appendix 6** L102-108: RLCT（実対数閾値）が指数 $k_i$ からどう計算されるかの具体的な公式が示されていない。標準的な決定公式を1行補う。（`review1/appendix.6.md` 指摘#2）
 
 ## P2. 各章の磨き上げ（B級中心、本文確認で妥当と確認済み）
 
