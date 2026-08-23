@@ -43,8 +43,3 @@ categories:
   - key: dao2022
     note:
     - SRAMを活用したメモリ効率的Attention。
-- title: 情報理論と抽象化
-  entries:
-  - key: shannon1948
-    note:
-    - 情報理論の基礎。情報を「予測不可能性」として定式化。

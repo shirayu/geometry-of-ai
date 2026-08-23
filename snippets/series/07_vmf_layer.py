@@ -18,7 +18,7 @@ class vMFLayer(nn.Module):
         # μを出力する層（正規化前）
         self.mu_layer = nn.Linear(input_dim, output_dim)
 
-        # log κを出力する層（スカラー）
+        # κの生の出力を出す層（スカラー）
         self.kappa_layer = nn.Linear(input_dim, 1)
 
     def forward(self, x):
@@ -35,9 +35,9 @@ class vMFLayer(nn.Module):
         mu = F.normalize(mu, dim=-1)
 
         # 集中度（正の値に制約）
-        log_kappa = self.kappa_layer(x)
+        kappa_raw = self.kappa_layer(x)
         # Softplusで正の値に、さらに範囲を制限
-        kappa = F.softplus(log_kappa)
+        kappa = F.softplus(kappa_raw)
         kappa = self.kappa_min + (self.kappa_max - self.kappa_min) * torch.sigmoid(kappa - 5)
 
         return mu, kappa

@@ -1,76 +1,114 @@
 import torch
+import torch.nn as nn
 
-TORCHDIFFEQ_AVAILABLE = False
+try:
+    from torchdiffeq import odeint
+
+    TORCHDIFFEQ_AVAILABLE = True
+except ImportError:
+    TORCHDIFFEQ_AVAILABLE = False
 
 
-class ResidualStack:
-    def __init__(self, dim, num_steps):
-        self.dim = dim
+class EulerResidualStack(nn.Module):
+    """同じベクトル場をEuler法で積分する残差スタック"""
+
+    def __init__(self, func, num_steps):
+        super().__init__()
+        if num_steps < 1:
+            raise ValueError("num_stepsは1以上である必要があります")
+        self.func = func
         self.num_steps = num_steps
 
-    def __call__(self, x, return_trajectory=False):
-        trajectory = x.unsqueeze(0).repeat(self.num_steps + 1, 1, 1)
+    def forward(self, x, t0=0.0, t1=1.0, return_trajectory=False):
+        dt = (t1 - t0) / self.num_steps
+        trajectory = [x]
+        for step in range(self.num_steps):
+            t = torch.as_tensor(t0 + step * dt, dtype=x.dtype, device=x.device)
+            x = x + dt * self.func(t, x)
+            trajectory.append(x)
         if return_trajectory:
-            return x, trajectory
+            return x, torch.stack(trajectory)
         return x
 
 
-class NeuralODE:
-    def __init__(self, dim):
-        self.dim = dim
+class ODEFunc(nn.Module):
+    """ODEの右辺 f(h, t)（08_neural_ode.pyと同じ定義）"""
 
-    def __call__(self, x, t_span, return_trajectory=False):
-        trajectory = x.unsqueeze(0).repeat(t_span.numel(), 1, 1)
+    def __init__(self, dim, hidden_dim=None):
+        super().__init__()
+        hidden_dim = hidden_dim or dim * 4
+        self.net = nn.Sequential(
+            nn.Linear(dim, hidden_dim),
+            nn.Tanh(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.Tanh(),
+            nn.Linear(hidden_dim, dim),
+        )
+
+    def forward(self, t, h):
+        return self.net(h)
+
+
+class NeuralODE(nn.Module):
+    def __init__(self, func):
+        super().__init__()
+        self.func = func
+
+    def forward(self, x, t_span, return_trajectory=False):
+        if not TORCHDIFFEQ_AVAILABLE:
+            raise RuntimeError("Neural ODEの実行にはtorchdiffeqが必要です")
+        trajectory = odeint(self.func, x, t_span, method="dopri5")
         if return_trajectory:
-            return x, trajectory
-        return x
+            return trajectory[-1], trajectory
+        return trajectory[-1]
 
 
 def compare_resnet_and_ode(dim=64, num_steps=10):
-    """ResNetとNeural ODEの挙動を比較
+    """同じベクトル場のEuler残差離散化とNeural ODEを比較
 
-    ResNet: 離散的なステップ
-    Neural ODE: 連続的な流れ（離散化して比較）
+    比較対象を同じ初期値・同じベクトル場・同じ時刻区間に揃え、
+    最終状態の差をEuler法の離散化誤差として測る。
     """
-    # ResNet
-    resnet = ResidualStack(dim, num_steps)
-
-    # Neural ODE（利用可能な場合）
-    if TORCHDIFFEQ_AVAILABLE:
-        neural_ode = NeuralODE(dim)
-
-    # テスト入力
+    torch.manual_seed(42)
+    func = ODEFunc(dim)
+    euler_residual = EulerResidualStack(func, num_steps)
     x = torch.randn(16, dim)
 
-    # ResNetの軌跡
-    _, resnet_traj = resnet(x, return_trajectory=True)
+    _, euler_traj = euler_residual(x, return_trajectory=True)
 
     results = {
-        "resnet": {
-            "trajectory_shape": resnet_traj.shape,
-            "output_norm_mean": resnet_traj[-1].norm(dim=-1).mean().item(),
-            "output_norm_std": resnet_traj[-1].norm(dim=-1).std().item(),
+        "euler_residual": {
+            "trajectory_shape": euler_traj.shape,
+            "output_norm_mean": euler_traj[-1].norm(dim=-1).mean().item(),
         }
     }
 
-    # Neural ODEの軌跡（利用可能な場合）
     if TORCHDIFFEQ_AVAILABLE:
-        t_span = torch.linspace(0, 1, num_steps + 1)
+        neural_ode = NeuralODE(func)
+        t_span = torch.linspace(0, 1, num_steps + 1, dtype=x.dtype, device=x.device)
         _, ode_traj = neural_ode(x, t_span, return_trajectory=True)
+        final_l2_error = (euler_traj[-1] - ode_traj[-1]).norm(dim=-1)
 
-        results["neural_ode"] = {
+        results["ode_reference"] = {
             "trajectory_shape": ode_traj.shape,
             "output_norm_mean": ode_traj[-1].norm(dim=-1).mean().item(),
-            "output_norm_std": ode_traj[-1].norm(dim=-1).std().item(),
+        }
+        results["discretization_error"] = {
+            "final_l2_mean": final_l2_error.mean().item(),
+            "final_l2_max": final_l2_error.max().item(),
+        }
+    else:
+        results["note"] = {
+            "message": "比較には `pip install torchdiffeq` が必要です",
         }
 
     return results
 
 
 # 比較実行
-results = compare_resnet_and_ode()
+results = compare_resnet_and_ode(num_steps=10)
 print("Comparison Results:")
-for model_name, metrics in results.items():
-    print(f"\n{model_name}:")
+for section_name, metrics in results.items():
+    print(f"\n{section_name}:")
     for k, v in metrics.items():
         print(f"  {k}: {v}")
