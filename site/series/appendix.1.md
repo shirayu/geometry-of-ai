@@ -167,7 +167,7 @@ import torch.nn.functional as F
 
 def quantize(tensor, num_bits=4):
     """[-1, 1]の範囲を仮定した対称一様量子化（最小構成）。"""
-    levels = 2 ** num_bits - 1
+    levels = 2**num_bits - 1
     scaled = torch.round((tensor.clamp(-1, 1) + 1) / 2 * levels)
     return scaled / levels * 2 - 1
 

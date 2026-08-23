@@ -15,4 +15,4 @@ nd="nd"
 Bui="Bui"
 
 [files]
-extend-exclude = ['package*.json', '*.min.js']
+extend-exclude = ['package*.json', '*.min.js', 'check-all/**']
