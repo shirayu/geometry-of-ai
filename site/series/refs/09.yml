@@ -43,3 +43,8 @@ categories:
   - key: welling2011
     note:
     - 確率的勾配Langevin動力学（SGLD）。ベイズ学習への応用。
+- title: 学習の熱力学
+  entries:
+  - key: okanohara2026
+    note:
+    - 学習をパラメータ分布の有限時間輸送として定式化し、学習コストを熱力学的な仕事と散逸に対応づける理論。

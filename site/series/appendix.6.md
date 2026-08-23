@@ -174,25 +174,25 @@ $h_{\alpha j}=0$ の単一チャートだけを見る場合に限り、 $\lambda
 
 ### 特異学習理論（SLT）の基礎・総論
 
-- <a id="ref-watanabe2012"></a>渡辺澄夫 (2012). *『ベイズ統計の理論と方法』*. コロナ社.
+- <a id="ref-watanabe2012"></a>渡辺澄夫 (2012). *『ベイズ統計の理論と方法』*. コロナ社. [https://www.coronasha.co.jp/np/isbn/9784339024623/](https://www.coronasha.co.jp/np/isbn/9784339024623/)
     - ベイズ統計の基本を固めつつ、特異モデルを含むベイズ推論の考え方に入る入口として有用。SLTの厳密理論そのものは英語の専門書・論文に譲るが、概念整理に向く。
     - 出版社ページ: [コロナ社](https://www.coronasha.co.jp/np/isbn/9784339024623/)（ISBN: 978-4-339-02462-3）
-- <a id="ref-watanabe2009"></a>Watanabe, S. (2009). *Algebraic Geometry and Statistical Learning Theory*. Cambridge University Press.
+- <a id="ref-watanabe2009"></a>Watanabe, S. (2009). *Algebraic Geometry and Statistical Learning Theory*. Cambridge University Press. DOI: [10.1017/CBO9780511800474](https://doi.org/10.1017/CBO9780511800474)
     - SLTの中核（RLCT・ゼータ関数・特異点解消の応用）を体系化した基本文献。数学的詳細まで追いたい人向け。
-- <a id="ref-watanabe2006"></a>渡辺澄夫 (2006). *『代数幾何と学習理論』*. 森北出版.
+- <a id="ref-watanabe2006"></a>渡辺澄夫 (2006). *『代数幾何と学習理論』*. 森北出版. [https://www.morikita.co.jp/books/book/1905](https://www.morikita.co.jp/books/book/1905)
     - 上記CUP書の日本語版に位置づく専門書。入手性は状況によるが、図書館等で参照できると強い。
     - 出版社ページ: [hanmoto.com](https://www.hanmoto.com/bd/isbn/9784627813212)（ISBN: 978-4-627-81321-2）
 
 ### WBIC / WAIC / 一般化誤差（論文）
 
-- <a id="ref-watanabe2013"></a>Watanabe, S. (2013). A Widely Applicable Bayesian Information Criterion. *Journal of Machine Learning Research*, 14, 3029–3065.
+- <a id="ref-watanabe2013"></a>Watanabe, S. (2013). A Widely Applicable Bayesian Information Criterion. *Journal of Machine Learning Research*, 14, 3029–3065. [https://jmlr.org/papers/v14/watanabe13a.html](https://jmlr.org/papers/v14/watanabe13a.html)
     - WBICの代表的な定式化。Appendixの「自由エネルギーの漸近」と直結する。
-- <a id="ref-watanabe2010"></a>Watanabe, S. (2010). Asymptotic Equivalence of Bayes Cross Validation and Widely Applicable Information Criterion in Singular Learning Theory. *Journal of Machine Learning Research*, 11, 3571–3594.
+- <a id="ref-watanabe2010"></a>Watanabe, S. (2010). Asymptotic Equivalence of Bayes Cross Validation and Widely Applicable Information Criterion in Singular Learning Theory. *Journal of Machine Learning Research*, 11, 3571–3594. arXiv: [1004.2316](https://arxiv.org/abs/1004.2316)
     - WAIC・CV・一般化誤差の関係を理論的に結び、SLTの予測（\(2\lambda/n\) 型の関係など）を理解するのに重要。
 
 ### 情報幾何学（正則モデル側の基礎）
 
-- <a id="ref-amari2019ja"></a>甘利俊一 (2019). *『新版 情報幾何学の新展開』*. サイエンス社.
+- <a id="ref-amari2019ja"></a>甘利俊一 (2019). *『新版 情報幾何学の新展開』*. サイエンス社. [https://www.saiensu.co.jp/search/?isbn=978-4-7819-1463-3](https://www.saiensu.co.jp/search/?isbn=978-4-7819-1463-3)
     - 正則モデルにおけるFisher計量や自然勾配など、[Appendix 5](appendix.5.md)と接続する基礎を日本語で押さえたいときに有用。
     - 出版社ページ: [サイエンス社](https://www.saiensu.co.jp/search/?isbn=978-4-7819-1463-3&y=2019)（ISBN: 978-4-7819-1463-3）
 - <a id="ref-amari2016"></a>Amari, S. (2016). *Information Geometry and Its Applications*. Applied Mathematical Sciences, Vol. 194. Springer Japan. DOI: [10.1007/978-4-431-55978-8](https://doi.org/10.1007/978-4-431-55978-8)
@@ -204,10 +204,10 @@ $h_{\alpha j}=0$ の単一チャートだけを見る場合に限り、 $\lambda
     - 「ニューラルネットは特異モデルである」という点を前面に出し、古典的なLaplace近似などの限界も含めて議論する。SLTを深層学習理論へ接続する読み物として良い。
 - <a id="ref-power2022"></a>Power, A., Burda, Y., Edwards, H., Babuschkin, I., & Misra, V. (2022). Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets. arXiv: [2201.02177](https://arxiv.org/abs/2201.02177)
     - 長い停滞の後に突然汎化が進む “grokking” を報告した代表的論文。SLTの相転移的な見方と関連づけて議論されることがある。
-- <a id="ref-hochreiter1997"></a>Hochreiter, S., & Schmidhuber, J. (1997). Flat Minima. *Neural Computation*, 9(1), 1–42.
+- <a id="ref-hochreiter1997"></a>Hochreiter, S., & Schmidhuber, J. (1997). Flat Minima. *Neural Computation*, 9(1), 1–42. DOI: [10.1162/neco.1997.9.1.1](https://doi.org/10.1162/neco.1997.9.1.1)
     - 「平坦な解（flat minima）が汎化に有利」という古典的主張の代表。RLCTの直感（谷の“広さ”）を説明するときの背景として参照しやすい。
 
 ### 数学的背景（代数幾何：特異点解消）
 
-- <a id="ref-hironaka1964"></a>Hironaka, H. (1964). Resolution of Singularities of an Algebraic Variety over a Field of Characteristic Zero. *Annals of Mathematics*, 80(1), 1–50.
+- <a id="ref-hironaka1964"></a>Hironaka, H. (1964). Resolution of Singularities of an Algebraic Variety over a Field of Characteristic Zero. *Annals of Mathematics*, 80(1), 1–50. DOI: [10.2307/1970486](https://doi.org/10.2307/1970486)
     - 特異点解消の原典。SLTの数学的基盤として歴史的・理論的に重要。

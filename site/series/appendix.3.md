@@ -853,7 +853,7 @@ print(f"Parameters saved: ~{(1 - 2 / 8) * 100:.1f}% (for K,V)")
 
 ### Pruning（剪定）
 
-- <a id="ref-lecun1990"></a>LeCun, Y., Denker, J. S., & Solla, S. A. (1990). Optimal Brain Damage. *NeurIPS 1989*.
+- <a id="ref-lecun1990"></a>LeCun, Y., Denker, J. S., & Solla, S. A. (1990). Optimal Brain Damage. *NeurIPS 1989*. [https://proceedings.neurips.cc/paper/1989/hash/6c9882bbac1c7093bd25041881277658-Abstract.html](https://proceedings.neurips.cc/paper/1989/hash/6c9882bbac1c7093bd25041881277658-Abstract.html)
     - ニューラルネットワークの剪定の古典的論文。構造化pruningの場合は実効速度向上が見込めるが、非構造化pruningでは実装次第で速度向上が限定的な場合もある。
 
 ### Mixture of Experts (MoE)

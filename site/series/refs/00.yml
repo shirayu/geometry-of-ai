@@ -13,7 +13,6 @@ categories:
   - key: fefferman2016
     note:
     - 多様体仮説を理論的にテストする立場の代表的論文。
-    - 'arXiv版: [arXiv:1310.0425](https://arxiv.org/abs/1310.0425) (2013)'
 - title: 幾何学的深層学習（サーベイ）
   entries:
   - key: bronstein2021

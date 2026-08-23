@@ -733,7 +733,7 @@ print("収束の比較を gradient_comparison.png に保存")
 
 - <a id="ref-kullback1951"></a>Kullback, S., & Leibler, R. A. (1951). On Information and Sufficiency. *The Annals of Mathematical Statistics*, 22(1), 79–86. DOI: [10.1214/aoms/1177729694](https://doi.org/10.1214/aoms/1177729694)
     - KLダイバージェンスの一次文献。情報理論における基礎概念。
-- <a id="ref-bishop2006"></a>Bishop, C. M. (2006). *Pattern Recognition and Machine Learning*. Springer.
+- <a id="ref-bishop2006"></a>Bishop, C. M. (2006). *Pattern Recognition and Machine Learning*. Springer. [https://link.springer.com/book/9780387310732](https://link.springer.com/book/9780387310732)
     - 機械学習におけるKLダイバージェンス、クロスエントロピー、最尤推定の関係を詳しく解説。
 
 ### 双曲幾何学（階層構造）

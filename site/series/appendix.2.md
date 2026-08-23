@@ -364,7 +364,7 @@ $$d(\mathbf{v}_A, \mathbf{v}_B) + d(\mathbf{v}_B, \mathbf{v}_C) \geq d(\mathbf{v
 
 ## 参考文献
 
-- <a id="ref-levina2004"></a>Levina, E., & Bickel, P. J. (2004). Maximum Likelihood Estimation of Intrinsic Dimension. *NeurIPS 2004*, 777–784.
+- <a id="ref-levina2004"></a>Levina, E., & Bickel, P. J. (2004). Maximum Likelihood Estimation of Intrinsic Dimension. *NeurIPS 2004*, 777–784. [https://proceedings.neurips.cc/paper/2004/hash/74934548253bcab8490ebd74afed7031-Abstract.html](https://proceedings.neurips.cc/paper/2004/hash/74934548253bcab8490ebd74afed7031-Abstract.html)
     - 局所的なk近傍の距離比を使って内在次元を最尤推定する手法。多様体の次元を実用的に推定できる。
 - <a id="ref-facco2017"></a>Facco, E., d'Errico, M., Rodriguez, A., & Laio, A. (2017). Estimating the intrinsic dimension of datasets by a minimal neighborhood information. *Scientific Reports*, 7, 12140. DOI: [10.1038/s41598-017-11873-y](https://doi.org/10.1038/s41598-017-11873-y)
     - 最近傍2点の距離比のみを使う最小情報量での内在次元推定（TWO-NN法）。

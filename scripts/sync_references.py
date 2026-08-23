@@ -229,6 +229,8 @@ def render_entry(entry: BibEntry) -> str:
         if "eprintyear" in f:
             arxiv += f" ({f['eprintyear']})"
         segments.append(arxiv)
+    elif "url" in f:
+        segments.append(f"[{f['url']}]({f['url']})")
 
     return " ".join(segments)
 
@@ -344,6 +346,8 @@ def validate_bib(bib: dict[str, BibEntry]) -> list[str]:
             errors.append(f"references.bib: {key}: @inproceedings には booktitle が必要です")
         if e.entry_type == "book" and "publisher" not in e.fields:
             errors.append(f"references.bib: {key}: @book には publisher が必要です")
+        if not any(f in e.fields for f in ("doi", "eprint", "url")):
+            errors.append(f"references.bib: {key}: doi/eprint/url のいずれもありません（リンクが生成できません）")
     # 注: 引用ラベルの章内重複は check_citations.py が検出する
     # （章をまたぐ同名ラベルは sidecar で解決できるため bib 全体では禁止しない）
     return errors
