@@ -19,7 +19,6 @@
         "site/node_modules",
         ".venv",
         "tmp",
-        "check-all",
         ".claude"
     ]
 }
