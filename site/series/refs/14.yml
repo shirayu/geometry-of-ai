@@ -11,10 +11,13 @@ categories:
   entries:
   - key: naitzat2020
     note:
-    - ニューラルネットワークの決定境界のトポロジーを研究。ReLUネットワークとskip connectionの効果を議論。
+    - 二値分類データが学習済みネットワークの各層を通るときのトポロジー変化を分析。活性化関数と深さによる差を議論。
   - key: gabrielsson2019
     note:
     - ニューラルネットワークの活性化空間のトポロジー解析手法を提案。
+  - key: gabrielsson2020
+    note:
+    - パーシステントホモロジーを勾配ベースの学習へ組み込む微分可能なトポロジー層を提案。
 - title: ソフトウェア
   entries:
   - key: tralie2018
