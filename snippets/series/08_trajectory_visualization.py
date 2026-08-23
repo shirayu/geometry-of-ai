@@ -85,6 +85,7 @@ def visualize_trajectory_2d(trajectory, title="State Trajectory"):
 
 
 # ResidualStackの軌跡を可視化
+torch.manual_seed(42)
 dim, num_blocks = 2, 20  # 2次元で直接可視化
 model = ResidualStack(dim, num_blocks)
 

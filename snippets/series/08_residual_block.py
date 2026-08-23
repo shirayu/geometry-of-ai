@@ -64,6 +64,7 @@ class ResidualStack(nn.Module):
 
 
 # 使用例
+torch.manual_seed(42)
 dim, num_blocks = 64, 8
 model = ResidualStack(dim, num_blocks)
 

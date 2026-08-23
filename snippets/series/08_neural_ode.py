@@ -79,6 +79,7 @@ class NeuralODE(nn.Module):
 
 # 使用例（torchdiffeqがインストールされている場合）
 if TORCHDIFFEQ_AVAILABLE:
+    torch.manual_seed(42)
     dim = 64
     model = NeuralODE(dim)
 
