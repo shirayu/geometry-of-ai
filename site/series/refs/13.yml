@@ -32,9 +32,9 @@ categories:
   - key: dai2024
     note:
     - 細粒度Expert + 共有Expertの設計。Expert専門化を極限まで追求したMoE設計。
-  - key: jiang2023
+  - key: jiang2024
     note:
-    - Mistral 7Bの技術報告。Grouped-Query AttentionとSliding Window Attentionを導入。
+    - Mixtralの技術報告。8 Experts、Top-2 routingによるMoE設計。
   - key: puigcerver2024
     note:
     - 離散的ルーティングを連続化するSoft MoE。高次元の直交性との接続。
