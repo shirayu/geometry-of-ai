@@ -1,1 +1,6 @@
-categories: []
+categories:
+- title: 情報幾何学の基礎
+  entries:
+  - key: amari2000
+    note:
+    - $\alpha$ -接続、e-接続/m-接続の双対構造を体系的に定式化した基本文献。本Appendixの中心的な参照元。

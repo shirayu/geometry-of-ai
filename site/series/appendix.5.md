@@ -90,7 +90,7 @@ e-接続とm-接続は、実は **連続的なパラメータ $\alpha$ を持つ
 
 ### $\alpha$ -接続の定義
 
-統計多様体 $\mathcal{S}$ 上の $\alpha$ -接続 $\nabla^{(\alpha)}$ は、実数パラメータ $\alpha \in \mathbb{R}$ によって連続的にパラメトライズされる接続の族である。Fisher計量 $g$ と **Amariの $\alpha$ -接続** の関係は、以下の式で定められる：
+統計多様体 $\mathcal{S}$ 上の $\alpha$ -接続 $\nabla^{(\alpha)}$ は、実数パラメータ $\alpha \in \mathbb{R}$ によって連続的にパラメトライズされる接続の族である。Fisher計量 $g$ と **Amariの $\alpha$ -接続**（[Amari & Nagaoka, 2000](#ref-amari2000)）の関係は、以下の式で定められる：
 
 $$\nabla^{(\alpha)} = \nabla^{(0)} + \frac{\alpha}{2} T$$
 
@@ -293,3 +293,8 @@ e-接続とm-接続、そして両者を繋ぐ $\alpha$ -接続。この双対�
 > このページで登場した用語は、[キーワード集](/series/keywords#appendix-5-情報幾何学における双対構造-2種類のまっすぐ)でも確認できる。
 
 ## 参考文献
+
+### 情報幾何学の基礎
+
+- <a id="ref-amari2000"></a>Amari, S., & Nagaoka, H. (2000). *Methods of Information Geometry*. Translations of Mathematical Monographs, Vol. 191. American Mathematical Society. DOI: [10.1090/mmono/191](https://doi.org/10.1090/mmono/191)
+    - $\alpha$ -接続、e-接続/m-接続の双対構造を体系的に定式化した基本文献。本Appendixの中心的な参照元。
