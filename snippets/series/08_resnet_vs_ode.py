@@ -1,29 +1,74 @@
 import torch
+import torch.nn as nn
 
-TORCHDIFFEQ_AVAILABLE = False
+try:
+    from torchdiffeq import odeint
+
+    TORCHDIFFEQ_AVAILABLE = True
+except ImportError:
+    TORCHDIFFEQ_AVAILABLE = False
 
 
-class ResidualStack:
+class ResidualBlock(nn.Module):
+    """基本的な残差ブロック（08_residual_block.pyと同じ定義）"""
+
+    def __init__(self, dim, hidden_dim=None):
+        super().__init__()
+        hidden_dim = hidden_dim or dim * 4
+        self.net = nn.Sequential(
+            nn.LayerNorm(dim),
+            nn.Linear(dim, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, dim),
+        )
+
+    def forward(self, x):
+        return x + self.net(x)
+
+
+class ResidualStack(nn.Module):
     def __init__(self, dim, num_steps):
-        self.dim = dim
-        self.num_steps = num_steps
+        super().__init__()
+        self.blocks = nn.ModuleList([ResidualBlock(dim) for _ in range(num_steps)])
 
-    def __call__(self, x, return_trajectory=False):
-        trajectory = x.unsqueeze(0).repeat(self.num_steps + 1, 1, 1)
+    def forward(self, x, return_trajectory=False):
+        trajectory = [x]
+        for block in self.blocks:
+            x = block(x)
+            trajectory.append(x)
         if return_trajectory:
-            return x, trajectory
+            return x, torch.stack(trajectory)
         return x
 
 
-class NeuralODE:
+class ODEFunc(nn.Module):
+    """ODEの右辺 f(h, t)（08_neural_ode.pyと同じ定義）"""
+
+    def __init__(self, dim, hidden_dim=None):
+        super().__init__()
+        hidden_dim = hidden_dim or dim * 4
+        self.net = nn.Sequential(
+            nn.Linear(dim, hidden_dim),
+            nn.Tanh(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.Tanh(),
+            nn.Linear(hidden_dim, dim),
+        )
+
+    def forward(self, t, h):
+        return self.net(h)
+
+
+class NeuralODE(nn.Module):
     def __init__(self, dim):
-        self.dim = dim
+        super().__init__()
+        self.func = ODEFunc(dim)
 
-    def __call__(self, x, t_span, return_trajectory=False):
-        trajectory = x.unsqueeze(0).repeat(t_span.numel(), 1, 1)
+    def forward(self, x, t_span, return_trajectory=False):
+        trajectory = odeint(self.func, x, t_span, method="dopri5")
         if return_trajectory:
-            return x, trajectory
-        return x
+            return trajectory[-1], trajectory
+        return trajectory[-1]
 
 
 def compare_resnet_and_ode(dim=64, num_steps=10):

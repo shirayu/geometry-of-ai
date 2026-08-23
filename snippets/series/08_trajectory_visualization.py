@@ -1,17 +1,38 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import torch.nn as nn
 
 
-class ResidualStack:
+class ResidualBlock(nn.Module):
+    """基本的な残差ブロック（08_residual_block.pyと同じ定義）"""
+
+    def __init__(self, dim, hidden_dim=None):
+        super().__init__()
+        hidden_dim = hidden_dim or dim * 4
+        self.net = nn.Sequential(
+            nn.LayerNorm(dim),
+            nn.Linear(dim, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, dim),
+        )
+
+    def forward(self, x):
+        return x + self.net(x)
+
+
+class ResidualStack(nn.Module):
     def __init__(self, dim, num_blocks):
-        self.dim = dim
-        self.num_blocks = num_blocks
+        super().__init__()
+        self.blocks = nn.ModuleList([ResidualBlock(dim) for _ in range(num_blocks)])
 
-    def __call__(self, x, return_trajectory=False):
-        trajectory = x.unsqueeze(0).repeat(self.num_blocks + 1, 1, 1)
+    def forward(self, x, return_trajectory=False):
+        trajectory = [x]
+        for block in self.blocks:
+            x = block(x)
+            trajectory.append(x)
         if return_trajectory:
-            return x, trajectory
+            return x, torch.stack(trajectory)
         return x
 
 
