@@ -165,8 +165,11 @@ import torch
 import torch.nn.functional as F
 
 
-def quantize(tensor):
-    return tensor
+def quantize(tensor, num_bits=4):
+    """[-1, 1]の範囲を仮定した対称一様量子化（最小構成）。"""
+    levels = 2 ** num_bits - 1
+    scaled = torch.round((tensor.clamp(-1, 1) + 1) / 2 * levels)
+    return scaled / levels * 2 - 1
 
 
 # 概念的なコード
@@ -198,9 +201,11 @@ PTQは学習後に格子を当てはめる。QATは、格子があることを�
 
 **Straight-Through Estimator (STE) の再登場:**
 
+STEの仕組みは単純である。forward計算では $\text{round}(x)$ をそのまま使うが、backward計算ではこの関数の勾配（ほぼ至るところ0）を無視し、代わりに恒等関数の勾配（常に1）で代用する。つまり $\partial \, \text{round}(x) / \partial x \approx 1$ という近似を意図的に導入する。
+
 - STEがここでも活躍（[Hubara et al., 2018](#ref-hubara2018)）
 - Forward: 量子化された重みを使用
-- Backward: 連続的な勾配を伝播
+- Backward: 連続的な勾配を伝播（丸め操作を素通りさせる）
 - **幾何学的解釈:** 「見かけは格子点にいるが、勾配は連続空間から来る」
 
 forwardとbackwardで別の空間を使うという、この一見都合のよいごまかしが実際に学習を回せてしまう。離散と連続の境界がどこまで妥協を許すかは、上で見た通りである。
@@ -237,11 +242,11 @@ forwardとbackwardで別の空間を使うという、この一見都合のよ�
 量子化誤差を幾何学的に測る方法：
 
 1. **重み空間での距離:**
-   $$\epsilon_w = |W - \hat{W}|_F$$
+   $$\epsilon_w = \|\mathbf{W} - \hat{\mathbf{W}}\|_F$$
    （Frobenius ノルム）
 
 2. **出力空間での距離:**
-   $$\epsilon_y = |f(x; W) - f(x; \hat{W})|_2$$
+   $$\epsilon_y = \|f(x; \mathbf{W}) - f(x; \hat{\mathbf{W}})\|_2$$
    （特定の入力に対する出力の違い）
 
 3. **決定境界のHausdorff距離:**
