@@ -216,6 +216,12 @@ export default defineConfig({
         hostname: 'https://geometry-of-ai.hayashibe.jp',
     },
 
+    vite: {
+        server: {
+            allowedHosts: true,
+        },
+    },
+
     markdown: {
         math: true,
         anchor: {
