@@ -30,6 +30,7 @@ tasks:
       - svg_naming
       - lecture_links
       - toc_coverage
+      - bold_emphasis
 
   math:
     desc: Check math expressions
@@ -145,3 +146,8 @@ tasks:
     desc: Check that all series pages are registered in toc.data.ts
     cmds:
       - python3 ./scripts/check_toc_coverage.py {{.SERIES_DIR}}
+
+  bold_emphasis:
+    desc: Check that ** / __ emphasis actually renders (CommonMark flanking rules)
+    cmds:
+      - node ./scripts/check_bold_emphasis.mjs {{.SERIES_DIR}}

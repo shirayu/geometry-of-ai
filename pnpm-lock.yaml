@@ -11,6 +11,9 @@ importers:
       katex:
         specifier: ^0.18.4
         version: 0.18.4
+      markdown-it:
+        specifier: ^14.3.0
+        version: 14.3.0
       markdownlint-cli2:
         specifier: ^0.23.2
         version: 0.23.2
