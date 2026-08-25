@@ -278,7 +278,7 @@ $$\mathcal{L} _{\text{CE}} = -\sum _x P(x) \log Q(x) = D _{\text{KL}}(P \| Q) + 
 
 ### フィッシャー情報行列：分布の感度を測る
 
-**フィッシャー情報行列（Fisher Information Matrix）** は、パラメータ $\theta$ を少し変えたとき、予測分布 $p(x; \theta)$ がどれだけ敏感に変化するかを測る尺度である（[Amari, 2016](#ref-amari2016)）。
+**フィッシャー情報行列（Fisher Information Matrix）** は、パラメータ $\theta$ を少し変えたとき、予測分布 $p(x; \theta)$ がどれだけ敏感に変化するかを測る尺度である（[Amari, 2016](#ref-amari2016)）。ここでの $\theta$ は、上記「点」の項で述べた分布のパラメータ（例：正規分布の $(\mu, \sigma)$ 、vMF分布の $(\boldsymbol{\mu}, \kappa)$ ）を指し、ニューラルネットワークの重み全体ではない（この区別の全体像は[第0回](00.md)を参照）。重み全体を $\theta$ として扱う拡張は[Appendix 6](appendix.6.md)で扱う。
 
 数学的には、スコア関数（対数尤度の勾配）の共分散として定義される：
 
