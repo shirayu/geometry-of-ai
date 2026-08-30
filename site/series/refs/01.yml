@@ -35,7 +35,7 @@ categories:
   - key: cortes1995
     note:
     - SVMの原論文。
-- title: 損失関数による統一的理解
+- title: 損失関数に見る共通構造
   entries:
   - key: hastie2009
     note:

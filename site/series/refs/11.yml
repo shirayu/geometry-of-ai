@@ -3,7 +3,7 @@ categories:
   entries:
   - key: radford2021
     note:
-    - CLIPの原論文。対照学習によるテキスト-画像の統一空間を提案。
+    - CLIPの原論文。対照学習によるテキスト-画像の共有空間を提案。
   - key: oord2018
     note:
     - InfoNCE損失を提案。対照学習の理論的基盤。
@@ -16,7 +16,7 @@ categories:
   entries:
   - key: liang2022
     note:
-    - モダリティギャップを発見・分析した論文。統一空間の限界を示す。
+    - モダリティギャップを発見・分析した論文。共有空間の限界を示す。
 - title: CLIPの限界と構成性
   entries:
   - key: yuksekgonul2023
