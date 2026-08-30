@@ -9,7 +9,11 @@
         "MD036": false,
         "MD024": false,
         "MD028": false,
-        "MD026": false
+        "MD026": false,
+        // MD051はGitHub基準のslug生成でリンク先を検証するが、
+        // 本サイトはVitePressのslug生成（日本語見出しの扱いが異なる）でビルドされるため誤検知する。
+        // 実際のリンク切れはVitePressビルド時のdead link検出に委ねる。
+        "MD051": false
     },
     "globs": [
         "**/*.md"

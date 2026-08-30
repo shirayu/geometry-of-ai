@@ -10,6 +10,7 @@ tasks:
     deps:
       - math
       - quiz
+      - body_anchors
       - math_rules
       - insertion
       - fence
@@ -40,9 +41,14 @@ tasks:
   quiz:
     desc: Check quiz format, MathJax rendering, and body references
     cmds:
-      - node --test ./site/scripts/check_quiz.test.mjs
       - node ./site/scripts/check_quiz.mjs
       - node ./site/scripts/check_quiz_quality.mjs
+
+  body_anchors:
+    desc: Check body files' in-page anchor links resolve to headings/HTML anchors
+    cmds:
+      - node --test ./site/scripts/check_body_anchors.test.mjs
+      - node ./site/scripts/check_body_anchors.mjs
 
   math_rules:
     desc: Check markdown math rules

@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { createMarkdownRenderer } from 'vitepress'
+import { headingSlugs } from './check_body_anchors.mjs'
 
 const SITE_DIR = path.resolve(import.meta.dirname, '..')
 const SERIES_DIR = path.join(SITE_DIR, 'series')
@@ -28,25 +29,6 @@ function hasMath(source) {
     return /\$\$?[\s\S]*?\$\$?/.test(source)
 }
 
-export function slugifyHeading(text) {
-    const rControl = /[\u0000-\u001f]/g
-    const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g
-    const rCombining = /[\u0300-\u036F]/g
-    return text
-        .normalize('NFKD')
-        .replace(rCombining, '')
-        // NFKDは濁点・半濁点付き仮名を基底文字+結合濁点・半濁点（U+3099/U+309A）に分解するが、
-        // これらはrCombiningの範囲（U+0300-U+036F）外のため、ここでNFCにより合成済み仮名へ戻す。
-        // ラテン文字のアクセント（U+0300-U+036F）は既に除去済みなので再合成されない（é→eのまま）。
-        .normalize('NFC')
-        .replace(rControl, '')
-        .replace(rSpecial, '-')
-        .replace(/-{2,}/g, '-')
-        .replace(/^-+|-+$/g, '')
-        .replace(/^(\d)/, '_$1')
-        .toLowerCase()
-}
-
 function sourceFile(href) {
     const [pathname, fragment] = href.split('#')
     if (!pathname.startsWith('/series/') || !fragment) return null
@@ -57,22 +39,6 @@ function sourceFile(href) {
     const file = path.resolve(SERIES_DIR, filename)
     if (!file.startsWith(`${SERIES_DIR}${path.sep}`)) return null
     return { file, fragment }
-}
-
-function headingSlugs(file) {
-    const slugs = new Set()
-    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
-    let inFence = false
-    for (const line of lines) {
-        if (/^\s*```/.test(line)) {
-            inFence = !inFence
-            continue
-        }
-        if (inFence) continue
-        const heading = line.match(/^#{2,3} (.+)$/)
-        if (heading) slugs.add(slugifyHeading(heading[1].trim()))
-    }
-    return slugs
 }
 
 function checkSource(href, file, line, errors) {
