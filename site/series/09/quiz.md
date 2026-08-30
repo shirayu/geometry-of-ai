@@ -108,7 +108,7 @@ A: Langevin更新はスコアによる上昇方向とランダムな揺らぎを
 
 ### Q7. Flow Matching
 
-Flow Matchingが目指す統一的な見方はどれか。
+Flow Matchingが与える共通の見方はどれか。
 
 ```quiz
 - [x]分布間を結ぶ時間依存ベクトル場を学ぶ

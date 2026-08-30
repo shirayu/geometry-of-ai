@@ -102,7 +102,7 @@ GQA（Grouped-Query Attention）、LoRA（Low-Rank Adaptation）、MoD（Mixture
   R: KVキャッシュの削減に関わるのはGQAのヘッド共有であり、LoRAは重み更新の低ランク化、MoDは層の通過制御という異なる仕組みで冗長性を減らしている。
 - [x]冗長な計算や更新を構造的に減らし、必要な部分へ資源を集中する
   R: GQAはKey-Valueの共有、LoRAは更新の低ランク化、MoDは深さ方向の計算選択によって、それぞれ異なる対象の冗長性を削り必要な部分に資源を集中させるという共通の設計思想を持つ。
-S: /series/appendix.3#統一的整理
+S: /series/appendix.3#共通の観点で整理する
 A: GQAはKey-Value（KV）の共有、LoRAは更新の低ランク化、MoDは深さ方向の計算選択に関わる。実装は異なるが、冗長性を削って効率化する共通の見方ができる。
 ```
 

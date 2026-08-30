@@ -277,7 +277,7 @@ export default defineConfig({
                 ],
             },
             {
-                text: '第2部 統一的視点への接続',
+                text: '第2部 空間の見方を広げる',
                 items: [
                     {
                         text: '',

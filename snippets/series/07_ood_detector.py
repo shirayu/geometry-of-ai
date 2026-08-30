@@ -32,7 +32,7 @@ class OODDetector:
         Returns:
             calibrated_threshold: 校正された閾値
         """
-        # 形状を1Dに統一
+        # 形状を1Dに揃える
         kappa_in = kappa_in.squeeze()
         kappa_out = kappa_out.squeeze()
 
