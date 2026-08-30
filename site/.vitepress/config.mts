@@ -282,10 +282,10 @@ export default defineConfig({
                     {
                         text: '',
                         items: [
-                            { text: '#4 分類の再統一 I', link: '/series/04' },
-                            { text: '#5 分類の再統一 II', link: '/series/05' },
+                            { text: '#4 分類を確率で読む', link: '/series/04' },
+                            { text: '#5 分類を境界で読む', link: '/series/05' },
                             { text: '#6 Transformerという測量士', link: '/series/06' },
-                            { text: '#7 不確実性の復権', link: '/series/07' },
+                            { text: '#7 点から分布へ', link: '/series/07' },
                         ],
                     },
                 ],
@@ -309,7 +309,7 @@ export default defineConfig({
                     {
                         text: '',
                         items: [
-                            { text: '#11 感覚の統合', link: '/series/11' },
+                            { text: '#11 異なる空間をつなぐ', link: '/series/11' },
                             { text: '#12 双曲幾何学', link: '/series/12' },
                         ],
                     },
@@ -323,7 +323,7 @@ export default defineConfig({
                         items: [
                             { text: '#13 高次元の深淵', link: '/series/13' },
                             { text: '#14 トポロジーという顕微鏡', link: '/series/14' },
-                            { text: '#15 次の時代を設計する', link: '/series/15' },
+                            { text: '#15 次の空間を設計する', link: '/series/15' },
                         ],
                     },
                 ],
