@@ -23,6 +23,13 @@ export function slugifyHeading(text) {
         .toLowerCase()
 }
 
+// 見出しにインライン数式（$...$）が含まれるかどうか。
+// VitePressのMathJax処理により実際のslugは数式部分の扱いが複雑（除去されたり、
+// 一部の記号だけ残ったりする）で、Markdownソースからの近似計算では再現できない。
+export function hasInlineMath(text) {
+    return /\$[^$]*\$/.test(text)
+}
+
 export function headingSlugs(file) {
     const slugs = new Set()
     const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
@@ -44,6 +51,24 @@ export function headingSlugs(file) {
     return slugs
 }
 
+// ファイル内に、近似slugify不能な数式見出し（$...$を含む見出し）が
+// 1つでも存在するか。存在する場合、そのファイルのアンカーリンク検証は
+// check_built_anchors.mjs（ビルド後のHTMLと照合）に委ねる。
+export function hasMathHeading(file) {
+    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
+    let inFence = false
+    for (const line of lines) {
+        if (/^\s*```/.test(line)) {
+            inFence = !inFence
+            continue
+        }
+        if (inFence) continue
+        const heading = line.match(/^#{2,3} (.+)$/)
+        if (heading && hasInlineMath(heading[1])) return true
+    }
+    return false
+}
+
 export function bodyFiles(dir) {
     return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
         const file = path.join(dir, entry.name)
@@ -57,7 +82,14 @@ export function bodyFiles(dir) {
 // markdownlint MD051 はGitHub基準のslug生成で検証するが、本サイトはVitePress基準の
 // slug生成でビルドされ、日本語見出しでは両者の結果が一致しないため、MD051は無効化し
 // このスクリプトで代替検証する。
+// 注意: 見出しにインライン数式（$...$）が含まれる場合、VitePressのMathJax処理により
+// 実際のslugと本スクリプトのslugify結果がずれることがある（scripts/check_built_anchors.mjs
+// がビルド後のHTMLと突き合わせて機械的に検証する）。
 export function checkBodyAnchorLinks(file, errors) {
+    // 数式見出しを含むファイルは近似slugifyが信頼できないため、検証を
+    // check_built_anchors.mjs（ビルド後のHTMLと照合）に委ねてスキップする。
+    if (hasMathHeading(file)) return
+
     const relative = path.relative(path.resolve(SITE_DIR, '..'), file)
     const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
     const slugs = headingSlugs(file)

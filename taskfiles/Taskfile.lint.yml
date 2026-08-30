@@ -50,6 +50,11 @@ tasks:
       - node --test ./site/scripts/check_body_anchors.test.mjs
       - node ./site/scripts/check_body_anchors.mjs
 
+  check_built:
+    desc: Check body files' in-page anchor links against the built HTML (run `task site:build` first)
+    cmds:
+      - node ./site/scripts/check_built_anchors.mjs
+
   math_rules:
     desc: Check markdown math rules
     cmds:

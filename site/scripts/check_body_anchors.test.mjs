@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { slugifyHeading, checkBodyAnchorLinks } from './check_body_anchors.mjs'
+import { slugifyHeading, checkBodyAnchorLinks, hasInlineMath, hasMathHeading } from './check_body_anchors.mjs'
 
 test('濁点・半濁点付きの見出しは合成済み仮名のスラグになる', () => {
     // slugifyHeading は NFKD 分解後に U+0300-U+036F の結合文字を除去し、続いて NFC で
@@ -62,6 +62,41 @@ test('<a id>形式のアンカーもリンク先として認識される', () =>
     fs.writeFileSync(
         file,
         ['## 用語集', '', '<a id="kw-example"></a>説明文', '', '[用語](#kw-example)へ戻る'].join('\n')
+    )
+    const errors = []
+    checkBodyAnchorLinks(file, errors)
+    fs.rmSync(file)
+    assert.deepEqual(errors, [])
+})
+
+test('hasInlineMathは$...$を含むテキストを検出する', () => {
+    assert.equal(hasInlineMath('Levi-Civita接続（ $\\alpha = 0$ ）の位置づけ'), true)
+    assert.equal(hasInlineMath('多様体とは何か'), false)
+})
+
+test('hasMathHeadingは数式を含む見出しを持つファイルを検出する', () => {
+    const withMath = path.join(os.tmpdir(), `check_body_anchors_test_${Date.now()}_math.md`)
+    fs.writeFileSync(withMath, ['## 導入', '', '### 集中度 $\\kappa$ の直感'].join('\n'))
+    assert.equal(hasMathHeading(withMath), true)
+    fs.rmSync(withMath)
+
+    const withoutMath = path.join(os.tmpdir(), `check_body_anchors_test_${Date.now()}_plain.md`)
+    fs.writeFileSync(withoutMath, ['## 導入', '', '### ふつうの見出し'].join('\n'))
+    assert.equal(hasMathHeading(withoutMath), false)
+    fs.rmSync(withoutMath)
+})
+
+test('数式見出しを含むファイルはアンカーリンク検証をスキップする（check_built_anchors.mjsに委任）', () => {
+    const file = path.join(os.tmpdir(), `check_body_anchors_test_${Date.now()}.md`)
+    fs.writeFileSync(
+        file,
+        [
+            '## 導入',
+            '',
+            '### 集中度 $\\kappa$ の直感',
+            '',
+            '詳細は[存在しないはずのリンク](#存在しない見出し)を見よ。',
+        ].join('\n')
     )
     const errors = []
     checkBodyAnchorLinks(file, errors)
