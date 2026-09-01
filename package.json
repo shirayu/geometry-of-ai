@@ -2,7 +2,7 @@
     "author": "",
     "description": "",
     "devDependencies": {
-        "katex": "^0.18.4",
+        "katex": "^0.18.5",
         "markdown-it": "^15.0.1",
         "markdownlint-cli2": "^0.23.2"
     },
