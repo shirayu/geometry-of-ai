@@ -321,7 +321,7 @@ export default defineConfig({
                     {
                         text: '',
                         items: [
-                            { text: '#13 高次元の深淵', link: '/series/13' },
+                            { text: '#13 高次元の奇妙な性質', link: '/series/13' },
                             { text: '#14 トポロジーという顕微鏡', link: '/series/14' },
                             { text: '#15 次の空間を設計する', link: '/series/15' },
                         ],
